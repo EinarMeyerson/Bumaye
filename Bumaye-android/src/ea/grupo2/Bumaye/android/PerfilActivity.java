@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,13 +41,15 @@ public class PerfilActivity extends Activity {
 				R.array.nav_options);
 		if (personaje.getNombre()!=null)
 			names[0] = Html.fromHtml("<b>"+personaje.getNombre()+"</b>").toString();
-		this.navList = (ListView) findViewById(R.id.left_drawer);
-		// Set previous array as adapter of the list
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, names);
 		
-		navList.setAdapter(adapter);
-		navList.setOnItemClickListener(new DrawerItemClickListener());
+				
+		 mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+	        this.navList = (ListView) findViewById(R.id.left_drawer);
+	        // Set previous array as adapter of the list
+	        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+	                android.R.layout.simple_list_item_1, names);
+	        navList.setAdapter(adapter);
+	        navList.setOnItemClickListener(new DrawerItemClickListener());
 
 		ataque = (TextView) findViewById(R.id.ataque);
 		defensa = (TextView) findViewById(R.id.defensa);
@@ -258,27 +260,42 @@ public class PerfilActivity extends Activity {
 
 	}
 
-
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
-			//mDrawerLayout.closeDrawer(navList);
-			navClic(position);
-		}
-	}
-	private void navClic(int pos){
-		switch(pos) {            
-		case 2: 
-			Intent intent = new Intent(this, MapActivity.class);   
-			break;
-		case 3: 
-			break;
-		case 4: 
-			break;
-		default: 
-			break;
-		}
-	}
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
+        	mDrawerLayout.closeDrawer(navList);
+            navClic(position);
+    }
+}
+    private void navClic(int pos){
+    switch(pos) {            
+    case 2: 
+    	Intent intent = new Intent(this, MapActivity.class);   
+    	break;
+    case 3: 
+    	break;
+    case 4: 
+    	break;
+    default: 
+        break;
+    }
+}
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+
+//            View drawerView = findViewById(R.id.drawer_layout); // child drawer view
+
+            if (!mDrawerLayout.isDrawerOpen(navList)) {
+                mDrawerLayout.openDrawer(navList);
+            } else if (mDrawerLayout.isDrawerOpen(navList)) {
+                mDrawerLayout.closeDrawer(navList);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
 
