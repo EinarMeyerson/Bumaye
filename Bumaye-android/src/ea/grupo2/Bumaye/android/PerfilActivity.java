@@ -43,7 +43,6 @@ public class PerfilActivity extends Activity {
 			names[0] = Html.fromHtml("<b>"+personaje.getNombre()+"</b>").toString();
 		this.navList = (ListView) findViewById(R.id.left_drawer);		
 		 mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-	        this.navList = (ListView) findViewById(R.id.left_drawer);
 	        // Set previous array as adapter of the list
 	        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 	                android.R.layout.simple_list_item_1, names);
