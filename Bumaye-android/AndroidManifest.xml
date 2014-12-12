@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ea.grupo2.Bumaye.android"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="14" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/bumayeicon"
+        android:label="@string/app_name">
+        <activity
+            android:name=".PresentacionActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+         <activity
+            android:name=".PerfilActivity"
+            android:screenOrientation="landscape">
+         </activity>
+          <activity
+            android:name=".RegisterActivity"
+            android:screenOrientation="landscape">
+         </activity>
+         <activity
+            android:name=".MapActivity"
+            android:screenOrientation="landscape">
+         </activity>
+         <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="landscape">
+         </activity>
+    </application>
+
+</manifest>
