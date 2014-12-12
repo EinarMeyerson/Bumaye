@@ -45,6 +45,7 @@ public class PerfilActivity extends Activity {
 		// Set previous array as adapter of the list
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, names);
+		
 		navList.setAdapter(adapter);
 		navList.setOnItemClickListener(new DrawerItemClickListener());
 
@@ -138,9 +139,13 @@ public class PerfilActivity extends Activity {
 
 					ataces=atac;
 				}
+				if (ataces.getNombreataque()==null)
+				{ 
+					ataces.setNombreataque("sin ataque");
+				}
 
 				if (arm.getTipo().equals("casco")){
-					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
+					String especificaciones ="Nombre : " + arm.getNombre()+ "\nAtaque : +" + arm.getAtaque() + "\nDefensa: +" + arm.getDefensa() + "\nAtaque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
 			}
@@ -155,9 +160,13 @@ public class PerfilActivity extends Activity {
 
 					ataces=atac;
 				}
+				if (ataces.getNombreataque()==null)
+				{ 
+					ataces.setNombreataque("sin ataque");
+				}
 
 				if (arm.getTipo().equals("guantes")){
-					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
+					String especificaciones ="Nombre : " + arm.getNombre()+ "\nAtaque : +" + arm.getAtaque() + "\nDefensa: +" + arm.getDefensa() + "\nAtaque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
 			}
@@ -172,9 +181,13 @@ public class PerfilActivity extends Activity {
 
 					ataces=atac;
 				}
+				if (ataces.getNombreataque()==null)
+				{ 
+					ataces.setNombreataque("sin ataque");
+				}
 
 				if (arm.getTipo().equals("coraza")){
-					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
+					String especificaciones ="Nombre : " + arm.getNombre()+ "\nAtaque : +" + arm.getAtaque() + "\nDefensa: +" + arm.getDefensa() + "\nAtaque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
 			}
@@ -189,9 +202,13 @@ public class PerfilActivity extends Activity {
 
 					ataces=atac;
 				}
+				if (ataces.getNombreataque()==null)
+				{ 
+					ataces.setNombreataque("sin ataque");
+				}
 
 				if (arm.getTipo().equals("arma")){
-					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
+					String especificaciones ="Nombre : " + arm.getNombre()+ "\nAtaque : +" + arm.getAtaque() + "\nDefensa: +" + arm.getDefensa() + "\nAtaque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
 			}
@@ -206,9 +223,13 @@ public class PerfilActivity extends Activity {
 
 					ataces=atac;
 				}
+				if (ataces.getNombreataque()==null)
+				{ 
+					ataces.setNombreataque("sin ataque");
+				}
 
 				if (arm.getTipo().equals("perneras")){
-					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
+					String especificaciones ="Nombre : " + arm.getNombre()+ "\nAtaque : +" + arm.getAtaque() + "\nDefensa: +" + arm.getDefensa() + "\nAtaque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
 			}
@@ -223,9 +244,13 @@ public class PerfilActivity extends Activity {
 
 					ataces=atac;
 				}
+				if (ataces.getNombreataque()==null)
+				{ 
+					ataces.setNombreataque("sin ataque");
+				}
 
 				if (arm.getTipo().equals("botas")){
-					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
+					String especificaciones ="Nombre : " + arm.getNombre()+ "\nAtaque : " + arm.getAtaque() + "\nDefensa: " + arm.getDefensa() + "\nAtaque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
 			}
