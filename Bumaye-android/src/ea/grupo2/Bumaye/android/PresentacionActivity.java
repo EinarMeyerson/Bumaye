@@ -112,5 +112,8 @@ public class PresentacionActivity extends Activity{
 			private void wronglogin(){
 				Toast.makeText(getApplicationContext(), "Incorrect user/pass",
 						   Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(this, LoginActivity.class);
+				startActivity(intent);
+				finish();
 			}		
 	}
