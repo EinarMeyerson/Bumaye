@@ -49,7 +49,7 @@ public class MapActivity extends ListActivity {
         PersonList = new ArrayList<PersonajeVO>();
 		adapter = new PersonAdapter(this, PersonList);
 		setListAdapter(adapter);
-		(new FetchPersonsTask()).execute();
+		(new FetchPersonsTask()).execute(url);
     }
     private class FetchPersonsTask extends AsyncTask<String, Void, List<PersonajeVO>> {
 		private ProgressDialog pd;
