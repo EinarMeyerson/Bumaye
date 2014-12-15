@@ -275,6 +275,9 @@ public class PerfilActivity extends Activity {
     	startActivity(intent);
     	break;
     case 2: 
+    	Intent intentt = new Intent(this, Map2Activity.class);
+		intentt.putExtra("iduser", personaje.getIduser());
+    	startActivity(intentt);
     	break;
     case 3: 
     	break;

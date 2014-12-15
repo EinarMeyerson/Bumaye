@@ -65,8 +65,8 @@ private static class ViewHolder {
 		String atack =  Float.toString(data.get(position).getAtaque());
 		String deff = Float.toString(data.get(position).getDefensa());
 		viewHolder.tvSubject.setText(username);
-		viewHolder.tvUsername.setText(atack);
-		viewHolder.tvDate.setText(deff);
+		viewHolder.tvUsername.setText("Ataque: "+atack);
+		viewHolder.tvDate.setText("Defensa: "+deff);
 		return convertView;
 	}
 

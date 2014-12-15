@@ -11,6 +11,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+   	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+   	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+   	
 
     <permission
         android:name="ea.grupo2.Bumaye.android.permission.MAPS_RECEIVE"
@@ -19,9 +22,17 @@
     <uses-permission android:name="ea.grupo2.Bumaye.android.permission.MAPS_RECEIVE" />
 
     <application
+        
         android:allowBackup="true"
         android:icon="@drawable/bumayeicon"
         android:label="@string/app_name" >
+        
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDiqqeBeq-bJF5uZql15gx838Lwv_PK36Q" />
+        <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
         <uses-library android:required="true" android:name="com.google.android.maps" />
         <activity
             android:name=".PresentacionActivity"
@@ -45,14 +56,15 @@
             android:name=".MapActivity"
             android:screenOrientation="landscape" >
         </activity>
+         <activity
+            android:name=".Map2Activity"
+            android:screenOrientation="landscape" >
+        </activity>
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="landscape" >
         </activity>
 
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyA9nFi5wxu6O-mVf0lwzYpvmDklEft4WygE" />
     </application>
 
     <uses-feature

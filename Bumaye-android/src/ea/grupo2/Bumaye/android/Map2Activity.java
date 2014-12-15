@@ -15,7 +15,7 @@ import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.android.api.PersonAdapter;
 import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
 
-public class MapActivity extends FragmentActivity{
+public class Map2Activity extends ListActivity{
 
 	String url;
 	PersonajeVO personaje;
@@ -30,7 +30,7 @@ public class MapActivity extends FragmentActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_map2);
 		iduser = (Integer) getIntent().getExtras().get("iduser");
 
 		api = new UsrPersonajeAPI();
@@ -48,9 +48,9 @@ public class MapActivity extends FragmentActivity{
 		url = "http://" + serverAddress + ":" + serverPort
 				+ "/Bumaye-api/user/lista/"+iduser;
         PersonList = new ArrayList<PersonajeVO>();
-		//adapter = new PersonAdapter(this, PersonList);
-		//setListAdapter(adapter);
-		//(new FetchPersonsTask()).execute(url);
+		adapter = new PersonAdapter(this, PersonList);
+		setListAdapter(adapter);
+		(new FetchPersonsTask()).execute(url);
     }
     private class FetchPersonsTask extends AsyncTask<String, Void, List<PersonajeVO>> {
 		private ProgressDialog pd;
@@ -74,7 +74,7 @@ public class MapActivity extends FragmentActivity{
 	 
 		@Override
 		protected void onPreExecute() {
-			pd = new ProgressDialog(MapActivity.this);
+			pd = new ProgressDialog(Map2Activity.this);
 			pd.setTitle("Loading...");
 			pd.setCancelable(false);
 			pd.setIndeterminate(true);
