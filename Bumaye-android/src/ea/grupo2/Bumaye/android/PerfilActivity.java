@@ -42,7 +42,7 @@ public class PerfilActivity extends Activity {
 		if (personaje.getNombre()!=null)
 			names[0] = Html.fromHtml("<b>"+personaje.getNombre()+"</b>").toString();
 		
-				
+		navList = (ListView) findViewById(R.id.left_drawer);		
 		 mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 	        // Set previous array as adapter of the list
 	        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -269,12 +269,14 @@ public class PerfilActivity extends Activity {
 }
     private void navClic(int pos){
     switch(pos) {            
+    case 1: 
+    	Intent intent = new Intent(this, MapActivity.class);
+		intent.putExtra("iduser", personaje.getIduser());
+    	startActivity(intent);
+    	break;
     case 2: 
-    	Intent intent = new Intent(this, MapActivity.class);   
     	break;
     case 3: 
-    	break;
-    case 4: 
     	break;
     default: 
         break;
