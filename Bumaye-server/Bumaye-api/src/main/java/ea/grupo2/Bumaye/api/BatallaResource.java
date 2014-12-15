@@ -17,6 +17,11 @@ import ea.grupo2.Bumaye.Motor.OperacionesBBDD;
 
 @Path("/batalla")
 public class BatallaResource {
+	
+	@GET
+	public String HolaBumaye(){
+		return "Bumaye san!";
+	} 
 
 	    /**
 	     * Method handling HTTP GET requests. The returned object will be sent

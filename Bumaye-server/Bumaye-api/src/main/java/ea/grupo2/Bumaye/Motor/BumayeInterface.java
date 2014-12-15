@@ -3,8 +3,10 @@ package ea.grupo2.Bumaye.Motor;
 import java.util.ArrayList;
 import java.util.List;
  
+
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
+import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.pojos.ArmasArmaduras;
@@ -35,7 +37,9 @@ public interface BumayeInterface {
     public String deleteUsrPersonaje(int idUsrPersonaje);
     public PersonajeVO LoginUser(UsuarioVO userlog);
     public PersonajeVO RegistroUser(UsuarioVO userregistrado);
-     
+    
+    //Lista de jugadores logeados basic info
+    public List<PersonajeLogeadoVO> listPersonajes(int idUsersolicita);
      
     //funciones PersojaneVO
     public PersonajeVO getPersonaje(int idPersonaje);

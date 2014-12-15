@@ -1,11 +1,16 @@
 package ea.grupo2.Bumaye.api;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
+import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.Motor.BumayeInterface;
@@ -39,5 +44,15 @@ public class UsrResource {
 		BumayeInterface  m = new OperacionesBBDD();
 	    PersonajeVO personaje = m.RegistroUser(user);
 	    return personaje;
+	}
+	
+	@Path("/lista/{idusuario}")
+	@GET
+	@Produces(MediaType.API_LOGEADOS)
+	public List<PersonajeLogeadoVO> listaUsuarios (@PathParam("idusuario") int idusuario) {
+		BumayeInterface  m = new OperacionesBBDD();
+		List<PersonajeLogeadoVO> logeados = m.listPersonajes(idusuario);
+		
+	    return logeados;
 	}
 }

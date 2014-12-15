@@ -7,16 +7,19 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
  
+
 import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
  
+
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.ListBatallasVO;
+import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.hibernate.HibernateUtil;
@@ -820,6 +823,37 @@ public class OperacionesBBDD implements BumayeInterface{
 		return personajeregistrado;
 		
 		}
+
+
+
+	@Override
+	public List<PersonajeLogeadoVO> listPersonajes(int idUsersolicita) {
+		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        List<PersonajeLogeadoVO> personajeslogeados = new ArrayList<PersonajeLogeadoVO>();
  
+        try{
+            transaction = session.beginTransaction();
+			List<UsrPersonaje> u = (List<UsrPersonaje>)session.createQuery("from UsrPersonaje").list();
+            if (u != null) {               
+                for (UsrPersonaje userlogeado: u) {
+                	PersonajeLogeadoVO p = new PersonajeLogeadoVO(userlogeado.getIduser(), userlogeado.getNombre(), userlogeado.getVida(), userlogeado.getDefensa(), userlogeado.getAtaque());
+                	personajeslogeados.add(p);
+                }
+                transaction.commit();
+            }
+ 
+        }
+        catch(HibernateException e)
+        {
+            transaction.rollback();
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+            }
+        return personajeslogeados;
+    }
 }
  
