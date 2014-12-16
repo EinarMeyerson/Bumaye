@@ -45,10 +45,10 @@ public class PerfilActivity extends Activity {
 				
 		 mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 	        // Set previous array as adapter of the list
-	        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-	                android.R.layout.simple_list_item_1, names);
-	        navList.setAdapter(adapter);
-	        navList.setOnItemClickListener(new DrawerItemClickListener());
+//	        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+//	                android.R.layout.simple_list_item_1, names);
+//	        navList.setAdapter(adapter);
+//	        navList.setOnItemClickListener(new DrawerItemClickListener());
 
 		ataque = (TextView) findViewById(R.id.ataque);
 		defensa = (TextView) findViewById(R.id.defensa);
