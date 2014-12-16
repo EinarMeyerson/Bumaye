@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -49,7 +51,24 @@ public class UsrPersonajeAPI {
 		 }
 		 return data;
 	}
-
+	public List<PersonajeVO> getAllPerson(String url) {
+		Gson gson = new Gson();
+		HttpClient httpClient = new DefaultHttpClient();
+		List<PersonajeVO> data = new ArrayList<PersonajeVO>();
+		 java.lang.reflect.Type aType = new TypeToken<ArrayList<PersonajeVO>>()
+		{}.getType();
+		 gson = new Gson();
+		 httpClient = WebServiceUtils.getHttpClient();
+		 try {
+		 HttpResponse response = httpClient.execute(new HttpGet(url));
+		 HttpEntity entity = response.getEntity();
+		 Reader reader = new InputStreamReader(entity.getContent());
+		 data = gson.fromJson(reader, aType);
+		 } catch (Exception e) {
+		 Log.i("json array","While getting server response server generate error. ");
+		 }
+		 return data;
+	}
 	public PersonajeVO loginUsr(String texto, String pass, String url) {		
 		Log.d(TAG, "Login()");
 		PersonajeVO person = new PersonajeVO();
