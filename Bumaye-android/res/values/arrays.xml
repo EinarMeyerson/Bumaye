@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ 
+    <string-array name="nav_options">
+        <item>Nombre</item>
+        <item>Mapa</item>
+        <item>Lista Jugadores</item>
+        <item>Mapa</item>
+        <item>Opciones</item>
+    </string-array>
+ 
+</resources>
