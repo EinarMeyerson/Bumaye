@@ -3,8 +3,6 @@ package ea.grupo2.Bumaye.android;
 import java.io.IOException;
 import java.util.Properties;
 
-import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
-import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -17,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
 
 public class LoginActivity extends Activity {
 	

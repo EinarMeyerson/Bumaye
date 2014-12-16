@@ -45,6 +45,10 @@
             android:name=".ListaActivity"
             android:screenOrientation="landscape" >
         </activity>
+        <activity
+            android:name=".LuchaActivity"
+            android:screenOrientation="landscape" >
+        </activity>
     </application>
 
 </manifest>

@@ -27,4 +27,6 @@
      
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
+    <string name="ok">Luchar</string>
+    <string name="cancel">Cancelar</string>
 </resources>

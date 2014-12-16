@@ -2,14 +2,14 @@ package ea.grupo2.Bumaye.android.api;
 
 import java.util.List;
 
-import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
-import ea.grupo2.Bumaye.android.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.android.R;
 
 public class JugadorAdapter extends BaseAdapter {
 
