@@ -67,9 +67,21 @@ public class BatallaVO {
         System.out.print("idPersonajeVO "+idPersonajeVO+"\n");
 
         PersonajeVO personajeVO = mapPersonajeVO.get(idPersonajeVO);
+        listajugadores.indexOf(personajeVO);
         System.out.print(""+personajeVO.getNombre());
 
         return personajeVO;
+        
+    }
+    public int getPosicionPersonajeVO(int idPersonajeVO) {
+        System.out.print("entramos en getpersonajeVO \n");
+        System.out.print("idPersonajeVO "+idPersonajeVO+"\n");
+
+        PersonajeVO personajeVO = mapPersonajeVO.get(idPersonajeVO);
+        int posicion = listajugadores.indexOf(personajeVO);
+        System.out.print(""+personajeVO.getNombre());
+
+        return posicion;
     }
      
 }
