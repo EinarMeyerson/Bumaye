@@ -8,12 +8,18 @@ import java.util.Random;
 import java.util.Scanner;
  
 
+
+
+
 import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
  
+
+
+
 
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
@@ -32,7 +38,7 @@ public class OperacionesBBDD implements BumayeInterface{
      
     ListBatallasVO listbatallas = ListBatallasVO.getInstance();
      
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         BumayeInterface  m = new OperacionesBBDD();
          
 //        ArrayList<PersonajeVO> listaPersonajesVO = new ArrayList<PersonajeVO>();
@@ -46,110 +52,110 @@ public class OperacionesBBDD implements BumayeInterface{
 //        m.getBatallaVO(1);
         
         
-//        /* ARMAS Y ARMADURAS  */
-//        
-//        //Armadura de Bronce (nombre, tipo, defensa, ataque)
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("espada_bronce","arma",0,10));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("casco_bronce","casco",5,5));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("guantes_bronce","guantes",5,5));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("coraza_bronce","coraza",10,7));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("perneras_bronce","perneras",5,5));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("botas_bronce","botas",5,5));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("arco_bronce","coraza",0,12));
-//      System.out.print("Armadura de Bronce añadida a la base de datos");
-//      
-//    //Armadura de Oro
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("espada_oro","arma",2,15));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("casco_oro","casco",10,7));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("guantes_oro","guantes",10,7));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("coraza_oro","coraza",15,10));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("perneras_oro","perneras",10,7));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("botas_oro","botas",10,7));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("garrote_oro","arma",0,15));
-//      System.out.print("Armadura de Oro añadida a la base de datos");
-//      
-//    //Armadura de Dragon
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("espada_dragon","arma",5,20));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("casco_dragon","casco",15,10));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("guantes_dragon","guantes",15,10));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("coraza_dragon","coraza",20,15));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("perneras_dragon","perneras",15,10));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("botas_dragon","botas",15,10));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("martillo_dragon","arma",0,30));
-//      System.out.print("Armadura de Dragon añadida a la base de datos");
-//      
-//    //Armadura de trapo (nombre, tipo, defensa, ataque)
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("palo_trapo","arma",0,5));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("casco_trapo","casco",3,2));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("guantes_trapo","guantes",3,2));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("coraza_trapo","coraza",7,4));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("perneras_trapo","perneras",3,2));
-//      m.addArmasArmadurasBBDD(new ArmasArmaduras("botas_trapo","botas",3,2));
-//      System.out.print("Armadura de Trapo añadida a la base de datos");
-//      
-//
-//      /* ATAQUES */
-//      
-//      //ataques armas de bronce 
-//      //(nombre, atributoafectado, personajeafectado, factordaño, porcentajeacierto, vecesuso), arma/armadura)
-//      m.addAtaqueBBDD(new Ataques("Espadazo","vida",1,20,70,20),1);
-//      m.addAtaqueBBDD(new Ataques("Cabezazo","vida",1,5,90,2),2);
-//      m.addAtaqueBBDD(new Ataques("Defensa ferrea","defensa",0,20,75,2),4);
-//      m.addAtaqueBBDD(new Ataques("Flechazo","vida",1,10,60,30),7);
-//      System.out.print("Ataques de armas de bronce añadios a las armaduras");
-//      
-//      //ataques armas de oro
-//      m.addAtaqueBBDD(new Ataques("Corte","vida",1,30,80,25),8);
-//      m.addAtaqueBBDD(new Ataques("Pensador","defensa",0,25,75,4),9);
-//      m.addAtaqueBBDD(new Ataques("La Roca","defensa",0,40,80,3),11);
-//      m.addAtaqueBBDD(new Ataques("Varazo","vida",1,25,85,10),14);
-//      System.out.print("Ataques de armas de oro añadios a las armaduras");
-//      
-//     //ataques armas de dragon
-//      m.addAtaqueBBDD(new Ataques("Rajar","vida",1,40,90,30),15);
-//      m.addAtaqueBBDD(new Ataques("Mentalismo","defensa",0,30,80,6),16);
-//      m.addAtaqueBBDD(new Ataques("Escamas de Dragon","defensa",0,60,90,4),18);
-//      m.addAtaqueBBDD(new Ataques("Machacar","vida",1,60,60,20),21);
-//      System.out.print("Ataques de armas de dragon añadios a las armaduras");
-//      
-//    //ataques armas de trapo
-//      m.addAtaqueBBDD(new Ataques("Palazo","vida",1,30,60,20),22);
-//      m.addAtaqueBBDD(new Ataques("Cubrete","defensa",0,20,60,2),25);
-//      System.out.print("Ataques de armas de dragon añadios a las armaduras");
-//      
-//      
-//      /* PERSONAJES */
-//      m.addUsrPersonaje(new UsrPersonaje("albert@hotmail.com","spot","Spot",100,10,10));
-//      m.addUsrPersonaje(new UsrPersonaje("eianr@hotmail.com","1234","Elcolmo",100,10,10));
-//      m.addUsrPersonaje(new UsrPersonaje("juan@hotmail.com","1234","Ilcapone",100,10,10));
-//      System.out.print("Jugadores añadidos");
-//      
-//      
-//      /* AÑADIR ARMADURAS A PERSONAJES */
-//      //(idarmadura/ iduser)
-//      m.añadirArmasArmaduras(1, 1);
-//      m.añadirArmasArmaduras(2, 1);
-//      m.añadirArmasArmaduras(3, 1);
-//      m.añadirArmasArmaduras(4, 1);
-//      m.añadirArmasArmaduras(5, 1);
-//      m.añadirArmasArmaduras(6, 1);
-//      System.out.print("Armaduras añadias a jugador1");
-//
-//      m.añadirArmasArmaduras(14, 2);
-//      m.añadirArmasArmaduras(9, 2);
-//      m.añadirArmasArmaduras(10, 2);
-//      m.añadirArmasArmaduras(11, 2);
-//      m.añadirArmasArmaduras(12, 2);
-//      m.añadirArmasArmaduras(13, 2);
-//      System.out.print("Armaduras añadidas a jugador2");
-//      
-//      m.añadirArmasArmaduras(20, 3);
-//      m.añadirArmasArmaduras(16, 3);
-//      m.añadirArmasArmaduras(17, 3);
-//      m.añadirArmasArmaduras(18, 3);
-//      m.añadirArmasArmaduras(19, 3);
-//      m.añadirArmasArmaduras(21, 3);
-//      System.out.print("Armaduras añadias a jugador3");
+        /* ARMAS Y ARMADURAS  */
+        
+        //Armadura de Bronce (nombre, tipo, defensa, ataque)
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("espada_bronce","arma",0,10));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("casco_bronce","casco",5,5));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("guantes_bronce","guantes",5,5));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("coraza_bronce","coraza",10,7));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("perneras_bronce","perneras",5,5));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("botas_bronce","botas",5,5));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("arco_bronce","coraza",0,12));
+      System.out.print("Armadura de Bronce añadida a la base de datos");
+      
+    //Armadura de Oro
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("espada_oro","arma",2,15));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("casco_oro","casco",10,7));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("guantes_oro","guantes",10,7));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("coraza_oro","coraza",15,10));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("perneras_oro","perneras",10,7));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("botas_oro","botas",10,7));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("garrote_oro","arma",0,15));
+      System.out.print("Armadura de Oro añadida a la base de datos");
+      
+    //Armadura de Dragon
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("espada_dragon","arma",5,20));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("casco_dragon","casco",15,10));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("guantes_dragon","guantes",15,10));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("coraza_dragon","coraza",20,15));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("perneras_dragon","perneras",15,10));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("botas_dragon","botas",15,10));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("martillo_dragon","arma",0,30));
+      System.out.print("Armadura de Dragon añadida a la base de datos");
+      
+    //Armadura de trapo (nombre, tipo, defensa, ataque)
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("palo_trapo","arma",0,5));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("casco_trapo","casco",3,2));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("guantes_trapo","guantes",3,2));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("coraza_trapo","coraza",7,4));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("perneras_trapo","perneras",3,2));
+      m.addArmasArmadurasBBDD(new ArmasArmaduras("botas_trapo","botas",3,2));
+      System.out.print("Armadura de Trapo añadida a la base de datos");
+      
+
+      /* ATAQUES */
+      
+      //ataques armas de bronce 
+      //(nombre, atributoafectado, personajeafectado, factordaño, porcentajeacierto, vecesuso), arma/armadura)
+      m.addAtaqueBBDD(new Ataques("Espadazo","vida",1,20,70,20),1);
+      m.addAtaqueBBDD(new Ataques("Cabezazo","vida",1,5,90,2),2);
+      m.addAtaqueBBDD(new Ataques("Defensa ferrea","defensa",0,20,75,2),4);
+      m.addAtaqueBBDD(new Ataques("Flechazo","vida",1,10,60,30),7);
+      System.out.print("Ataques de armas de bronce añadios a las armaduras");
+      
+      //ataques armas de oro
+      m.addAtaqueBBDD(new Ataques("Corte","vida",1,30,80,25),8);
+      m.addAtaqueBBDD(new Ataques("Pensador","defensa",0,25,75,4),9);
+      m.addAtaqueBBDD(new Ataques("La Roca","defensa",0,40,80,3),11);
+      m.addAtaqueBBDD(new Ataques("Varazo","vida",1,25,85,10),14);
+      System.out.print("Ataques de armas de oro añadios a las armaduras");
+      
+     //ataques armas de dragon
+      m.addAtaqueBBDD(new Ataques("Rajar","vida",1,40,90,30),15);
+      m.addAtaqueBBDD(new Ataques("Mentalismo","defensa",0,30,80,6),16);
+      m.addAtaqueBBDD(new Ataques("Escamas de Dragon","defensa",0,60,90,4),18);
+      m.addAtaqueBBDD(new Ataques("Machacar","vida",1,60,60,20),21);
+      System.out.print("Ataques de armas de dragon añadios a las armaduras");
+      
+    //ataques armas de trapo
+      m.addAtaqueBBDD(new Ataques("Palazo","vida",1,30,60,20),22);
+      m.addAtaqueBBDD(new Ataques("Cubrete","defensa",0,20,60,2),25);
+      System.out.print("Ataques de armas de dragon añadios a las armaduras");
+      
+      
+      /* PERSONAJES */
+      m.addUsrPersonaje(new UsrPersonaje("albert@hotmail.com","spot","Spot",100,10,10));
+      m.addUsrPersonaje(new UsrPersonaje("eianr@hotmail.com","1234","Elcolmo",100,10,10));
+      m.addUsrPersonaje(new UsrPersonaje("juan@hotmail.com","1234","Ilcapone",100,10,10));
+      System.out.print("Jugadores añadidos");
+      
+      
+      /* AÑADIR ARMADURAS A PERSONAJES */
+      //(idarmadura/ iduser)
+      m.añadirArmasArmaduras(1, 1);
+      m.añadirArmasArmaduras(2, 1);
+      m.añadirArmasArmaduras(3, 1);
+      m.añadirArmasArmaduras(4, 1);
+      m.añadirArmasArmaduras(5, 1);
+      m.añadirArmasArmaduras(6, 1);
+      System.out.print("Armaduras añadias a jugador1");
+
+      m.añadirArmasArmaduras(14, 2);
+      m.añadirArmasArmaduras(9, 2);
+      m.añadirArmasArmaduras(10, 2);
+      m.añadirArmasArmaduras(11, 2);
+      m.añadirArmasArmaduras(12, 2);
+      m.añadirArmasArmaduras(13, 2);
+      System.out.print("Armaduras añadidas a jugador2");
+      
+      m.añadirArmasArmaduras(20, 3);
+      m.añadirArmasArmaduras(16, 3);
+      m.añadirArmasArmaduras(17, 3);
+      m.añadirArmasArmaduras(18, 3);
+      m.añadirArmasArmaduras(19, 3);
+      m.añadirArmasArmaduras(21, 3);
+      System.out.print("Armaduras añadias a jugador3");
       
 //      //Ilcapone pide batalla a Elcolmo
 //      m.iniciarbatalla(new Batalla(1,2,2));
@@ -544,74 +550,33 @@ public class OperacionesBBDD implements BumayeInterface{
  
    
     @Override
-    public BatallaVO ResultadoAtaqueVO(int idataque, int idbatallaVO) {
+    public BatallaVO ResultadoAtaqueVO(int idataque, int idbatallaVO, int idPersonajeVO) throws Exception{
          
         AtaqueVO ataque = getAtaque(idataque);
         BatallaVO batallaVO = getBatallaVO(idbatallaVO);
         int mod = batallaVO.getTurno() % batallaVO.getListajugadores().size();
         int mod2 = (batallaVO.getTurno()+1) % batallaVO.getListajugadores().size();
-            int i = EfectuarAtaque(ataque.getIdataque());
-            //Nos metemos en la funcion EfectuarAtaque para saber si el ataque se va a efectuar(i=1) o no (i=0)
-            if (i==1){
-                if (ataque.getJugadorafectado() ==1) {
-                    String atributo = ataque.getAtributoafectado();
-                     
-                    switch(atributo){
-                     
-                    case "vida":
-                        float dañoVida =(((batallaVO.getListajugadores().get(mod).getAtaque()/batallaVO.getListajugadores().get(mod2).getDefensa())*ataque.getFactor())/100)*30;
-                        System.out.print("Daño vida: "+dañoVida+"\n");
-                        float nuevaVida=0;
-                        if (dañoVida>batallaVO.getListajugadores().get(mod2).getVida()){
-                            nuevaVida=0;
-                        }
-                        else{
-                            nuevaVida = batallaVO.getListajugadores().get(mod2).getVida()-dañoVida;
-                        }
-                        System.out.print("Nombre updateatrib: "+batallaVO.getListajugadores().get(mod2).getNombre()+"\n");
-                        return updateAtributosBatallaVO(idbatallaVO,batallaVO.getListajugadores().get(mod2).getIduser(), "vida", nuevaVida);
-                         
-                    case "ataque":
-                        float dañoAtaque = (ataque.getFactor()/100)*batallaVO.getListajugadores().get(mod2).getAtaque();
-                        float nuevoAtaque = batallaVO.getListajugadores().get(mod2).getAtaque()-dañoAtaque;
-                        return updateAtributosBatallaVO(idbatallaVO,batallaVO.getListajugadores().get(mod2).getIduser(), "ataque", nuevoAtaque);
-                         
-                    case "defensa":
-                        float dañoDefensa = (ataque.getFactor()/100)*batallaVO.getListajugadores().get(mod2).getDefensa();
-                        float nuevoDefensa = batallaVO.getListajugadores().get(mod2).getDefensa()-dañoDefensa;
-                        return updateAtributosBatallaVO(idbatallaVO,batallaVO.getListajugadores().get(mod2).getIduser(), "defensa", nuevoDefensa);
+        int posicionBatalla = batallaVO.getPosicionPersonajeVO(idPersonajeVO);
+        if(VerificarTurno(idbatallaVO, posicionBatalla)==true){
+        	 int i = EfectuarAtaque(ataque.getIdataque());
+             //Nos metemos en la funcion EfectuarAtaque para saber si el ataque se va a efectuar(i=1) o no (i=0)
+             if (i==1){
+            	 BatallaVO returnBatallaVO = RealizarAtaque(idbatallaVO, idataque, mod, mod2);
+                 PasaTurno(idbatallaVO);
+             	return returnBatallaVO;
+             }
+             //La funcion EfectuarAtaque devuelve 0 por lo que el ataque no se va a efectuar
+             else{
+                 PasaTurno(idbatallaVO);
+                  
+                 return batallaVO;
+             }
+        }
+        else{
+    		throw new NoEsTuTurnoException();
 
-                    }
- 
-                }
-                else{
-                    String atributo = ataque.getAtributoafectado();
-                     
-                    switch(atributo){
-                    case "ataque":
-                        float aumentoAtaque = (ataque.getFactor()/100)*batallaVO.getListajugadores().get(mod).getAtaque();
-                        float nuevoAtaque = batallaVO.getListajugadores().get(mod).getAtaque()+aumentoAtaque;
-                        return updateAtributosBatallaVO(idbatallaVO,batallaVO.getListajugadores().get(mod).getIduser(), "ataque", nuevoAtaque);
-
-                         
-                    case "defensa":
-                        float aumentoDefensa = (ataque.getFactor()/100)*batallaVO.getListajugadores().get(mod).getDefensa();
-                        float nuevoDefensa = batallaVO.getListajugadores().get(mod).getDefensa()+aumentoDefensa;
-                        return updateAtributosBatallaVO(idbatallaVO, batallaVO.getListajugadores().get(mod).getIduser(), "defensa", nuevoDefensa);
-
-                    }
- 
-                }
-
-            }
-            //La funcion EfectuarAtaque devuelve 0 por lo que el ataque no se va a efectuar
-            else{
-                PasaTurno(idbatallaVO);
-                 
-                return batallaVO;
-            }
-        return batallaVO;
-    }
+        }
+      }
      
 //CAMBIAR HA CLASE BATLLA CON ATRIBUTOS NUEVOS ********************************************************
     @Override
@@ -718,19 +683,11 @@ public class OperacionesBBDD implements BumayeInterface{
  
     @Override
     public BatallaVO updateAtributosBatallaVO(int idbatallaVO,int idPersonajeActuali, String atributo, float nuevoatributo) {
-        // TODO Auto-generated method stub
-        System.out.print("idbatallaVO "+idbatallaVO+"\n");
-        System.out.print("idPersonajeActuali "+idPersonajeActuali+"\n");
-        System.out.print("atributo "+atributo+"\n");
-        System.out.print("nuevoatributo "+nuevoatributo+"\n");
+
         BatallaVO batallaVO = getBatallaVO(idbatallaVO);
         PersonajeVO personajeVO = batallaVO.getPersonajeVO(idPersonajeActuali);
         personajeVO.getActualizacionAtributo(atributo, nuevoatributo);
-        System.out.print("Personaje vida actualizado: "+personajeVO.getVida()+"\n");
 
-//        batallaVO.getPersonajeVO(idPersonajeActuali).getActualizacionAtributo(atributo, nuevoatributo);
-        System.out.print("Personaje actualizado: "+getBatallaVO(idbatallaVO).getPersonajeVO(idPersonajeActuali).getNombre()+"\n");
-        PasaTurno(idbatallaVO);
         return batallaVO;
     }
  
@@ -827,6 +784,83 @@ public class OperacionesBBDD implements BumayeInterface{
 
 
 	@Override
+	public boolean VerificarTurno(int idBatallaVO, int posicionBatalla) {
+
+		BatallaVO batallaVO = getBatallaVO(idBatallaVO);
+		int mod = batallaVO.getTurno() % batallaVO.getNoJugadores();
+		
+		if (mod == posicionBatalla){
+			return true;
+		}
+		else{
+			return false;
+		}
+			}
+
+
+
+	@Override
+	public BatallaVO RealizarAtaque(int idbatallaVO, int idataque, int mod, int mod2) {
+
+		AtaqueVO ataque = getAtaque(idataque);
+		BatallaVO batallaVO = getBatallaVO(idbatallaVO);
+		BatallaVO UbatallaVO = getBatallaVO(idbatallaVO);
+
+        if (ataque.getJugadorafectado() ==1) {
+            String atributo = ataque.getAtributoafectado();
+             
+            switch(atributo){
+             
+            case "vida":
+                float dañoVida =(((batallaVO.getListajugadores().get(mod).getAtaque()/batallaVO.getListajugadores().get(mod2).getDefensa())*ataque.getFactor())/100)*30;
+                System.out.print("Daño vida: "+dañoVida+"\n");
+                float nuevaVida=0;
+                if (dañoVida>batallaVO.getListajugadores().get(mod2).getVida()){
+                    nuevaVida=0;
+                }
+                else{
+                    nuevaVida = batallaVO.getListajugadores().get(mod2).getVida()-dañoVida;
+                }
+                System.out.print("Nombre updateatrib: "+batallaVO.getListajugadores().get(mod2).getNombre()+"\n");
+                UbatallaVO= updateAtributosBatallaVO(idbatallaVO,batallaVO.getListajugadores().get(mod2).getIduser(), "vida", nuevaVida);
+
+                 
+            case "ataque":
+                float dañoAtaque = (ataque.getFactor()/100)*batallaVO.getListajugadores().get(mod2).getAtaque();
+                float nuevoAtaque = batallaVO.getListajugadores().get(mod2).getAtaque()-dañoAtaque;
+                UbatallaVO= updateAtributosBatallaVO(idbatallaVO,batallaVO.getListajugadores().get(mod2).getIduser(), "ataque", nuevoAtaque);
+                 
+            case "defensa":
+                float dañoDefensa = (ataque.getFactor()/100)*batallaVO.getListajugadores().get(mod2).getDefensa();
+                float nuevoDefensa = batallaVO.getListajugadores().get(mod2).getDefensa()-dañoDefensa;
+                UbatallaVO= updateAtributosBatallaVO(idbatallaVO,batallaVO.getListajugadores().get(mod2).getIduser(), "defensa", nuevoDefensa);
+
+            }
+
+        }
+        else{
+            String atributo = ataque.getAtributoafectado();
+             
+            switch(atributo){
+            case "ataque":
+                float aumentoAtaque = (ataque.getFactor()/100)*batallaVO.getListajugadores().get(mod).getAtaque();
+                float nuevoAtaque = batallaVO.getListajugadores().get(mod).getAtaque()+aumentoAtaque;
+                UbatallaVO= updateAtributosBatallaVO(idbatallaVO,batallaVO.getListajugadores().get(mod).getIduser(), "ataque", nuevoAtaque);
+
+                 
+            case "defensa":
+                float aumentoDefensa = (ataque.getFactor()/100)*batallaVO.getListajugadores().get(mod).getDefensa();
+                float nuevoDefensa = batallaVO.getListajugadores().get(mod).getDefensa()+aumentoDefensa;
+                UbatallaVO= updateAtributosBatallaVO(idbatallaVO, batallaVO.getListajugadores().get(mod).getIduser(), "defensa", nuevoDefensa);
+
+            }
+
+        }
+		return UbatallaVO;
+		
+	}
+	
+	@Override
 	public List<PersonajeLogeadoVO> listPersonajes(int idUsersolicita) {
 		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -855,5 +889,7 @@ public class OperacionesBBDD implements BumayeInterface{
             }
         return personajeslogeados;
     }
+	
+ 
 }
  

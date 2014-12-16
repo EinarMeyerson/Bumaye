@@ -8,34 +8,42 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.ServerErrorException;
 
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.Motor.BumayeInterface;
+import ea.grupo2.Bumaye.Motor.NoEsTuTurnoException;
 import ea.grupo2.Bumaye.Motor.OperacionesBBDD;
 
 @Path("/batalla")
 public class BatallaResource {
-	
-	@GET
-	public String HolaBumaye(){
-		return "Bumaye san!";
-	} 
+
 	    /**
 	     * Method handling HTTP GET requests. The returned object will be sent
 	     * to the client as "text/plain" media type.
 	     *
 	     * @return String that will be returned as a text/plain response.
 	     */
-		@Path("/{idbatalla}/ataque/{idataque}")
+	@GET
+	public String HolaBumaye(){
+		return "Bumaye san!";
+	} 
+	
+		@Path("/{idbatalla}/jugador/{idPersonaje}/ataque/{idataque}")
 		@GET
 		@Produces(MediaType.API_BATALLA)
-		public BatallaVO ataqueBatalla (@PathParam("idbatalla") int idbatalla, @PathParam("idataque") int idataque) {
+		public BatallaVO ataqueBatalla (@PathParam("idbatalla") int idbatalla,@PathParam("idPersonaje") int idPersonaje, @PathParam("idataque") int idataque) throws NoEsTuTurnoException {
 			BumayeInterface  m = new OperacionesBBDD();
 			
-			BatallaVO batallaVO = m.ResultadoAtaqueVO(idataque, idbatalla);
-			
+				BatallaVO batallaVO = null;
+				try {
+					batallaVO = m.ResultadoAtaqueVO(idataque, idbatalla, idPersonaje);
+				} catch (Exception e) {
+					throw new NoEsTuTurnoException();
+				}
+				
 		    return batallaVO;
 		}
 		

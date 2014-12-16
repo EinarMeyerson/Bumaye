@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
  
 
+
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
@@ -38,14 +39,14 @@ public interface BumayeInterface {
     public PersonajeVO LoginUser(UsuarioVO userlog);
     public PersonajeVO RegistroUser(UsuarioVO userregistrado);
     
-    //Lista de jugadores logeados basic info
-    public List<PersonajeLogeadoVO> listPersonajes(int idUsersolicita);
+  //Lista de jugadores logeados basic info
+    public List<PersonajeLogeadoVO> listPersonajes(int idUsersolicita);     
      
     //funciones PersojaneVO
     public PersonajeVO getPersonaje(int idPersonaje);
 //  public String añadirPersonajeVO(PersonajeVO personaje);
     public BatallaVO updateAtributosBatallaVO(int idbatallaVO,int idPersonajeActuali, String atributo, float nuevoatributo);
-    public BatallaVO ResultadoAtaqueVO(int idataque, int idbatallaVO);
+    public BatallaVO ResultadoAtaqueVO(int idataque, int idbatallaVO, int idPersonajeVO) throws Exception;
      
     //funcion de batalla
     public void PasaTurno(int idBatallaVO);
@@ -55,5 +56,7 @@ public interface BumayeInterface {
     public String addbatallafinBBDD(Batalla batalla);
     public int EfectuarAtaque(int idataque);
     public String UpdateAtributosBatalla(int iduser, String atributo, float nuevoAtrib);
+    public boolean VerificarTurno(int idBatallaVO, int posicionBatalla);
+    public BatallaVO RealizarAtaque(int idbatallaVO, int idataque, int mod, int mod2);
     //FUNCIONES DE SIMULACION
 }
