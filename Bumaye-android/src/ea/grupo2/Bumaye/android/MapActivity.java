@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.res.AssetManager;
@@ -47,6 +52,11 @@ public class MapActivity extends FragmentActivity{
 			
 		url = "http://" + serverAddress + ":" + serverPort
 				+ "/Bumaye-api/user/lista/"+iduser;
+		GoogleMap mMap = ((SupportMapFragment)  getSupportFragmentManager().findFragmentById(R.id.map))
+	               .getMap();
+		mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+		mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+		mMap.setMyLocationEnabled(true);
         PersonList = new ArrayList<PersonajeVO>();
 		//adapter = new PersonAdapter(this, PersonList);
 		//setListAdapter(adapter);
