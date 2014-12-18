@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
+import android.support.v4.app.FragmentActivity;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 
 public class MapActivity extends Activity {
