@@ -5,8 +5,6 @@ import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
-import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +16,8 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
+import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
 
 public class PresentacionActivity extends Activity{
 	private final static String TAG = PresentacionActivity.class.getName();
