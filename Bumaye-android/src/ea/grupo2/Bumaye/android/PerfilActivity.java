@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -310,6 +311,7 @@ public class PerfilActivity extends Activity {
 
 		    TextView tv = new TextView(this);
 		    tv.setText(atributos[j]);
+		    tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
 		    row.addView(tv);
 
 		   }

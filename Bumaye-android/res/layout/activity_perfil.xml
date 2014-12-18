@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
                     android:text="Defensa" />
-                
+
                 <TextView
                     android:id="@+id/listadeataque"
                     android:layout_width="wrap_content"
@@ -54,7 +54,6 @@
                     android:shrinkColumns="*"
                     android:stretchColumns="*" >
                 </TableLayout>
-                
             </LinearLayout>
 
             <LinearLayout
