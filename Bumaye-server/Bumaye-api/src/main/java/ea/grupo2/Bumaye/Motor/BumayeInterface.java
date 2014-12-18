@@ -58,5 +58,7 @@ public interface BumayeInterface {
     public String UpdateAtributosBatalla(int iduser, String atributo, float nuevoAtrib);
     public boolean VerificarTurno(int idBatallaVO, int posicionBatalla);
     public BatallaVO RealizarAtaque(int idbatallaVO, int idataque, int mod, int mod2);
+    public boolean VerificarAtaque(int idataque, int idPersonajeVO) throws Exception;
+
     //FUNCIONES DE SIMULACION
 }

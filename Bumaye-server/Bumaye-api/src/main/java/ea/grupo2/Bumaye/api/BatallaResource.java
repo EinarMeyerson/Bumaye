@@ -10,11 +10,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.ServerErrorException;
 
+import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.Motor.BumayeInterface;
 import ea.grupo2.Bumaye.Motor.NoEsTuTurnoException;
+import ea.grupo2.Bumaye.Motor.NoTienesEseAtaqueException;
 import ea.grupo2.Bumaye.Motor.OperacionesBBDD;
 
 @Path("/batalla")
@@ -34,15 +36,16 @@ public class BatallaResource {
 		@Path("/{idbatalla}/jugador/{idPersonaje}/ataque/{idataque}")
 		@GET
 		@Produces(MediaType.API_BATALLA)
-		public BatallaVO ataqueBatalla (@PathParam("idbatalla") int idbatalla,@PathParam("idPersonaje") int idPersonaje, @PathParam("idataque") int idataque) throws NoEsTuTurnoException {
+		public BatallaVO ataqueBatalla (@PathParam("idbatalla") int idbatalla,@PathParam("idPersonaje") int idPersonaje, @PathParam("idataque") int idataque) throws Exception {
 			BumayeInterface  m = new OperacionesBBDD();
 			
-				BatallaVO batallaVO = null;
-				try {
-					batallaVO = m.ResultadoAtaqueVO(idataque, idbatalla, idPersonaje);
-				} catch (Exception e) {
-					throw new NoEsTuTurnoException();
-				}
+			BatallaVO batallaVO = null;
+			try{
+				batallaVO = m.ResultadoAtaqueVO(idataque, idbatalla, idPersonaje);
+			}
+			catch(NoEsTuTurnoException | NoTienesEseAtaqueException e){
+				throw e;
+			}
 				
 		    return batallaVO;
 		}
