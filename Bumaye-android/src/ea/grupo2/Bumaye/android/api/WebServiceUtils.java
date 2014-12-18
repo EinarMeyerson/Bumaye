@@ -6,6 +6,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
+
 public class WebServiceUtils {
 
 	 public static HttpClient getHttpClient(){
