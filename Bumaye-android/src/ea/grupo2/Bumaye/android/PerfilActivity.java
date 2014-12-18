@@ -161,6 +161,9 @@ public class PerfilActivity extends Activity {
 				}
 
 				if (arm.getTipo().equals("casco")){
+					if(ataces.getNombreataque()==null){
+						ataces.setNombreataque("sin ataque");
+					}
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
@@ -178,6 +181,9 @@ public class PerfilActivity extends Activity {
 				}
 
 				if (arm.getTipo().equals("guantes")){
+					if(ataces.getNombreataque()==null){
+						ataces.setNombreataque("sin ataque");
+					}
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
@@ -195,6 +201,9 @@ public class PerfilActivity extends Activity {
 				}
 
 				if (arm.getTipo().equals("coraza")){
+					if(ataces.getNombreataque()==null){
+						ataces.setNombreataque("sin ataque");
+					}
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
@@ -212,6 +221,9 @@ public class PerfilActivity extends Activity {
 				}
 
 				if (arm.getTipo().equals("arma")){
+					if(ataces.getNombreataque()==null){
+						ataces.setNombreataque("sin ataque");
+					}
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
@@ -229,6 +241,9 @@ public class PerfilActivity extends Activity {
 				}
 
 				if (arm.getTipo().equals("perneras")){
+					if(ataces.getNombreataque()==null){
+						ataces.setNombreataque("sin ataque");
+					}
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
@@ -246,6 +261,9 @@ public class PerfilActivity extends Activity {
 				}
 
 				if (arm.getTipo().equals("botas")){
+					if(ataces.getNombreataque()==null){
+						ataces.setNombreataque("sin ataque");
+					}
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
