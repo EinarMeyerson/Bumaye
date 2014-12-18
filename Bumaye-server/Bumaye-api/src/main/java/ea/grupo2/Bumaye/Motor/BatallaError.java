@@ -1,14 +1,14 @@
 package ea.grupo2.Bumaye.Motor;
 
-public class TurnoError {
+public class BatallaError {
 	private int status;
 	private String message;
  
-	public TurnoError() {
+	public BatallaError() {
 		super();
 	}
  
-	public TurnoError(int status, String message) {
+	public BatallaError(int status, String message) {
 		super();
 		this.status = status;
 		this.message = message;

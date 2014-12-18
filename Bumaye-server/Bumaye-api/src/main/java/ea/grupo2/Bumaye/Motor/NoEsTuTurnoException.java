@@ -12,7 +12,7 @@ public class NoEsTuTurnoException extends WebApplicationException {
 	public NoEsTuTurnoException() {
 		super(Response
 				.status(Response.Status.FORBIDDEN)
-				.entity(new TurnoError(Response.Status.FORBIDDEN
+				.entity(new BatallaError(Response.Status.FORBIDDEN
 						.getStatusCode(), MESSAGE))
 				.type(MediaType.API_ERROR).build());
 	}

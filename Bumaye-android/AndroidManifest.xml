@@ -7,14 +7,13 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="14" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/bumayeicon"
-        android:label="@string/app_name" >
+        android:label="@string/app_name">
         <activity
             android:name=".PresentacionActivity"
             android:label="@string/app_name"
@@ -25,27 +24,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
+         <activity
             android:name=".PerfilActivity"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
+            android:screenOrientation="landscape">
+         </activity>
+          <activity
             android:name=".RegisterActivity"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
+            android:screenOrientation="landscape">
+         </activity>
+         <activity
             android:name=".MapActivity"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
+            android:screenOrientation="landscape">
+         </activity>
+         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
-            android:name=".ListaActivity"
-            android:screenOrientation="landscape" >
-        </activity>
+            android:screenOrientation="landscape">
+         </activity>
     </application>
 
 </manifest>
-

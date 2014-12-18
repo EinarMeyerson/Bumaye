@@ -83,13 +83,7 @@ public class PresentacionActivity extends Activity{
 				@Override
 				protected PersonajeVO doInBackground(String... params) {
 					PersonajeVO person  = new PersonajeVO();
-					try {
-						person = api.loginUsr(params[0],params[1],params[2]);
-					} catch (NullPointerException e) {
-						// TODO Auto-generated catch block
-						finish();
-					}					
-
+					person = api.loginUsr(params[0],params[1],params[2]);					
 					return person;
 				}
 				@Override

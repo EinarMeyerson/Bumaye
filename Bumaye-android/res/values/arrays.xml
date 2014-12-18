@@ -3,9 +3,8 @@
  
     <string-array name="nav_options">
         <item>Nombre</item>
-        <item>Mapa</item>
-        <item>Lista Jugadores</item>
         <item>Inventario</item>
+        <item>Mapa</item>
         <item>Opciones</item>
     </string-array>
  
