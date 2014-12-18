@@ -36,20 +36,20 @@ public class ListaActivity extends ListActivity {
 	private UsrPersonajeAPI api;
     PopupWindow popUp;
 	int idplayer;
-	PersonajeVO personaje;
+	PersonajeVO personaje = null;
 	String nom;
 	String serverAddress;
 	String serverPort;
 	private ListView navList;
 	private DrawerLayout mDrawerLayout;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
         SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
 		nom = prefs.getString("nombre", "");
-		
-        idplayer = getIntent().getExtras().getInt("idplayer");
+		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
         api = new UsrPersonajeAPI();
         AssetManager assetManager = getAssets();
 		Properties config = new Properties();
@@ -103,7 +103,7 @@ public class ListaActivity extends ListActivity {
 		@Override
 		protected void onPreExecute() {
 			pd = new ProgressDialog(ListaActivity.this);
-			pd.setTitle("Loading...");
+			pd.setTitle("Loading Players...");
 			pd.setCancelable(false);
 			pd.setIndeterminate(true);
 			pd.show();

@@ -38,6 +38,7 @@ public class PerfilActivity extends Activity {
 
 		url = (String) getIntent().getExtras().get("url");
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 		// Load an array of options names       
 		String[] names = getResources().getStringArray(
@@ -259,18 +260,23 @@ public class PerfilActivity extends Activity {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
-			//mDrawerLayout.closeDrawer(navList);
+			mDrawerLayout.closeDrawer(navList);
 			navClic(position);
 		}
 	}
 	private void navClic(int pos){
-		switch(pos) {            
+		switch(pos) {
+		case 1:
+			Intent intent = new Intent(this, MapActivity.class);
+			intent.putExtra("personaje", personaje);
+			startActivity(intent);
+			break;
 		case 2: 
-			Intent intent = new Intent(this, MapActivity.class);   
+			Intent intentt = new Intent(this, ListaActivity.class);
+			intentt.putExtra("personaje", personaje);
+			startActivity(intentt);
 			break;
 		case 3: 
-			break;
-		case 4: 
 			break;
 		default: 
 			break;

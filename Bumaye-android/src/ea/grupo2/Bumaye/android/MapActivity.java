@@ -23,19 +23,16 @@ public class MapActivity extends Activity {
 	private ListView navList;
     private DrawerLayout mDrawerLayout;
 	String url;
-	PersonajeVO personaje;
-	String strAtaq,strArma;
-	TextView ataque, defensa;
-	ImageView cascoimagen, guantesimagen, corazaimagen, armaimagen, piernasimagen, botasimagen;
+	PersonajeVO personaje =null;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_perfil);
+        setContentView(R.layout.activity_map);
         
         url = (String) getIntent().getExtras().get("url");
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
-        
+
         // Load an array of options names       
         String[] names = getResources().getStringArray(
                 R.array.nav_options);
@@ -48,80 +45,7 @@ public class MapActivity extends Activity {
         navList.setAdapter(adapter);
         navList.setOnItemClickListener(new DrawerItemClickListener());
         
-		ataque = (TextView) findViewById(R.id.ataque);
-		defensa = (TextView) findViewById(R.id.defensa);
-		
-		//se inicializan las imagenes para cargar las armaduras
-		cascoimagen = (ImageView)findViewById(R.id.casco);
-		guantesimagen = (ImageView)findViewById(R.id.guantes);
-		corazaimagen = (ImageView)findViewById(R.id.coraza); 
-		armaimagen= (ImageView)findViewById(R.id.arma); 
-		piernasimagen = (ImageView)findViewById(R.id.piernas); 
-		botasimagen = (ImageView)findViewById(R.id.botas); 
-		
-		refreshPerfil();
     }    
-    private void refreshPerfil(){
-    	
-    	ataque.setText("\nAtaque: "+personaje.getAtaque());
-    	defensa.setText("Defensa: "+personaje.getDefensa());
-    	
-    	for (ArmaArmaduraVO arm: personaje.getArmasarmaduras()) {
-    		
-//    		ataque.setText(ataque.getText() + arm.getNombre()+" : + "+ arm.getAtaque() + "\n");
-//        	defensa.setText(defensa.getText() + arm.getNombre()+" : + "+ arm.getDefensa()+ "\n");        	
-        	for (AtaqueVO atac: arm.getAtaques()) {
-        		
-        		String afectado;
-        		if (atac.getJugadorafectado() == 1)
-        		{
-        			afectado = "Enemigo";
-        		}
-        		else 
-        		{	
-        			afectado = personaje.getNombre();
-        		}
-        		
-    		}
-        	
-    	 Uri uri = Uri.parse("android.resource://ea.grupo2.Bumaye.android/drawable/"+arm.getNombre());
-    	 
-    	
-    		if (arm.getTipo().equals("arma"))
-    		{
-    			armaimagen.setImageURI(uri);
-    			
-    		}else if(arm.getTipo().equals("casco"))
-    		{
-    			cascoimagen.setImageURI(uri);
-    			
-    		}else if(arm.getTipo().equals("guantes"))
-    		{
-    			guantesimagen.setImageURI(uri);
-    			
-    		}else if(arm.getTipo().equals("coraza"))
-    		{
-    			corazaimagen.setImageURI(uri);
-    			
-    		}else if(arm.getTipo().equals("perneras"))
-    		{
-    			piernasimagen.setImageURI(uri);
-    			
-    		}else if(arm.getTipo().equals("botas"))
-    		{
-    			//botas
-    			botasimagen.setImageURI(uri);
-    		}
-    		
-    		
-    	}
-//    	ataque.setText(ataque.getText() + "cuerpo a cuerpo : + 10"+ "\n");
-//    	defensa.setText(defensa.getText() + "cuerpo a cuerpo : + 10"+ "\n");
-//    	ataque.setText(ataque.getText() + "-----------------------"+ "\n");
-//    	defensa.setText(defensa.getText() + "-----------------------"+ "\n");
-//		ataque.setText(ataque.getText() +"Total: "+ personaje.getAtaque()+ "\n");
-//    	defensa.setText(defensa.getText() +"Total: "+ personaje.getDefensa()+ "\n");
-    }
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
 
         @Override
@@ -133,13 +57,12 @@ public class MapActivity extends Activity {
     private void navClic(int pos){
     switch(pos) {            
     case 2: 
-    	Intent intent = new Intent(this, RegisterActivity.class);   
+    	Intent intent = new Intent(this, MapActivity.class);   
     	break;
     case 3: 
-    	Intent intent2 = new Intent(this, MapActivity.class);   
+    	Intent intent2 = new Intent(this, ListaActivity.class);   
     	break;
     case 4: 
-    	Intent intent3 = new Intent(this, MapActivity.class);
     	break;
     default: 
         break;
