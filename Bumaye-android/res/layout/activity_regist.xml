@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ea.grupo2.Bumaye.android.RegisterActivity"
-    android:background="@drawable/fondoviejales" >
+    android:background="@drawable/fondomarron" >
 
     <EditText
         android:id="@+id/password"

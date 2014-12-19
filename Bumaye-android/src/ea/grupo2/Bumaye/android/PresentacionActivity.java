@@ -10,11 +10,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
@@ -26,6 +28,7 @@ public class PresentacionActivity extends Activity{
 	String nombre;
 	String contra;
 	String url;
+	Typeface tf;
 	private UsrPersonajeAPI api;
 	Intent intentt;
     private static final long SPLASH_SCREEN_DELAY = 2000;
@@ -36,6 +39,9 @@ public class PresentacionActivity extends Activity{
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_presentacion);
+		tf = Typeface.createFromAsset(getAssets(), "Aoaswfte.ttf");
+		TextView titulo = (TextView) findViewById(R.id.bumayepresentacion);
+		titulo.setTypeface(tf);
 		api = new UsrPersonajeAPI();
 		// COGEMOS IP Y PUERTO DEL SERVIDOR, DEFINIDOS EN LA CARPETA ASSETS
 				AssetManager assetManager = getAssets();

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-
 import com.google.android.gms.games.Games;
 
 import android.app.AlertDialog;
@@ -17,6 +16,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -54,6 +55,10 @@ public class ListaActivity extends ListActivity {
 		nom = prefs.getString("nombre", "");
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
 		api = new UsrPersonajeAPI();
+		
+		 getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
+	     getActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		
 		AssetManager assetManager = getAssets();
 		Properties config = new Properties();
 		try {

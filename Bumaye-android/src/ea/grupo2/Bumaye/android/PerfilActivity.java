@@ -2,6 +2,8 @@ package ea.grupo2.Bumaye.android;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -40,6 +42,9 @@ public class PerfilActivity extends Activity {
 		url = (String) getIntent().getExtras().get("url");
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        
+        getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 		// Load an array of options names       
 		String[] names = getResources().getStringArray(
