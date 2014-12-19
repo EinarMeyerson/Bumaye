@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+//import com.google.android.gms.games.Games;
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -34,7 +36,7 @@ public class ListaActivity extends ListActivity {
 	private JugadorAdapter adapter;
 	String url;
 	private UsrPersonajeAPI api;
-    PopupWindow popUp;
+	PopupWindow popUp;
 	int idplayer;
 	PersonajeVO personaje = null;
 	String nom;
@@ -42,16 +44,16 @@ public class ListaActivity extends ListActivity {
 	String serverPort;
 	private ListView navList;
 	private DrawerLayout mDrawerLayout;
-	
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista);
-        SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_lista);
+		SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
 		nom = prefs.getString("nombre", "");
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
-        api = new UsrPersonajeAPI();
-        AssetManager assetManager = getAssets();
+		api = new UsrPersonajeAPI();
+		AssetManager assetManager = getAssets();
 		Properties config = new Properties();
 		try {
 			config.load(assetManager.open("config.properties"));
@@ -63,26 +65,26 @@ public class ListaActivity extends ListActivity {
 			finish();
 		}
 		url = "http://" + serverAddress + ":" + serverPort
-					+ "/Bumaye-api/user/lista/"+idplayer;
-		 mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+				+ "/Bumaye-api/user/lista/"+idplayer;
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-			// Load an array of options names       
-			String[] names = getResources().getStringArray(
-					R.array.nav_options);
-			if (nom!=null)
-				names[0] = Html.fromHtml("<b>"+nom+"</b>").toString();
-			this.navList = (ListView) findViewById(R.id.left_drawer);
-			// Set previous array as adapter of the list
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-					android.R.layout.simple_list_item_1, names);
-			navList.setAdapter(adapter);
-			navList.setOnItemClickListener(new DrawerItemClickListener());
+		// Load an array of options names       
+		String[] names = getResources().getStringArray(
+				R.array.nav_options);
+		if (nom!=null)
+			names[0] = Html.fromHtml("<b>"+nom+"</b>").toString();
+		this.navList = (ListView) findViewById(R.id.left_drawer);
+		// Set previous array as adapter of the list
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, names);
+		navList.setAdapter(adapter);
+		navList.setOnItemClickListener(new DrawerItemClickListener());
 
 		(new LoadListTask()).execute(url);
 
-    }
-    
-    private class LoadListTask extends AsyncTask<String, Void, List<PersonajeVO>> {
+	}
+
+	private class LoadListTask extends AsyncTask<String, Void, List<PersonajeVO>> {
 		private ProgressDialog pd;
 
 		@Override
@@ -117,7 +119,7 @@ public class ListaActivity extends ListActivity {
 		setListAdapter(adapter);
 		adapter.notifyDataSetChanged();
 	}
-	
+
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id){
 		PersonajeVO pers = PersonList.get(position);
@@ -126,49 +128,60 @@ public class ListaActivity extends ListActivity {
 		final String nom = pers.getNombre();
 		builder.setTitle("Lucha contra: "+pers.getNombre());
 		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-		           public void onClick(DialogInterface dialog, int id) {
-		               // User clicked OK button
-		        	   dialog.cancel();
-		       			inicioBatalla(nom);
-		           }
-		       });
+			public void onClick(DialogInterface dialog, int id) {
+				// User clicked OK button
+				dialog.cancel();
+				inicioBatalla(nom);
+			}
+		});
 		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-		           public void onClick(DialogInterface dialog, int id) {
-			               // User cancelled the dialog
-		        	   dialog.cancel();
-		           }
-		       });		
+			public void onClick(DialogInterface dialog, int id) {
+				// User cancelled the dialog
+				dialog.cancel();
+			}
+		});		
 		// Create the AlertDialog
 		AlertDialog dialog = builder.create();
 		dialog.show();
 	}
-private void inicioBatalla(String nombrerival){
-		Intent intent = new Intent(this,LuchaActivity.class);
-		intent.putExtra("nomjug", nombrerival);
-	   startActivity(intent);
-	   finish();	
-}
-private class DrawerItemClickListener implements ListView.OnItemClickListener {
+	private void inicioBatalla(String nombrerival){
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
-		mDrawerLayout.closeDrawer(navList);
-		navClic(position);
+//
+//	Intent intent = Games.TurnBasedMultiplayer.getSelectOpponentsIntent(mGoogleApiClient, 2, 2, false);
+//    startActivityForResult(intent, RC_SELECT_PLAYERS);
+
+		//		Intent intent = new Intent(this,LuchaActivity.class);
+		//		intent.putExtra("nomjug", nombrerival);
+		//	   startActivity(intent);
+		//	   finish();	
+	}
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
+			mDrawerLayout.closeDrawer(navList);
+			navClic(position);
+		}
+	}
+	private void navClic(int pos){
+		switch(pos) { 
+		case 0: 
+			Intent intent = new Intent(this, PerfilActivity.class);
+			intent.putExtra("personaje", personaje);
+			startActivity(intent);
+			finish();
+			break;
+		case 1: 
+
+			break;
+		case 2: 
+
+			break;
+		case 3: 
+			break;
+		default: 
+			break;
+		}
 	}
 }
-private void navClic(int pos){
-	switch(pos) {            
-	case 1: 
 
-		break;
-	case 2: 
-		
-		break;
-	case 3: 
-		break;
-	default: 
-		break;
-	}
-}
-}
-    

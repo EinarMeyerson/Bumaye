@@ -11,12 +11,16 @@ import java.util.Scanner;
 
 
 
+
+
 import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
  
+
+
 
 
 
@@ -551,32 +555,41 @@ public class OperacionesBBDD implements BumayeInterface{
    
     @Override
     public BatallaVO ResultadoAtaqueVO(int idataque, int idbatallaVO, int idPersonajeVO) throws Exception{
-         
-        AtaqueVO ataque = getAtaque(idataque);
-        BatallaVO batallaVO = getBatallaVO(idbatallaVO);
-        int mod = batallaVO.getTurno() % batallaVO.getListajugadores().size();
-        int mod2 = (batallaVO.getTurno()+1) % batallaVO.getListajugadores().size();
-        int posicionBatalla = batallaVO.getPosicionPersonajeVO(idPersonajeVO);
-        if(VerificarTurno(idbatallaVO, posicionBatalla)==true){
-        	 int i = EfectuarAtaque(ataque.getIdataque());
-             //Nos metemos en la funcion EfectuarAtaque para saber si el ataque se va a efectuar(i=1) o no (i=0)
-             if (i==1){
-            	 BatallaVO returnBatallaVO = RealizarAtaque(idbatallaVO, idataque, mod, mod2);
-                 PasaTurno(idbatallaVO);
-             	return returnBatallaVO;
-             }
-             //La funcion EfectuarAtaque devuelve 0 por lo que el ataque no se va a efectuar
-             else{
-                 PasaTurno(idbatallaVO);
-                  
-                 return batallaVO;
-             }
-        }
-        else{
+
+    	AtaqueVO ataque = getAtaque(idataque);
+    	BatallaVO batallaVO = getBatallaVO(idbatallaVO);
+    	int mod = batallaVO.getTurno() % batallaVO.getListajugadores().size();
+    	int mod2 = (batallaVO.getTurno()+1) % batallaVO.getListajugadores().size();
+    	int posicionBatalla = batallaVO.getPosicionPersonajeVO(idPersonajeVO);
+    	if(VerificarTurno(idbatallaVO, posicionBatalla)==true){
+			System.out.print("entramos dentros if VerificarTurno \n");
+
+    		if(VerificarAtaque(idataque, idPersonajeVO)==true)
+    		{
+    			int i = EfectuarAtaque(ataque.getIdataque());
+    			//Nos metemos en la funcion EfectuarAtaque para saber si el ataque se va a efectuar(i=1) o no (i=0)
+    			if (i==1){
+    				BatallaVO returnBatallaVO = RealizarAtaque(idbatallaVO, idataque, mod, mod2);
+    				PasaTurno(idbatallaVO);
+    				return returnBatallaVO;
+    			}
+    			//La funcion EfectuarAtaque devuelve 0 por lo que el ataque no se va a efectuar
+    			else{
+    				PasaTurno(idbatallaVO);
+
+    				return batallaVO;
+    			}
+    		}
+    		else
+    		{
+    			throw new NoTienesEseAtaqueException();
+    		}
+    	}
+    	else{
     		throw new NoEsTuTurnoException();
 
-        }
-      }
+    	}
+    }
      
 //CAMBIAR HA CLASE BATLLA CON ATRIBUTOS NUEVOS ********************************************************
     @Override
@@ -788,7 +801,7 @@ public class OperacionesBBDD implements BumayeInterface{
 
 		BatallaVO batallaVO = getBatallaVO(idBatallaVO);
 		int mod = batallaVO.getTurno() % batallaVO.getNoJugadores();
-		
+		System.out.print("mod: "+mod+" posicion: "+posicionBatalla);
 		if (mod == posicionBatalla){
 			return true;
 		}
@@ -889,7 +902,24 @@ public class OperacionesBBDD implements BumayeInterface{
             }
         return personajeslogeados;
     }
-	
+
+
+
+	@Override
+	public boolean VerificarAtaque(int idataque, int idPersonajeVO) throws Exception {
+		PersonajeVO personajeVO = getPersonaje(idPersonajeVO);
+		personajeVO.setAtaques(listaAtaquesUsr(idPersonajeVO));
+		if ( personajeVO.getAtaqueVO(idataque) != null){
+			System.out.print("entramos dentro del if de verificar ataque \n");
+			return true;
+		}
+		else{
+			System.out.print("entramos dentro del else de verificar ataque \n");
+
+			return false;
+		}
+	}
+
  
 }
  
