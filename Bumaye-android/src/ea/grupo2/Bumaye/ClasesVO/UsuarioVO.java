@@ -9,13 +9,16 @@ public class UsuarioVO {
 	private String pass;
 	@SerializedName("email")
 	private String email;
+	@SerializedName("idGCM")
+	private String idGCM;
 	public UsuarioVO (){
 	}
 
-public UsuarioVO(String username, String pass, String email) {
+public UsuarioVO(String username, String pass, String email, String idGCM) {
 	this.username=username;
 	this.pass=pass;
 	this.email=email;
+	this.idGCM=idGCM;
 }
 	
 	public String getUsername() {
@@ -37,5 +40,13 @@ public UsuarioVO(String username, String pass, String email) {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getIdGCM() {
+		return idGCM;
+	}
+
+	public void setIdGCM(String idGCM) {
+		this.idGCM = idGCM;
 	}
 }

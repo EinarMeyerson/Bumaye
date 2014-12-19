@@ -8,6 +8,7 @@ import ea.grupo2.Bumaye.pojos.ArmasArmaduras;
 
 public class PersonajeVO {
 	private int iduser;
+	private String idGCM;
 	private String nombre;
 	private float vida;
 	private float defensa;
@@ -22,8 +23,9 @@ public class PersonajeVO {
 	}
 
 
-	public PersonajeVO(int iduser, String nombre, float vida,float defensa, float ataque) {
+	public PersonajeVO(int iduser,String idGCM, String nombre, float vida,float defensa, float ataque) {
 		this.iduser = iduser;
+		this.idGCM = idGCM;
 		this.nombre = nombre;
 		this.vida = vida;
 		this.defensa = defensa;
@@ -31,7 +33,7 @@ public class PersonajeVO {
 	}
 	public PersonajeVO getPersonajeVO()
 	{
-		PersonajeVO personaje = new PersonajeVO(this.iduser, this.nombre, this.vida, this.defensa, this.ataque);
+		PersonajeVO personaje = new PersonajeVO(this.iduser, this.idGCM, this.nombre, this.vida, this.defensa, this.ataque);
 		return personaje;
 	}
 
@@ -144,6 +146,16 @@ public class PersonajeVO {
         return armaArmaduraVO;
         
     }
+
+
+	public String getIdGCM() {
+		return idGCM;
+	}
+
+
+	public void setIdGCM(String idGCM) {
+		this.idGCM = idGCM;
+	}
 
 
 }

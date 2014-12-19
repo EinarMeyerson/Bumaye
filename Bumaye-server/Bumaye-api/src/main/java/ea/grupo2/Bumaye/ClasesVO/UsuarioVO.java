@@ -2,6 +2,7 @@ package ea.grupo2.Bumaye.ClasesVO;
 
 public class UsuarioVO {
 	
+	private String idGCM;
 	private String username;
 	private String pass;
 	private String email;
@@ -9,7 +10,8 @@ public class UsuarioVO {
 	public UsuarioVO (){
 	}
 
-public UsuarioVO(String username, String pass, String email) {
+public UsuarioVO(String username,String idGCM, String pass, String email) {
+	this.idGCM = idGCM;
 	this.username=username;
 	this.pass=pass;
 	this.email=email;
@@ -34,5 +36,13 @@ public UsuarioVO(String username, String pass, String email) {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getIdGCM() {
+		return idGCM;
+	}
+
+	public void setIdGCM(String idGCM) {
+		this.idGCM = idGCM;
 	}
 }

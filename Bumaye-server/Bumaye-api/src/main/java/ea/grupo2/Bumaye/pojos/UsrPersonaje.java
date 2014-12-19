@@ -20,6 +20,8 @@ public class UsrPersonaje {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="iduser")
     private int iduser;
+    @Column(unique = true, name="idGCM")
+    private String idGCM;
     @Column(unique = true, name="username")
     private String username;
     @Column(name="password")
@@ -48,7 +50,8 @@ public class UsrPersonaje {
     }
      
      
-    public UsrPersonaje(String username, String password, String nombre, float vida, float defensa, float ataque) {
+    public UsrPersonaje(String username,String idGCM, String password, String nombre, float vida, float defensa, float ataque) {
+    	this.idGCM = idGCM;
         this.username = username;
         this.password = password;
         this.nombre = nombre;
@@ -138,6 +141,16 @@ public class UsrPersonaje {
     public void setBatallas(List<Batalla> batallas) {
         this.batallas = batallas;
     }
+
+
+	public String getIdGCM() {
+		return idGCM;
+	}
+
+
+	public void setIdGCM(String idGCM) {
+		this.idGCM = idGCM;
+	}
  
      
 }

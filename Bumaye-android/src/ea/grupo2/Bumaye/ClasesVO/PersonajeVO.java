@@ -9,6 +9,8 @@ import com.google.gson.annotations.SerializedName;
 public class PersonajeVO implements Serializable{
 	@SerializedName("iduser")
 	private int iduser;
+	@SerializedName("idGCM")
+	private String idGCM;
 	@SerializedName("nombre")
 	private String nombre;
 	@SerializedName("vida")
@@ -26,8 +28,9 @@ public class PersonajeVO implements Serializable{
 	}
 	
 
-public PersonajeVO(int iduser, String nombre, float vida,float defensa, float ataque) {
+public PersonajeVO(int iduser, String idGCM, String nombre, float vida,float defensa, float ataque) {
 	this.iduser = iduser;
+	this.idGCM = idGCM;
 	this.nombre = nombre;
 	this.vida = vida;
 	this.defensa = defensa;
@@ -35,7 +38,7 @@ public PersonajeVO(int iduser, String nombre, float vida,float defensa, float at
 }
 public PersonajeVO getPersonajeVO()
 {
-	PersonajeVO personaje = new PersonajeVO(this.iduser, this.nombre, this.vida, this.defensa, this.ataque);
+	PersonajeVO personaje = new PersonajeVO(this.iduser,this.idGCM, this.nombre, this.vida, this.defensa, this.ataque);
 	return personaje;
 }
 
@@ -120,6 +123,16 @@ public List<ArmaArmaduraVO> getArmasarmaduras() {
 
 public void setArmasarmaduras(List<ArmaArmaduraVO> armasarmaduras) {
 	this.armasarmaduras = armasarmaduras;
+}
+
+
+public String getIdGCM() {
+	return idGCM;
+}
+
+
+public void setIdGCM(String idGCM) {
+	this.idGCM = idGCM;
 }
 
 //public List<AtaqueVO> getAtaques() {
