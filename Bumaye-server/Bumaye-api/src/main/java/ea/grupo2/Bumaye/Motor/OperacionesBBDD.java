@@ -128,10 +128,10 @@ public class OperacionesBBDD implements BumayeInterface{
       System.out.print("Ataques de armas de dragon añadios a las armaduras");
       
       
-      /* PERSONAJES */
-      m.addUsrPersonaje(new UsrPersonaje("albert@hotmail.com","spot","Spot",100,10,10));
-      m.addUsrPersonaje(new UsrPersonaje("eianr@hotmail.com","1234","Elcolmo",100,10,10));
-      m.addUsrPersonaje(new UsrPersonaje("juan@hotmail.com","1234","Ilcapone",100,10,10));
+//      /* PERSONAJES */
+      m.addUsrPersonaje(new UsrPersonaje("albert@hotmail.com",null,"spot","Spot",100,10,10));
+      m.addUsrPersonaje(new UsrPersonaje("eianr@hotmail.com",null,"1234","Elcolmo",100,10,10));
+      m.addUsrPersonaje(new UsrPersonaje("juan@hotmail.com",null,"1234","Ilcapone",100,10,10));
       System.out.print("Jugadores añadidos");
       
       
@@ -480,7 +480,7 @@ public class OperacionesBBDD implements BumayeInterface{
         	//UsrPersonaje us  = (UsrPersonaje)session.load(UsrPersonaje.class, userlog.getUsername());
         	if (u != null) {
 				transaction.commit();
-				personajelog = new PersonajeVO(u.getIduser(), u.getNombre(), u.getVida(), u.getDefensa(), u.getAtaque());
+				personajelog = new PersonajeVO(u.getIduser(),u.getIdGCM(), u.getNombre(), u.getVida(), u.getDefensa(), u.getAtaque());
 				for (ArmasArmaduras arm: u.getArmasarmaduras()) {
 					//Sacar armaduras y ataques y pasarselos al personaje
 					ArmaArmaduraVO armunica= new ArmaArmaduraVO(arm.getIdArmasArmaduras(), arm.getNombre(), arm.getTipo(), arm.getDefensa(), arm.getAtaque());
@@ -677,7 +677,7 @@ public class OperacionesBBDD implements BumayeInterface{
             personaje = (UsrPersonaje)session.load(UsrPersonaje.class, idPersonaje);
             if (personaje!= null) {
                  
-                personajevo = new PersonajeVO(personaje.getIduser(), personaje.getNombre(), personaje.getVida(), personaje.getDefensa(), personaje.getAtaque());
+                personajevo = new PersonajeVO(personaje.getIduser(),personaje.getIdGCM(), personaje.getNombre(), personaje.getVida(), personaje.getDefensa(), personaje.getAtaque());
                 transaction.commit();
                  
             }
@@ -750,7 +750,7 @@ public class OperacionesBBDD implements BumayeInterface{
         	else
         	{
         		transaction.commit();
-        		addUsrPersonaje(new UsrPersonaje(userregistrado.getEmail(), userregistrado.getPass(), userregistrado.getUsername(),100,10,10));
+        		addUsrPersonaje(new UsrPersonaje(userregistrado.getEmail(),userregistrado.getIdGCM(), userregistrado.getPass(), userregistrado.getUsername(),100,10,10));
         		
         		//Volvemos a realizar la query para solicitar el id del usuario recien creado
         		Query queri = session.createQuery("from UsrPersonaje as u where u.nombre='" + userregistrado.getUsername() + "'");
@@ -771,7 +771,7 @@ public class OperacionesBBDD implements BumayeInterface{
             		
             		//Creamos la Clase PersonajeVO para mandarle al usuario todos sus atributos
     				
-            		UsuarioVO nuevousuariologeado = new UsuarioVO(p.getNombre(), p.getPassword(), userregistrado.getEmail());
+            		UsuarioVO nuevousuariologeado = new UsuarioVO(p.getNombre(),p.getIdGCM(),p.getPassword(), userregistrado.getEmail());
             		
             		personajeregistrado = LoginUser(nuevousuariologeado);
 

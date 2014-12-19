@@ -52,24 +52,24 @@ public class BatallaResource {
 		
 		
 		//CAMBIARLAAAAAAAAAAAAAA ES UNA CHAPUZA PARA HACER UNA PRUEBA
-		
-		@Path("/prueba")
-		@GET
-		@Produces(MediaType.API_BATALLA)
-		public BatallaVO iniciarBatalla () {
-			BumayeInterface  m = new OperacionesBBDD();
-			
-			ArrayList<PersonajeVO> listaPersonajesVO = new ArrayList<PersonajeVO>();
-	        UsuarioVO u1 = new UsuarioVO("Ilcapone", "1234", "palotes@pushi");
-	        listaPersonajesVO.add(m.LoginUser(u1));
-	 
-	        UsuarioVO u2 = new UsuarioVO("Elcolmo", "1234", "mañana@quizas.si");
-	        listaPersonajesVO.add(m.LoginUser(u2));
-			
-			BatallaVO batallaVO = m.iniciarBatallaVO(listaPersonajesVO);
-			
-		    return batallaVO;
-		}
+//		
+//		@Path("/prueba")
+//		@GET
+//		@Produces(MediaType.API_BATALLA)
+//		public BatallaVO iniciarBatalla () {
+//			BumayeInterface  m = new OperacionesBBDD();
+//			
+//			ArrayList<PersonajeVO> listaPersonajesVO = new ArrayList<PersonajeVO>();
+//	        UsuarioVO u1 = new UsuarioVO("Ilcapone", "1234", "palotes@pushi");
+//	        listaPersonajesVO.add(m.LoginUser(u1));
+//	 
+//	        UsuarioVO u2 = new UsuarioVO("Elcolmo", "1234", "mañana@quizas.si");
+//	        listaPersonajesVO.add(m.LoginUser(u2));
+//			
+//			BatallaVO batallaVO = m.iniciarBatallaVO(listaPersonajesVO);
+//			
+//		    return batallaVO;
+//		}
 		
 		
 }

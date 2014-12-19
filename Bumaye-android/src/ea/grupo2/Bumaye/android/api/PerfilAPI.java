@@ -94,13 +94,14 @@ public class PerfilAPI {
 	}
 	
 // MIRAR QUE DEVUELVE LA API CUANDO HACES LA API (ESTARIA BIEN NO DEVOLVER NADA)
-	public PersonajeVO registUsr(String texto, String pass, String mail, String url) {		
+	public PersonajeVO registUsr(String texto, String pass, String mail,String idGCM, String url) {		
 		Log.d(TAG, "Register() en API");
 		Log.d(TAG, url);
 		PersonajeVO person = null;
 		UsuarioVO dev = new UsuarioVO();
 		dev.setUsername(texto);
 		dev.setPass(pass);
+		dev.setIdGCM(idGCM);
 		dev.setEmail(mail);
         Gson gson = new GsonBuilder().create();
         
