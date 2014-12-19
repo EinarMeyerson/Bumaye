@@ -14,6 +14,13 @@
         android:allowBackup="true"
         android:icon="@drawable/bumayeicon"
         android:label="@string/app_name">
+        
+        <meta-data  android:name="com.google.android.gms.appstated.APP_id"
+            android:value="@string/app_id"/>
+        
+        <meta-data  android:name="com.google.android.gms.games.APP_id"
+            android:value="@string/app_id"/>
+        
         <activity
             android:name=".PresentacionActivity"
             android:label="@string/app_name"
