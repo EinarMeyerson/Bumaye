@@ -289,11 +289,13 @@ public class PerfilActivity extends Activity {
 			Intent intent = new Intent(this, MapActivity.class);
 			intent.putExtra("personaje", personaje);
 			startActivity(intent);
+			finish();
 			break;
 		case 2: 
 			Intent intentt = new Intent(this, ListaActivity.class);
 			intentt.putExtra("personaje", personaje);
 			startActivity(intentt);
+			finish();
 			break;
 		case 3: 
 			break;

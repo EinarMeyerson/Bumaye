@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.google.android.gms.games.Games;
+//import com.google.android.gms.games.Games;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -146,9 +146,9 @@ public class ListaActivity extends ListActivity {
 	}
 	private void inicioBatalla(String nombrerival){
 
-
-//		Intent intent = Games.TurnBasedMultiplayer.getSelectOpponentsIntent(mGoogleApiClient, 2, 2, false);
-//		startActivityForResult(intent, RC_SELECT_PLAYERS);
+//
+//	Intent intent = Games.TurnBasedMultiplayer.getSelectOpponentsIntent(mGoogleApiClient, 2, 2, false);
+//    startActivityForResult(intent, RC_SELECT_PLAYERS);
 
 		//		Intent intent = new Intent(this,LuchaActivity.class);
 		//		intent.putExtra("nomjug", nombrerival);
@@ -164,7 +164,13 @@ public class ListaActivity extends ListActivity {
 		}
 	}
 	private void navClic(int pos){
-		switch(pos) {            
+		switch(pos) { 
+		case 0: 
+			Intent intent = new Intent(this, PerfilActivity.class);
+			intent.putExtra("personaje", personaje);
+			startActivity(intent);
+			finish();
+			break;
 		case 1: 
 
 			break;
