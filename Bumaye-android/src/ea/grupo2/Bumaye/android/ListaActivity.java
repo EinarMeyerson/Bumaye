@@ -93,7 +93,7 @@ public class ListaActivity extends ListActivity {
 
 		@Override
 		protected void onPostExecute(List<PersonajeVO> result) {			
-			addNotas(result);
+			addPlayers(result);
 
 			if (pd != null) {
 				pd.dismiss();
@@ -111,7 +111,7 @@ public class ListaActivity extends ListActivity {
 
 	}
 
-	private void addNotas(List<PersonajeVO> result) {
+	private void addPlayers(List<PersonajeVO> result) {
 		PersonList.addAll(result);
 		adapter = new JugadorAdapter(this, result);
 		setListAdapter(adapter);
