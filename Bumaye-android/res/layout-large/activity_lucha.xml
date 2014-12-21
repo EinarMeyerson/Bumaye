@@ -1,0 +1,53 @@
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ea.grupo2.Bumaye.android.PerfilActivity" >
+
+    <!-- The main content view -->
+
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="A luchar!!!"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+             <TextView
+                android:id="@+id/player1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="60dp"
+                android:text="Player1"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+             <TextView
+                android:id="@+id/vs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="60dp"
+                android:text="VS"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+              <TextView
+                android:id="@+id/player2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="60dp"
+                android:text="Player2"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+            
+    </FrameLayout>
+
+    <!-- The navigation drawer -->
+
+
+</android.support.v4.widget.DrawerLayout>

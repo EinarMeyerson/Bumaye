@@ -29,24 +29,31 @@
                     android:id="@+id/ataque"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ataque" />
+                    android:text="Ataque"
+                    android:textSize="20sp"
+                    android:paddingBottom="10dp" />
 
                 <TextView
                     android:id="@+id/defensa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Defensa" />
+                    android:text="Defensa"
+                    android:textSize="20sp"
+                    android:paddingBottom="10dp" />
 
                 <TextView
                     android:id="@+id/listadeataque"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lista de ataques" />
+                    android:text="Lista de ataques"
+                    android:textSize="20sp"
+                    android:paddingBottom="10dp" />
 
                 <TableLayout
                     android:id="@+id/tableataques"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
                     android:shrinkColumns="*"
                     android:stretchColumns="*" >
                 </TableLayout>

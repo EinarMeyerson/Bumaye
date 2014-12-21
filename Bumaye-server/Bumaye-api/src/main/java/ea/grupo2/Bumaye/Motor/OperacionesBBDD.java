@@ -13,12 +13,14 @@ import java.util.Scanner;
 
 
 
+
 import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
  
+
 
 
 
@@ -36,6 +38,7 @@ import ea.grupo2.Bumaye.hibernate.HibernateUtil;
 import ea.grupo2.Bumaye.pojos.ArmasArmaduras;
 import ea.grupo2.Bumaye.pojos.Ataques;
 import ea.grupo2.Bumaye.pojos.Batalla;
+import ea.grupo2.Bumaye.pojos.Objeto;
 import ea.grupo2.Bumaye.pojos.UsrPersonaje;
  
 public class OperacionesBBDD implements BumayeInterface{    
@@ -54,6 +57,13 @@ public class OperacionesBBDD implements BumayeInterface{
 //         
 //        m.iniciarBatallaVO(listaPersonajesVO);
 //        m.getBatallaVO(1);
+        
+        /* OBJETOS  */
+        
+        m.addObjeto(new Objeto ("Poción", "acion", 40, "Hierba", "Seta",90));
+        m.addObjeto(new Objeto ("Hierba", null, 10, null, null,100));
+        m.addObjeto(new Objeto ("Seta", null, 10, null, null,100));
+        
         
         
         /* ARMAS Y ARMADURAS  */
@@ -918,6 +928,32 @@ public class OperacionesBBDD implements BumayeInterface{
 
 			return false;
 		}
+	}
+
+
+
+	@Override
+	public String addObjeto(Objeto objeto) {
+		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try{
+            transaction = session.beginTransaction();
+            //colecionUsers.addUser(usuario);
+            session.save(objeto);
+            System.out.println("Objeto añadido");
+            transaction.commit();
+            return "Objeto añadido";
+            }
+            catch(HibernateException e)
+            {
+                transaction.rollback();
+                e.printStackTrace();
+                return "Usuario no añadido";
+            }
+            finally {
+            session.close();
+            }
 	}
 
  

@@ -39,12 +39,16 @@ public class UsrPersonaje {
     @JoinTable(name = "UsrPersonaje_Batallas", joinColumns = { 
             @JoinColumn(name = "iduser")}, inverseJoinColumns = { @JoinColumn(name = "idBatalla")})
             private List<Batalla> batallas;
- 
      
     @ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "UsrPersonaje_ArmasArmaduras", joinColumns = { 
             @JoinColumn(name = "iduser")}, inverseJoinColumns = { @JoinColumn(name = "idArmasArmaduras")})
     private List<ArmasArmaduras> armasarmaduras;
+    
+    @ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "UsrPersonaje_Objeto", joinColumns = { 
+            @JoinColumn(name = "iduser")}, inverseJoinColumns = { @JoinColumn(name = "idobjeto")})
+    private List<Objeto> inventario;
      
     public UsrPersonaje (){
     }
@@ -151,6 +155,18 @@ public class UsrPersonaje {
 	public void setIdGCM(String idGCM) {
 		this.idGCM = idGCM;
 	}
- 
+
+
+	public List<Objeto> getInventario() {
+		return inventario;
+	}
+
+
+	public void setInventario(List<Objeto> inventario) {
+		this.inventario = inventario;
+	}
+	public void addInventario(Objeto objeto) {
+		inventario.add(objeto);
+    }
      
 }

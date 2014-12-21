@@ -5,6 +5,7 @@ import java.util.List;
  
 
 
+
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
@@ -13,10 +14,18 @@ import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.pojos.ArmasArmaduras;
 import ea.grupo2.Bumaye.pojos.Ataques;
 import ea.grupo2.Bumaye.pojos.Batalla;
+import ea.grupo2.Bumaye.pojos.Objeto;
 import ea.grupo2.Bumaye.pojos.UsrPersonaje;
  
  
 public interface BumayeInterface {
+	
+	//funciones de objetos
+	public String addObjeto(Objeto objeto);
+	
+	//funciones de cofre
+	
+	//funciones de inventario
      
     //funciones inreface de los Ataques
     public String addAtaqueBBDD(Ataques ataque, int idarmaarmadura);
