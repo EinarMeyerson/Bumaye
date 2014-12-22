@@ -7,32 +7,41 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="14" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <permission android:name="ea.grupo2.Bumaye.android.permission.C2D_MESSAGE"
+    <permission
+        android:name="ea.grupo2.Bumaye.android.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="ea.grupo2.Bumaye.android.permission.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/bumayeicon"
-        android:label="@string/app_name">
-         <receiver
+        android:label="@string/app_name" >
+        <receiver
             android:name=".GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.example.gcm" />
             </intent-filter>
         </receiver>
+
         <service android:name=".GcmIntentService" />
-        <meta-data android:name="com.google.android.gms.version"
-        android:value="@integer/google_play_services_version" />
-        
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".PresentacionActivity"
             android:label="@string/app_name"
@@ -43,30 +52,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <activity
+        <activity
             android:name=".PerfilActivity"
-            android:screenOrientation="landscape">
-         </activity>
-          <activity
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
             android:name=".RegisterActivity"
-            android:screenOrientation="landscape">
-         </activity>
-         <activity
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
             android:name=".MapActivity"
-            android:screenOrientation="landscape">
-         </activity>
-         <activity
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
             android:name=".LoginActivity"
-            android:screenOrientation="landscape">
-         </activity>
+            android:screenOrientation="landscape" >
+        </activity>
         <activity
             android:name=".LuchaActivity"
             android:screenOrientation="landscape" >
         </activity>
-         <activity
+        <activity
             android:name=".ListaActivity"
             android:screenOrientation="landscape" >
         </activity>
-    </application>
 
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCBstlhslmhkpqWRXa3FE5gkplEq3rbv5M" />
+    </application>
+<uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
 </manifest>

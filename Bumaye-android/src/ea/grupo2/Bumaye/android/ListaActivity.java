@@ -178,7 +178,10 @@ public class ListaActivity extends ListActivity {
 			finish();
 			break;
 		case 1: 
-
+			Intent intentt = new Intent(this, MapActivity.class);
+			intentt.putExtra("personaje", personaje);
+			startActivity(intentt);
+			finish();
 			break;
 		case 2: 
 
