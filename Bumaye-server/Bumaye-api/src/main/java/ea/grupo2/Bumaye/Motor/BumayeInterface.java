@@ -22,6 +22,7 @@ public interface BumayeInterface {
 	
 	//funciones de objetos
 	public String addObjeto(Objeto objeto);
+	public String añadirObjetos(int idobjeto, int iduser);
 	
 	//funciones de cofre
 	

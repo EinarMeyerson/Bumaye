@@ -15,6 +15,7 @@ public class PersonajeVO {
 	private float ataque;
 	private List<ArmaArmaduraVO> armasarmaduras;
 	private List<AtaqueVO> ataques;
+	private List<ObjetoVO> inventario;
 	HashMap<Integer, ArmaArmaduraVO> mapArmaArmaduraVO = new HashMap<Integer, ArmaArmaduraVO>();
 	HashMap<Integer, AtaqueVO> mapAtaqueVO = new HashMap<Integer, AtaqueVO>();
 
@@ -157,5 +158,18 @@ public class PersonajeVO {
 		this.idGCM = idGCM;
 	}
 
+
+	public List<ObjetoVO> getInventario() {
+		return inventario;
+	}
+
+
+	public void setInventario(List<ObjetoVO> inventario) {
+		this.inventario = inventario;
+	}
+	public void addInventario(ObjetoVO objeto) {
+		inventario.add(objeto);
+	}
+	
 
 }
