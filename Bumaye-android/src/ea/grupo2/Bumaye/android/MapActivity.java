@@ -32,46 +32,65 @@ public class MapActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         
-        url = (String) getIntent().getExtras().get("url");
-		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
-
-		 getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
-	     getActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-		
-        // Load an array of options names       
-        String[] names = getResources().getStringArray(
-                R.array.nav_options);
-        if (personaje.getNombre()!=null)
-        	names[0] = Html.fromHtml("<b>"+personaje.getNombre()+"</b>").toString();
-        this.navList = (ListView) findViewById(R.id.left_drawer);
-        // Set previous array as adapter of the list
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, names);
-        navList.setAdapter(adapter);
-        navList.setOnItemClickListener(new DrawerItemClickListener());
+        personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         
-    }    
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
-            mDrawerLayout.closeDrawer(navList);
-            navClic(position);
-    }
-}
-    private void navClic(int pos){
-    switch(pos) {            
-    case 2: 
-    	Intent intent = new Intent(this, MapActivity.class);   
-    	break;
-    case 3: 
-    	Intent intent2 = new Intent(this, ListaActivity.class);   
-    	break;
-    case 4: 
-    	break;
-    default: 
-        break;
-    }
-}
+		// Load an array of options names       
+		String[] names = getResources().getStringArray(
+				R.array.nav_options);
+		if (personaje.getNombre()!=null)
+			names[0] = Html.fromHtml("<b>"+personaje.getNombre()+"</b>").toString();
+		this.navList = (ListView) findViewById(R.id.left_drawer);
+		// Set previous array as adapter of the list
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, names);
+		navList.setAdapter(adapter);
+		navList.setOnItemClickListener(new DrawerItemClickListener());
+
+        
+    }  private class DrawerItemClickListener implements ListView.OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
+			mDrawerLayout.closeDrawer(navList);
+			navClic(position);
+		}
+	}
+	private void navClic(int pos){
+		switch(pos) {
+		case 0: 
+			Intent intent = new Intent(this, PerfilActivity.class);
+			intent.putExtra("personaje", personaje);
+			startActivity(intent);
+			finish();
+			break;
+		case 1:
+//			Intent intent = new Intent(this, MapActivity.class);
+//			intent.putExtra("personaje", personaje);
+//			startActivity(intent);
+//			finish();
+			break;
+		case 2: 
+			Intent intentt = new Intent(this, ListaActivity.class);
+			intentt.putExtra("personaje", personaje);
+			startActivity(intentt);
+			finish();
+			break;
+		case 3: 
+			Intent intenttt = new Intent(this, InventarioActivity.class);
+			intenttt.putExtra("personaje", personaje);
+			startActivity(intenttt);
+			finish();
+			break;
+		default: 
+			break;
+		}
+	}
+	
+	
+    
 }
     

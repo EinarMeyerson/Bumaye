@@ -22,7 +22,7 @@ import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 
-public class PerfilActivity extends Activity {
+public class InventarioActivity extends Activity {
 
 	private ListView navList;
 	private DrawerLayout mDrawerLayout;
@@ -172,7 +172,7 @@ public class PerfilActivity extends Activity {
 						ataces.setNombreataque("sin ataque");
 					}
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+					Toast.makeText(InventarioActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
 			}
 		}
@@ -192,7 +192,7 @@ public class PerfilActivity extends Activity {
 						ataces.setNombreataque("sin ataque");
 					}
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+					Toast.makeText(InventarioActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
 			}
 		}
@@ -212,7 +212,7 @@ public class PerfilActivity extends Activity {
 						ataces.setNombreataque("sin ataque");
 					}
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+					Toast.makeText(InventarioActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
 			}
 		}
@@ -232,7 +232,7 @@ public class PerfilActivity extends Activity {
 						ataces.setNombreataque("sin ataque");
 					}
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+					Toast.makeText(InventarioActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
 			}
 		}
@@ -252,7 +252,7 @@ public class PerfilActivity extends Activity {
 						ataces.setNombreataque("sin ataque");
 					}
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+					Toast.makeText(InventarioActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
 			}
 		}
@@ -272,7 +272,7 @@ public class PerfilActivity extends Activity {
 						ataces.setNombreataque("sin ataque");
 					}
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+					Toast.makeText(InventarioActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
 			}
 		}
@@ -303,10 +303,6 @@ public class PerfilActivity extends Activity {
 			finish();
 			break;
 		case 3: 
-			Intent intenttt = new Intent(this, InventarioActivity.class);
-			intenttt.putExtra("personaje", personaje);
-			startActivity(intenttt);
-			finish();
 			break;
 		default: 
 			break;
