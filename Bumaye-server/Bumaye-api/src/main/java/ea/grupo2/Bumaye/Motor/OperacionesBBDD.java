@@ -889,14 +889,18 @@ public class OperacionesBBDD implements BumayeInterface{
 		Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         List<PersonajeLogeadoVO> personajeslogeados = new ArrayList<PersonajeLogeadoVO>();
+        System.out.print("Usuario con id: " + idUsersolicita + " solicita lista de jugadores" );
  
         try{
             transaction = session.beginTransaction();
 			List<UsrPersonaje> u = (List<UsrPersonaje>)session.createQuery("from UsrPersonaje").list();
             if (u != null) {               
                 for (UsrPersonaje userlogeado: u) {
+                	if (userlogeado.getIduser()!=idUsersolicita)
+                	{
                 	PersonajeLogeadoVO p = new PersonajeLogeadoVO(userlogeado.getIduser(), userlogeado.getNombre(), userlogeado.getVida(), userlogeado.getDefensa(), userlogeado.getAtaque());
                 	personajeslogeados.add(p);
+                	}
                 }
                 transaction.commit();
             }
