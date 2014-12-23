@@ -23,6 +23,8 @@ public class PersonajeVO implements Serializable{
 	private List<ArmaArmaduraVO> armasarmaduras = new ArrayList<ArmaArmaduraVO>();
 //	@SerializedName("ataques")
 //	private List<AtaqueVO> ataques = new ArrayList<AtaqueVO>();
+	@SerializedName("inventario")
+	private List<ObjetoVO> inventario;
 
    public PersonajeVO (){
 	}
@@ -133,6 +135,16 @@ public String getIdGCM() {
 
 public void setIdGCM(String idGCM) {
 	this.idGCM = idGCM;
+}
+
+
+public List<ObjetoVO> getInventario() {
+	return inventario;
+}
+
+
+public void setInventario(List<ObjetoVO> inventario) {
+	this.inventario = inventario;
 }
 
 //public List<AtaqueVO> getAtaques() {
