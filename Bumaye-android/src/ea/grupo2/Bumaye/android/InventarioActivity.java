@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
@@ -17,9 +16,9 @@ import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 
 public class InventarioActivity extends Activity {
@@ -34,7 +33,6 @@ public class InventarioActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inventario);
 
-		url = (String) getIntent().getExtras().get("url");
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         
@@ -52,10 +50,13 @@ public class InventarioActivity extends Activity {
 				android.R.layout.simple_list_item_1, names);
 		navList.setAdapter(adapter);
 		navList.setOnItemClickListener(new DrawerItemClickListener());
+
 		
 	}    
 	
 
+
+	
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 
@@ -67,27 +68,34 @@ public class InventarioActivity extends Activity {
 	}
 	private void navClic(int pos){
 		switch(pos) {
-		case 1:
-			Intent intent = new Intent(this, MapActivity.class);
+		case 0: 
+			Intent intent = new Intent(this, PerfilActivity.class);
 			intent.putExtra("personaje", personaje);
 			startActivity(intent);
 			finish();
 			break;
-		case 2: 
-			Intent intentt = new Intent(this, ListaActivity.class);
+		case 1:
+			Intent intentt = new Intent(this, MapActivity.class);
 			intentt.putExtra("personaje", personaje);
 			startActivity(intentt);
 			finish();
 			break;
-		case 3: 
-			Intent intenttt = new Intent(this, InventarioActivity.class);
+		case 2: 
+			Intent intenttt = new Intent(this, ListaActivity.class);
 			intenttt.putExtra("personaje", personaje);
 			startActivity(intenttt);
+			finish();
+			break;
+		case 3: 
+			Intent intentttt = new Intent(this, InventarioActivity.class);
+			intentttt.putExtra("personaje", personaje);
+			startActivity(intentttt);
 			finish();
 			break;
 		default: 
 			break;
 		}
 	}
+	
 }
 

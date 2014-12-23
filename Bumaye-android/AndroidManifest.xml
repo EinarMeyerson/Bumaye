@@ -76,7 +76,7 @@
             android:name=".ListaActivity"
             android:screenOrientation="landscape" >
         </activity>
-        <activity
+         <activity
             android:name=".InventarioActivity"
             android:screenOrientation="landscape" >
         </activity>
