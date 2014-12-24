@@ -72,7 +72,6 @@ public class OperacionesBBDD implements BumayeInterface{
 
 		m.addObjeto(new Objeto ("Elixir", "ataque", 50, "Poción", "Runa roja",60));
 		m.addObjeto(new Objeto ("Runa roja", null, 70, "Piedra", "Seta roja",70));
-		m.addObjeto(new Objeto ("Piedra", null, 5, null, null,100));
 		m.addObjeto(new Objeto ("Seta roja", null, 30, null, null,100));
 
 		m.addObjeto(new Objeto ("Caldo", "defensa", 50, "Poción", "Runa azul",60));
@@ -86,6 +85,29 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.addObjeto(new Objeto ("Barra Bronce", null, 50, "Min Bronce", "Herreria",70));
 		m.addObjeto(new Objeto ("Barra Oro", null, 50, "Min Oro", "Herreria",60));
 		m.addObjeto(new Objeto ("Barra Drag", null, 50, "Min Drag", "Herreria",50));
+		
+		
+		//16 max_runa_cristal_agua
+		m.addObjeto(new Objeto ("max_runa_cristal_agua", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("max_runa_cristal_hoja", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("max_runa_cristal_nieve", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("max_runa_cristal_rayo", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("runa_cristal_agua", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("runa_cristal_hoja", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("runa_cristal_nieve", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("runa_cristal_rayo", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("runa_muerte", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("runa_agua", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("runa_agua2", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("runa_agua3", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("runa_rayo", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("runa_hoja", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("runa_nieve", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("pedrusco", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("piedra", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("runa_rayo2", null, 70, "Piedra", "Seta azul",70));
+		//33 la ultima
+		
 
 		System.out.print("Objetos añadidos a la base de datos");
 
@@ -191,15 +213,24 @@ public class OperacionesBBDD implements BumayeInterface{
 		      m.añadirObjetos(16, 2);
 		      System.out.print("Objetos añadias a jugador2");
 		      
-		      m.añadirObjetos(2, 3);
-		      m.añadirObjetos(3, 3);
-		      m.añadirObjetos(6, 3);
-		      m.añadirObjetos(7, 3);
-		      m.añadirObjetos(9, 3);
-		      m.añadirObjetos(10, 3);
-		      m.añadirObjetos(11, 3);
-		      m.añadirObjetos(13, 3);
 		      m.añadirObjetos(16, 3);
+		      m.añadirObjetos(17, 3);
+		      m.añadirObjetos(18, 3);
+		      m.añadirObjetos(19, 3);
+		      m.añadirObjetos(20, 3);
+		      m.añadirObjetos(21, 3);
+		      m.añadirObjetos(22, 3);
+		      m.añadirObjetos(23, 3);
+		      m.añadirObjetos(24, 3);
+		      m.añadirObjetos(25, 3);
+		      m.añadirObjetos(26, 3);
+		      m.añadirObjetos(27, 3);
+		      m.añadirObjetos(28, 3);
+		      m.añadirObjetos(29, 3);
+		      m.añadirObjetos(30, 3);
+		      m.añadirObjetos(31, 3);
+		      m.añadirObjetos(32, 3);
+		      m.añadirObjetos(33, 3);
 		      System.out.print("Objetos añadias a jugador3");
 
 

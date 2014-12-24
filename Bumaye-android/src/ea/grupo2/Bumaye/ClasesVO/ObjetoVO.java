@@ -1,8 +1,10 @@
 package ea.grupo2.Bumaye.ClasesVO;
 
+import java.io.Serializable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class ObjetoVO {
+public class ObjetoVO implements Serializable{
 	@SerializedName("idobjeto")
 	private int idobjeto;
 	@SerializedName("nombre")
@@ -21,9 +23,9 @@ public class ObjetoVO {
 	public ObjetoVO() {
 	}
 
-	public ObjetoVO(String nombre, String tipo, float rareza, String combo1,
+	public ObjetoVO(int idobjeto, String nombre, String tipo, float rareza, String combo1,
 			String combo2, float exito) {
-
+		this.idobjeto = idobjeto;
 		this.nombre = nombre;
 		this.rareza = rareza;
 		this.tipo = tipo;

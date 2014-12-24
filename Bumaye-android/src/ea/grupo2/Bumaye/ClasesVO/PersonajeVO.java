@@ -21,10 +21,8 @@ public class PersonajeVO implements Serializable{
 	private float ataque;
 	@SerializedName("armasarmaduras")
 	private List<ArmaArmaduraVO> armasarmaduras = new ArrayList<ArmaArmaduraVO>();
-//	@SerializedName("ataques")
-//	private List<AtaqueVO> ataques = new ArrayList<AtaqueVO>();
 	@SerializedName("inventario")
-	private List<ObjetoVO> inventario;
+	private List<ObjetoVO> inventario = new ArrayList<ObjetoVO>();
 
    public PersonajeVO (){
 	}
@@ -145,6 +143,10 @@ public List<ObjetoVO> getInventario() {
 
 public void setInventario(List<ObjetoVO> inventario) {
 	this.inventario = inventario;
+}
+
+public void addInventario(ObjetoVO objeto) {
+	inventario.add(objeto);
 }
 
 //public List<AtaqueVO> getAtaques() {

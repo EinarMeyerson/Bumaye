@@ -1,6 +1,7 @@
 package ea.grupo2.Bumaye.android;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,11 +28,15 @@ public class InventarioActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
 	String url;
 	PersonajeVO personaje;
+	ListView lv;
+	Context context;
+	public static int [] imgObjetos;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_inventario);
+		setContentView(R.layout.activity_inventario_prueva);
 
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -50,13 +55,29 @@ public class InventarioActivity extends Activity {
 				android.R.layout.simple_list_item_1, names);
 		navList.setAdapter(adapter);
 		navList.setOnItemClickListener(new DrawerItemClickListener());
-
 		
-	}    
+		
+		//inicializamos el ListView
+		 lv=(ListView) findViewById(R.id.listObjetos);
+		 String [] nombre_Objetos = getnomObjetos(personaje);
+		 lv.setAdapter(new CustomAdapter(this, nombre_Objetos));
+		 
+		
+	} 
 	
-
-
+	//funcion para sacar la lista de nombres de los objetos
 	
+	public String[] getnomObjetos (PersonajeVO person){
+		
+		 String [] nomObjetos = new String[20];
+		 int i=0;
+		 for(ObjetoVO objet: person.getInventario())
+		 {
+			 nomObjetos[i]= objet.getNombre();
+			 i++;
+		 }
+		 return nomObjetos;		
+	}
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 
