@@ -15,23 +15,258 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingLeft="20dp" >
+            
+            <LinearLayout
+                    android:id="@+id/relativeguantescorazaarma"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+                    
+                <ImageView
+                        android:id="@+id/objeto1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/piedra" />
+                    
+                <ImageView
+                        android:id="@+id/objeto2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/runa_agua" />
 
-                <TextView
-                    android:id="@+id/listadeinvent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="INVENTARIO:" />
+                    <ImageView
+                        android:id="@+id/objeto3"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/runa_agua2" />
 
-                <TableLayout
-                    android:id="@+id/tableinvent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:shrinkColumns="*"
-                    android:stretchColumns="*"
-                    android:paddingLeft="20dp" >
-                </TableLayout>
+                    <ImageView
+                        android:id="@+id/objeto4"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:src="@drawable/runa_agua3" />
+
+                    <ImageView
+                        android:id="@+id/runa_agua5"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingLeft="20dp"
+                        android:src="@drawable/runa_agua4" />
+                </LinearLayout>
+            
+            <LinearLayout
+                    android:id="@+id/relativeguantescorazaarma"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+                    
+                <ImageView
+                        android:id="@+id/objeto6"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/runa_cristal_agua" />
+                    
+                <ImageView
+                        android:id="@+id/objeto7"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/runa_cristal_hoja" />
+
+                    <ImageView
+                        android:id="@+id/objeto8"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/runa_cristal_nieve" />
+
+                    <ImageView
+                        android:id="@+id/objeto9"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:src="@drawable/runa_cristal_rayo" />
+
+                    <ImageView
+                        android:id="@+id/objeto10"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingLeft="20dp"
+                        android:src="@drawable/runa_hoja" />
+                </LinearLayout>
+            
+            <LinearLayout
+                    android:id="@+id/relativeguantescorazaarma"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+                    
+                <ImageView
+                        android:id="@+id/objeto11"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/runa_muerte" />
+                    
+                <ImageView
+                        android:id="@+id/objeto12"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/runa_nieve" />
+
+                    <ImageView
+                        android:id="@+id/objeto13"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/runa_nieve2" />
+
+                    <ImageView
+                        android:id="@+id/objeto14"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:src="@drawable/runa_rayo" />
+
+                    <ImageView
+                        android:id="@+id/objeto15"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingLeft="20dp"
+                        android:src="@drawable/runa_rayo2" />
+                </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/relativeguantescorazaarma"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+                    
+                <ImageView
+                        android:id="@+id/objeto16"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/max_runa_cristal_agua" />
+                    
+                <ImageView
+                        android:id="@+id/objeto17"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/max_runa_cristal_hoja" />
+
+                    <ImageView
+                        android:id="@+id/objeto18"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingRight="20dp"
+                        android:src="@drawable/max_runa_cristal_nieve" />
+
+                    <ImageView
+                        android:id="@+id/objeto19"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:src="@drawable/max_runa_cristal_rayo" />
+
+                    <ImageView
+                        android:id="@+id/objeto20"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:onClick="clickImagen"
+                        android:paddingLeft="20dp"
+                        android:src="@drawable/pedrusco" />
+                </LinearLayout>
+            
+                
         </LinearLayout>
     </FrameLayout>
 
