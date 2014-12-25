@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
@@ -12,6 +13,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TableLayout;
@@ -30,6 +32,9 @@ public class InventarioActivity extends Activity {
 	PersonajeVO personaje;
 	ListView lv;
 	Context context;
+	TextView nombreObjeto, rareza, exito, combo1, combo2, tipo;
+	ImageView imgObjeto;
+	Button equipar;
 	public static int [] imgObjetos;
 	
 
@@ -62,6 +67,21 @@ public class InventarioActivity extends Activity {
 		 String [] nombre_Objetos = getnomObjetos(personaje);
 		 lv.setAdapter(new CustomAdapter(this, nombre_Objetos));
 		 
+		 
+		 
+		 nombreObjeto = (TextView) findViewById(R.id.nombre_objeto_especifico);
+		 rareza = (TextView) findViewById(R.id.rareza);
+		 exito = (TextView) findViewById(R.id.exito);
+		 combo1 = (TextView) findViewById(R.id.combo1);
+		 combo2 = (TextView) findViewById(R.id.combo2);
+		 tipo = (TextView) findViewById(R.id.tipo);
+
+			
+		 imgObjeto = (ImageView)findViewById(R.id.imagens_objeto_especifica);
+		 
+		 equipar = (Button)findViewById(R.id.equipar_objeto);
+		 equipar.setVisibility(View.INVISIBLE);
+		 
 		
 	} 
 	
@@ -77,6 +97,26 @@ public class InventarioActivity extends Activity {
 			 i++;
 		 }
 		 return nomObjetos;		
+	}
+	
+	//funcion para mostrar los detalles de un objeto
+	public void clickObjeto(View view){
+		String nomobjeto_esp = (String)view.getTag();
+		for (ObjetoVO objet: personaje.getInventario())
+		{
+			if (nomobjeto_esp==objet.getNombre())
+			{
+				 nombreObjeto.setText(objet.getNombre());
+				 rareza.setText("Rareza: "+objet.getRareza());
+				 exito.setText("Exito de combinacion: "+objet.getExito()+ "%");
+				 combo1.setText("Combo uno: "+ objet.getCombo1());
+				 combo2.setText("Combo dos: "+ objet.getCombo2());
+				 tipo.setText("Tipo: "+ objet.getTipo());
+				 Uri uri = Uri.parse("android.resource://ea.grupo2.Bumaye.android/drawable/"+objet.getNombre());
+				 imgObjeto.setImageURI(uri);
+			}
+		}
+		
 	}
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
