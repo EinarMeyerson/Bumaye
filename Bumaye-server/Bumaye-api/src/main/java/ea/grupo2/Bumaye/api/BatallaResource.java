@@ -12,6 +12,7 @@ import javax.ws.rs.ServerErrorException;
 
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.Motor.BumayeInterface;
@@ -50,6 +51,18 @@ public class BatallaResource {
 		    return batallaVO;
 		}
 		
+		
+		@Path("/combinacion/{objeto1}/{objeto2}")
+		@GET
+		@Produces(MediaType.API_BATALLA)
+		public ObjetoVO combinacion (@PathParam("objeto1") String objeto1,@PathParam("objeto2") String objeto2 ){
+			BumayeInterface  m = new OperacionesBBDD();
+			
+			ObjetoVO objetoVO = null;
+			objetoVO = m.combinacion(objeto1, objeto2);
+				
+		    return objetoVO;
+		}
 		
 		//CAMBIARLAAAAAAAAAAAAAA ES UNA CHAPUZA PARA HACER UNA PRUEBA
 //		

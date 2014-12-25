@@ -16,11 +16,13 @@ import java.util.Scanner;
 
 
 
+
 import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 
 
 
@@ -88,24 +90,24 @@ public class OperacionesBBDD implements BumayeInterface{
 		
 		
 		//16 max_runa_cristal_agua
-		m.addObjeto(new Objeto ("max_runa_cristal_agua", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("max_runa_cristal_hoja", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("max_runa_cristal_nieve", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("max_runa_cristal_rayo", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("runa_cristal_agua", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("runa_cristal_hoja", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("runa_cristal_nieve", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("runa_cristal_rayo", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("runa_muerte", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("runa_agua", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("runa_agua2", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("runa_agua3", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("runa_rayo", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("runa_hoja", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("runa_nieve", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("pedrusco", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("piedra", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("runa_rayo2", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("max_runa_cristal_agua", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("max_runa_cristal_hoja", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("max_runa_cristal_nieve", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("max_runa_cristal_rayo", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("runa_cristal_agua", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("runa_cristal_hoja", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("runa_cristal_nieve", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("runa_cristal_rayo", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("runa_muerte", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("runa_agua", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("runa_agua2", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("runa_agua3", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("runa_rayo", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("runa_hoja", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("runa_nieve", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("pedrusco", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("piedra", null, 70, "Piedra", "Seta azul",70));
+//		m.addObjeto(new Objeto ("runa_rayo2", null, 70, "Piedra", "Seta azul",70));
 		//33 la ultima
 		
 
@@ -199,7 +201,7 @@ public class OperacionesBBDD implements BumayeInterface{
 		      m.añadirObjetos(10, 1);
 		      m.añadirObjetos(11, 1);
 		      m.añadirObjetos(13, 1);
-		      m.añadirObjetos(16, 1);
+//		      m.añadirObjetos(16, 1);
 		      System.out.print("Objetos añadias a jugador1");
 		      
 		      m.añadirObjetos(2, 2);
@@ -210,27 +212,27 @@ public class OperacionesBBDD implements BumayeInterface{
 		      m.añadirObjetos(10, 2);
 		      m.añadirObjetos(11, 2);
 		      m.añadirObjetos(13, 2);
-		      m.añadirObjetos(16, 2);
+//		      m.añadirObjetos(16, 2);
 		      System.out.print("Objetos añadias a jugador2");
 		      
-		      m.añadirObjetos(16, 3);
-		      m.añadirObjetos(17, 3);
-		      m.añadirObjetos(18, 3);
-		      m.añadirObjetos(19, 3);
-		      m.añadirObjetos(20, 3);
-		      m.añadirObjetos(21, 3);
-		      m.añadirObjetos(22, 3);
-		      m.añadirObjetos(23, 3);
-		      m.añadirObjetos(24, 3);
-		      m.añadirObjetos(25, 3);
-		      m.añadirObjetos(26, 3);
-		      m.añadirObjetos(27, 3);
-		      m.añadirObjetos(28, 3);
-		      m.añadirObjetos(29, 3);
-		      m.añadirObjetos(30, 3);
-		      m.añadirObjetos(31, 3);
-		      m.añadirObjetos(32, 3);
-		      m.añadirObjetos(33, 3);
+//		      m.añadirObjetos(16, 3);
+//		      m.añadirObjetos(17, 3);
+//		      m.añadirObjetos(18, 3);
+//		      m.añadirObjetos(19, 3);
+//		      m.añadirObjetos(20, 3);
+//		      m.añadirObjetos(21, 3);
+//		      m.añadirObjetos(22, 3);
+//		      m.añadirObjetos(23, 3);
+//		      m.añadirObjetos(24, 3);
+//		      m.añadirObjetos(25, 3);
+//		      m.añadirObjetos(26, 3);
+//		      m.añadirObjetos(27, 3);
+//		      m.añadirObjetos(28, 3);
+//		      m.añadirObjetos(29, 3);
+//		      m.añadirObjetos(30, 3);
+//		      m.añadirObjetos(31, 3);
+//		      m.añadirObjetos(32, 3);
+//		      m.añadirObjetos(33, 3);
 		      System.out.print("Objetos añadias a jugador3");
 
 
@@ -1096,6 +1098,79 @@ public class OperacionesBBDD implements BumayeInterface{
 		}
 		System.out.println(s);
 		return s;
+	}
+
+
+
+	@Override
+	public List<ObjetoVO> listaObjetosUsr(int iduser) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		UsrPersonaje u = new UsrPersonaje();
+		List<ObjetoVO> ObjetoVOfin = new ArrayList<ObjetoVO>();
+
+		try{
+			transaction = session.beginTransaction();
+			u = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
+			if (u != null) {
+
+				////
+				List<Objeto> inventario = u.getInventario();              
+				for (Objeto obj: inventario) {
+					ObjetoVOfin.add(new ObjetoVO(obj.getIdobjeto(), obj.getNombre(), obj.getRareza(), obj.getTipo(), obj.getCombo1(), obj.getCombo2(), obj.getExito()));
+				}
+				////
+
+				transaction.commit();
+
+			}
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return ObjetoVOfin;
+	}
+
+
+
+	@Override
+	public ObjetoVO combinacion(String objeto1, String objeto2) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		ObjetoVO objvo= null;
+		//      UsrPersonaje usrper = null;
+		try{
+			transaction = session.beginTransaction();   
+			//          usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
+			Query query = session.createQuery("select idobjeto from Objeto where (combo1= :objeto1 and combo2= :objeto2) or (combo1= :objeto2 and combo2= :objeto1)");
+			query.setParameter("objeto1",objeto1);
+			query.setParameter("objeto2", objeto2);            
+			int results = (Integer)query.uniqueResult();
+			if (results >0 ) {
+				Objeto obj = (Objeto)session.load(Objeto.class, results);
+				objvo = new ObjetoVO(obj.getIdobjeto(), obj.getNombre(), obj.getRareza(), obj.getTipo(), obj.getCombo1(), obj.getCombo2(), obj.getExito());
+				transaction.commit();
+				System.out.print("Combinacion1 realizada sin contar suerte");
+			}
+
+		}
+
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+
+		return objvo;
 	}
 
 
