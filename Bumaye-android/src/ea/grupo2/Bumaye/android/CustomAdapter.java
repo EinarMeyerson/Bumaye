@@ -53,6 +53,7 @@ public class CustomAdapter extends BaseAdapter{
 		holder.tv=(TextView) rowView.findViewById(R.id.nombre_objeto);
 		holder.img=(ImageView) rowView.findViewById(R.id.imagen_objeto);       
 		holder.tv.setText(result[position]);
+		rowView.setTag(holder.tv.getText());
 		
 		Uri uri = Uri.parse("android.resource://ea.grupo2.Bumaye.android/drawable/"+ holder.tv.getText());
 		
