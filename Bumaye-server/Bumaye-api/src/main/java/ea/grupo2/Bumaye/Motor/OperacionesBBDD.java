@@ -17,11 +17,13 @@ import java.util.Scanner;
 
 
 
+
 import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 
 
 
@@ -1117,6 +1119,7 @@ public class OperacionesBBDD implements BumayeInterface{
 				////
 				List<Objeto> inventario = u.getInventario();              
 				for (Objeto obj: inventario) {
+					System.out.print("obj: "+obj.getNombre());
 					ObjetoVOfin.add(new ObjetoVO(obj.getIdobjeto(), obj.getNombre(), obj.getRareza(), obj.getTipo(), obj.getCombo1(), obj.getCombo2(), obj.getExito()));
 				}
 				////
@@ -1139,39 +1142,61 @@ public class OperacionesBBDD implements BumayeInterface{
 
 
 
-	@Override
-	public ObjetoVO combinacion(String objeto1, String objeto2) {
+	@Override		
+	public ObjetoVO combinacion(int iduser, String objeto1, String objeto2) throws Exception{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		ObjetoVO objvo= null;
 		//      UsrPersonaje usrper = null;
-		try{
-			transaction = session.beginTransaction();   
-			//          usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
-			Query query = session.createQuery("select idobjeto from Objeto where (combo1= :objeto1 and combo2= :objeto2) or (combo1= :objeto2 and combo2= :objeto1)");
-			query.setParameter("objeto1",objeto1);
-			query.setParameter("objeto2", objeto2);            
-			int results = (Integer)query.uniqueResult();
-			if (results >0 ) {
-				Objeto obj = (Objeto)session.load(Objeto.class, results);
-				objvo = new ObjetoVO(obj.getIdobjeto(), obj.getNombre(), obj.getRareza(), obj.getTipo(), obj.getCombo1(), obj.getCombo2(), obj.getExito());
-				transaction.commit();
-				System.out.print("Combinacion1 realizada sin contar suerte");
+		if(VerificarObjeto(objeto1, iduser)==true && VerificarObjeto(objeto2, iduser)==true){
+
+			try{
+				transaction = session.beginTransaction();   
+				//          usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
+				Query query = session.createQuery("select idobjeto from Objeto where (combo1= :objeto1 and combo2= :objeto2) or (combo1= :objeto2 and combo2= :objeto1)");
+				query.setParameter("objeto1",objeto1);
+				query.setParameter("objeto2", objeto2);            
+				int results = (Integer)query.uniqueResult();
+				if (results >0 ) {
+					Objeto obj = (Objeto)session.load(Objeto.class, results);
+					objvo = new ObjetoVO(obj.getIdobjeto(), obj.getNombre(), obj.getRareza(), obj.getTipo(), obj.getCombo1(), obj.getCombo2(), obj.getExito());
+					transaction.commit();
+					System.out.print("Combinacion1 realizada sin contar suerte");
+				}
+	
 			}
+	
+			catch(HibernateException e)
+			{
+				transaction.rollback();
+				e.printStackTrace();
+			}
+			finally {
+				session.close();
+			}
+	
+			return objvo;
 
 		}
+		else{
+			throw new NoTienesEseObjetoException();
 
-		catch(HibernateException e)
-		{
-			transaction.rollback();
-			e.printStackTrace();
 		}
-		finally {
-			session.close();
-		}
-
-		return objvo;
 	}
 
+	@Override
+	public boolean VerificarObjeto(String nombreObjeto , int idPersonajeVO) throws Exception {
+		PersonajeVO personajeVO = getPersonaje(idPersonajeVO);
+		personajeVO.setInventario(listaObjetosUsr(idPersonajeVO));
+		if ( personajeVO.getObjetoVO(nombreObjeto) != null){
+			System.out.print("entramos dentro del if de verificar objeto \n");
+			return true;
+		}
+		else{
+			System.out.print("entramos dentro del else de verificar objeto \n");
 
+			return false;
+		}
+	}
+	
 }

@@ -18,6 +18,7 @@ import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.Motor.BumayeInterface;
 import ea.grupo2.Bumaye.Motor.NoEsTuTurnoException;
 import ea.grupo2.Bumaye.Motor.NoTienesEseAtaqueException;
+import ea.grupo2.Bumaye.Motor.NoTienesEseObjetoException;
 import ea.grupo2.Bumaye.Motor.OperacionesBBDD;
 
 @Path("/batalla")
@@ -52,14 +53,22 @@ public class BatallaResource {
 		}
 		
 		
-		@Path("/combinacion/{objeto1}/{objeto2}")
+		@Path("/{idpersonaje}/combinacion/{objeto1}/{objeto2}")
 		@GET
 		@Produces(MediaType.API_BATALLA)
-		public ObjetoVO combinacion (@PathParam("objeto1") String objeto1,@PathParam("objeto2") String objeto2 ){
+		public ObjetoVO combinacion (@PathParam("idpersonaje") int idpersonaje, @PathParam("objeto1") String objeto1,@PathParam("objeto2") String objeto2 ) throws Exception{
 			BumayeInterface  m = new OperacionesBBDD();
 			
+				
+		    
+		    
 			ObjetoVO objetoVO = null;
-			objetoVO = m.combinacion(objeto1, objeto2);
+			try{
+				objetoVO = m.combinacion(idpersonaje,objeto1, objeto2);
+			}
+			catch(NoTienesEseObjetoException e){
+				throw e;
+			}
 				
 		    return objetoVO;
 		}

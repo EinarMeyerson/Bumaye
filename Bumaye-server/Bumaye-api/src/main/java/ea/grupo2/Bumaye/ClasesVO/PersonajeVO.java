@@ -18,7 +18,7 @@ public class PersonajeVO {
 	private List<ObjetoVO> inventario;
 	HashMap<Integer, ArmaArmaduraVO> mapArmaArmaduraVO = new HashMap<Integer, ArmaArmaduraVO>();
 	HashMap<Integer, AtaqueVO> mapAtaqueVO = new HashMap<Integer, AtaqueVO>();
-	HashMap<Integer, ObjetoVO> mapObjetoVO = new HashMap<Integer, ObjetoVO>();
+	HashMap<String, ObjetoVO> mapObjetoVO = new HashMap<String, ObjetoVO>();
 
 
 	public PersonajeVO (){
@@ -166,16 +166,16 @@ public class PersonajeVO {
 
 
 	public void setInventario(List<ObjetoVO> inventario) {
-		for (ObjetoVO obj : inventario) mapObjetoVO.put(obj.getIdobjeto(),obj);
+		for (ObjetoVO obj : inventario) mapObjetoVO.put(obj.getNombre(),obj);
 		this.inventario = inventario;
 	}
 	public void addInventario(ObjetoVO objeto) {
-		mapObjetoVO.put(objeto.getIdobjeto(), objeto);
+		mapObjetoVO.put(objeto.getNombre(), objeto);
 		inventario.add(objeto);
 	}
 	
-    public ObjetoVO getObjetoVO(int idObjetoVO) {
-    	ObjetoVO objetoVO = mapObjetoVO.get(idObjetoVO);
+    public ObjetoVO getObjetoVO(String nombreObjeto) {
+    	ObjetoVO objetoVO = mapObjetoVO.get(nombreObjeto);
         return objetoVO;
         
     }
