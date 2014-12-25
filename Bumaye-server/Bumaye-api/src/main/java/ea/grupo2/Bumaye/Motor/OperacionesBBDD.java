@@ -18,6 +18,8 @@ import java.util.Scanner;
 
 
 
+
+
 import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -35,10 +37,13 @@ import org.hibernate.Transaction;
 
 
 
+
+
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.ListBatallasVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
@@ -48,6 +53,7 @@ import ea.grupo2.Bumaye.pojos.ArmasArmaduras;
 import ea.grupo2.Bumaye.pojos.Ataques;
 import ea.grupo2.Bumaye.pojos.Batalla;
 import ea.grupo2.Bumaye.pojos.Objeto;
+import ea.grupo2.Bumaye.pojos.ObjetoCantidad;
 import ea.grupo2.Bumaye.pojos.UsrPersonaje;
 
 public class OperacionesBBDD implements BumayeInterface{    
@@ -198,6 +204,32 @@ public class OperacionesBBDD implements BumayeInterface{
 		      m.añadirObjetos(2, 1);
 		      m.añadirObjetos(3, 1);
 		      m.añadirObjetos(6, 1);
+		      m.añadirObjetos(7, 1);
+		      m.añadirObjetos(9, 1);
+		      m.añadirObjetos(10, 1);
+		      m.añadirObjetos(11, 1);
+		      m.añadirObjetos(13, 1);
+//		      m.añadirObjetos(16, 1);
+		      System.out.print("Objetos añadias a jugador1");
+		      
+		      m.añadirObjetos(2, 2);
+		      m.añadirObjetos(3, 2);
+		      m.añadirObjetos(6, 2);
+		      m.añadirObjetos(7, 2);
+		      m.añadirObjetos(9, 2);
+		      m.añadirObjetos(10, 2);
+		      m.añadirObjetos(11, 2);
+		      m.añadirObjetos(13, 2);
+//		      m.añadirObjetos(16, 2);
+		      System.out.print("Objetos añadias a jugador2");
+		      
+		      /* AÑADIR OBJETOS A PERSONAJES */
+		      m.añadirObjetos(2, 1);
+		      m.añadirObjetos(3, 1);
+		      m.añadirObjetos(6, 1);
+		      m.añadirObjetos(7, 1);
+		      m.añadirObjetos(9, 1);
+		      m.añadirObjetos(10, 1);
 		      m.añadirObjetos(7, 1);
 		      m.añadirObjetos(9, 1);
 		      m.añadirObjetos(10, 1);
@@ -576,7 +608,7 @@ public class OperacionesBBDD implements BumayeInterface{
 		Transaction transaction = null;
 		PersonajeVO personajelog = null;
 		List<ArmaArmaduraVO> armaduraspersonaje = new ArrayList<ArmaArmaduraVO>();
-		List<ObjetoVO> listobjetos = new ArrayList<ObjetoVO>();
+		List<ObjetoCantidadVO> listobjetos = new ArrayList<ObjetoCantidadVO>();
 		try{
 			transaction = session.beginTransaction();
 			System.out.print("Usuario: " + userlog.getUsername() + " Contraseña : " + userlog.getPass());
@@ -603,10 +635,13 @@ public class OperacionesBBDD implements BumayeInterface{
 				
 				//Añadimos los objetos al personaje VO
 				for (Objeto objeto: u.getInventario()) {
-					//Sacar armaduras y ataques y pasarselos al personaje
-					ObjetoVO obj= new ObjetoVO(objeto.getIdobjeto(), objeto.getNombre(), objeto.getRareza(), objeto.getTipo(), objeto.getCombo1(), objeto.getCombo2(), objeto.getExito());
+					Query query2 = session.createQuery("from ObjetoCantidad where idUser= :iduser and idobjeto= :idobjeto");
+					query2.setParameter("idobjeto",objeto.getIdobjeto());
+					query2.setParameter("iduser", personajelog.getIduser());            
+					ObjetoCantidad objetocantidad = (ObjetoCantidad) query2.uniqueResult();
+					ObjetoCantidadVO objcan= new ObjetoCantidadVO(objeto.getIdobjeto(), objeto.getNombre(), objeto.getRareza(), objeto.getTipo(), objeto.getCombo1(), objeto.getCombo2(), objeto.getExito(), objetocantidad.getCantidad());
 					
-					listobjetos.add(obj);
+					listobjetos.add(objcan);
 				}
 				personajelog.setInventario(listobjetos);				
 			}
@@ -1079,12 +1114,43 @@ public class OperacionesBBDD implements BumayeInterface{
 		String s="Objeto rechazado";
 		UsrPersonaje usrper = null;
 		Objeto objeto = null;
+		ObjetoCantidad objetocantidad = new ObjetoCantidad();
+
 		try{
 			transaction = session.beginTransaction();   
 			usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
 			if (usrper != null) {
 				objeto = (Objeto)session.load(Objeto.class, idobjeto);
 				usrper.addInventario(objeto);
+				
+				
+				Query query = session.createQuery("from ObjetoCantidad where idUser= :iduser and idobjeto= :idobjeto");
+				query.setParameter("idobjeto",idobjeto);
+				query.setParameter("iduser", iduser);            
+				objetocantidad = (ObjetoCantidad) query.uniqueResult();
+				if (objetocantidad !=null ) {
+
+					Query query2 = session.createQuery("update ObjetoCantidad set cantidad= :cantidad where idobjeto= :idobjeto and idUser= :iduser");
+					query2.setParameter("cantidad",objetocantidad.getCantidad()+1);
+					query2.setParameter("idobjeto",idobjeto);
+					query2.setParameter("iduser", iduser);            
+					if (query2.executeUpdate() >0 ) {
+//						transaction.commit();
+						System.out.print("ya hay una entrada y sumamos +1 en el objeto añadido\n");
+					}
+				}
+
+				else{
+					ObjetoCantidad objetocantidad2 = new ObjetoCantidad();
+					objetocantidad2.setCantidad(1);
+					objetocantidad2.setObjeto(objeto);;
+					objetocantidad2.setUsrPersonaje(usrper);;
+					session.save(objetocantidad2);
+					System.out.print("ya hay ninguna entrada la creamos\n");
+
+				}
+				
+				
 				transaction.commit();
 				s="Objeto acceptado";
 			}
@@ -1105,11 +1171,11 @@ public class OperacionesBBDD implements BumayeInterface{
 
 
 	@Override
-	public List<ObjetoVO> listaObjetosUsr(int iduser) {
+	public List<ObjetoCantidadVO> listaObjetosUsr(int iduser) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		UsrPersonaje u = new UsrPersonaje();
-		List<ObjetoVO> ObjetoVOfin = new ArrayList<ObjetoVO>();
+		List<ObjetoCantidadVO> ObjetoVOfin = new ArrayList<ObjetoCantidadVO>();
 
 		try{
 			transaction = session.beginTransaction();
@@ -1117,10 +1183,18 @@ public class OperacionesBBDD implements BumayeInterface{
 			if (u != null) {
 
 				////
-				List<Objeto> inventario = u.getInventario();              
-				for (Objeto obj: inventario) {
-					System.out.print("obj: "+obj.getNombre());
-					ObjetoVOfin.add(new ObjetoVO(obj.getIdobjeto(), obj.getNombre(), obj.getRareza(), obj.getTipo(), obj.getCombo1(), obj.getCombo2(), obj.getExito()));
+				List<ObjetoCantidad> inventario = u.getObjetocantidad();              
+				for (ObjetoCantidad obj: inventario) {
+					System.out.print("obj: "+obj.getObjeto().getNombre());
+					Query query2 = session.createQuery("from ObjetoCantidad where idUser= :iduser and idobjeto= :idobjeto");
+					query2.setParameter("idobjeto",obj.getObjeto().getIdobjeto());
+					query2.setParameter("iduser", u.getIduser());            
+					ObjetoCantidad objetocantidad = (ObjetoCantidad) query2.uniqueResult();
+					ObjetoVOfin.add(new ObjetoCantidadVO(obj.getObjeto().getIdobjeto(), obj.getObjeto().getNombre(), 
+							obj.getObjeto().getRareza(), obj.getObjeto().getTipo(), 
+							obj.getObjeto().getCombo1(), obj.getObjeto().getCombo2(), 
+							obj.getObjeto().getExito(), objetocantidad.getCantidad()));
+					
 				}
 				////
 
@@ -1188,7 +1262,7 @@ public class OperacionesBBDD implements BumayeInterface{
 	public boolean VerificarObjeto(String nombreObjeto , int idPersonajeVO) throws Exception {
 		PersonajeVO personajeVO = getPersonaje(idPersonajeVO);
 		personajeVO.setInventario(listaObjetosUsr(idPersonajeVO));
-		if ( personajeVO.getObjetoVO(nombreObjeto) != null){
+		if ( personajeVO.getObjetoCantidadVO(nombreObjeto) != null){
 			System.out.print("entramos dentro del if de verificar objeto \n");
 			return true;
 		}
