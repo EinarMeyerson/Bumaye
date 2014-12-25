@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Cofre {
@@ -29,6 +30,9 @@ public class Cofre {
 	@JoinTable(name = "Cofre_Objeto", joinColumns = { 
 			@JoinColumn(name = "idcofre")}, inverseJoinColumns = { @JoinColumn(name = "idobjeto")})
 	private List<Objeto> lista_objetos;
+	
+	 @OneToMany(mappedBy="cofre", fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
+		private List<ObjetoCofreCantidad> objetoscofrecantidads;
 	
 	public Cofre (){
     }
@@ -71,4 +75,23 @@ public class Cofre {
 	public void setLista_objetos(List<Objeto> lista_objetos) {
 		this.lista_objetos = lista_objetos;
 	}
+
+
+	public List<ObjetoCofreCantidad> getObjetoscofrecantidads() {
+		return objetoscofrecantidads;
+	}
+
+
+	public void setObjetoscofrecantidads(
+			List<ObjetoCofreCantidad> objetoscofrecantidads) {
+		this.objetoscofrecantidads = objetoscofrecantidads;
+	}
+	
+	public void addObjetocofrecantidad(ObjetoCofreCantidad objetocofrecantidad) {
+		objetoscofrecantidads.add(objetocofrecantidad);
+    }
+	
+	public void addlistaobjetos(Objeto objeto) {
+		lista_objetos.add(objeto);
+    }
 }

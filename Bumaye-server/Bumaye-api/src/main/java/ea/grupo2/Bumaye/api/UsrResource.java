@@ -67,4 +67,13 @@ public class UsrResource {
 	    return objetoscantida;
 	}
 	
+	@Path("/listaobjetoscofre/{idcofre}")
+	@GET
+	@Produces(MediaType.API_OBJETOS)
+	public List<ObjetoCantidadVO> listaObjetosCofre (@PathParam("idcofre") int idcofre) {
+		BumayeInterface  m = new OperacionesBBDD();
+		List<ObjetoCantidadVO> objetoscantida = m.listaObjetosCofre(idcofre);
+		
+	    return objetoscantida;
+	}
 }

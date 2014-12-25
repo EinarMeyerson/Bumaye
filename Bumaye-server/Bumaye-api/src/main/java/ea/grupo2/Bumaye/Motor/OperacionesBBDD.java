@@ -20,11 +20,19 @@ import java.util.Scanner;
 
 
 
+
+
+
+
 import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+
+
+
 
 
 
@@ -52,8 +60,10 @@ import ea.grupo2.Bumaye.hibernate.HibernateUtil;
 import ea.grupo2.Bumaye.pojos.ArmasArmaduras;
 import ea.grupo2.Bumaye.pojos.Ataques;
 import ea.grupo2.Bumaye.pojos.Batalla;
+import ea.grupo2.Bumaye.pojos.Cofre;
 import ea.grupo2.Bumaye.pojos.Objeto;
 import ea.grupo2.Bumaye.pojos.ObjetoCantidad;
+import ea.grupo2.Bumaye.pojos.ObjetoCofreCantidad;
 import ea.grupo2.Bumaye.pojos.UsrPersonaje;
 
 public class OperacionesBBDD implements BumayeInterface{    
@@ -75,6 +85,7 @@ public class OperacionesBBDD implements BumayeInterface{
 
 		/* OBJETOS  */
 		//(nombre objeto, tipo, rareza, combo1, combo2, %exito)
+		
 
 		m.addObjeto(new Objeto ("Poción", "vida", 40, "Hierba", "Seta",90));
 		m.addObjeto(new Objeto ("Hierba", null, 10, null, null,100));
@@ -95,6 +106,63 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.addObjeto(new Objeto ("Barra Bronce", null, 50, "Min Bronce", "Herreria",70));
 		m.addObjeto(new Objeto ("Barra Oro", null, 50, "Min Oro", "Herreria",60));
 		m.addObjeto(new Objeto ("Barra Drag", null, 50, "Min Drag", "Herreria",50));
+		
+		
+		
+		/* COFRES  */
+		//(longitud, latitud)
+		m.addCofre(new Cofre(15, 20));
+		m.addCofre(new Cofre(38, 22));
+		m.addCofre(new Cofre(3, 24));
+
+		/* AÑADIR OBJETOS A COFRE */
+	      m.añadirObjetosCofre(2, 1);
+	      m.añadirObjetosCofre(3, 1);
+	      m.añadirObjetosCofre(6, 1);
+	      m.añadirObjetosCofre(7, 1);
+	      m.añadirObjetosCofre(9, 1);
+	      m.añadirObjetosCofre(10, 1);
+	      m.añadirObjetosCofre(11, 1);
+	      m.añadirObjetosCofre(13, 1);
+	      System.out.print("Objetos añadias a cofre1");
+	      
+	      m.añadirObjetosCofre(2, 2);
+	      m.añadirObjetosCofre(3, 2);
+	      m.añadirObjetosCofre(6, 2);
+	      m.añadirObjetosCofre(7, 2);
+	      m.añadirObjetosCofre(9, 2);
+	      m.añadirObjetosCofre(10, 2);
+	      m.añadirObjetosCofre(11, 2);
+	      m.añadirObjetosCofre(13, 2);
+//	      m.añadirObjetos(16, 2);
+	      System.out.print("Objetos añadias a cofre2");
+	      
+	      /* AÑADIR OBJETOS A COFRE */
+	      m.añadirObjetosCofre(2, 1);
+	      m.añadirObjetosCofre(3, 1);
+	      m.añadirObjetosCofre(6, 1);
+	      m.añadirObjetosCofre(7, 1);
+	      m.añadirObjetosCofre(9, 1);
+	      m.añadirObjetosCofre(10, 1);
+	      m.añadirObjetosCofre(7, 1);
+	      m.añadirObjetosCofre(9, 1);
+	      m.añadirObjetosCofre(10, 1);
+	      m.añadirObjetosCofre(11, 1);
+	      m.añadirObjetosCofre(13, 1);
+//	      m.añadirObjetos(16, 1);
+	      System.out.print("Objetos añadias a cofre1");
+	      
+	      m.añadirObjetosCofre(2, 2);
+	      m.añadirObjetosCofre(3, 2);
+	      m.añadirObjetosCofre(6, 2);
+	      m.añadirObjetosCofre(7, 2);
+	      m.añadirObjetosCofre(9, 2);
+	      m.añadirObjetosCofre(10, 2);
+	      m.añadirObjetosCofre(11, 2);
+	      m.añadirObjetosCofre(13, 2);
+//	      m.añadirObjetos(16, 2);
+	      System.out.print("Objetos añadias a cofre2");
+		
 		
 		
 		//16 max_runa_cristal_agua
@@ -545,7 +613,6 @@ public class OperacionesBBDD implements BumayeInterface{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 
 	@Override
@@ -1272,5 +1339,145 @@ public class OperacionesBBDD implements BumayeInterface{
 			return false;
 		}
 	}
-	
+
+
+
+	@Override
+	public String añadirObjetosCofre(int idobjeto, int idCofre) {
+		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		String s="Objetocofre rechazado";
+		Cofre cofre = null;
+		Objeto objeto = null;
+		ObjetoCofreCantidad objetocofrecantidad = new ObjetoCofreCantidad();
+
+		try{
+			transaction = session.beginTransaction();   
+			cofre = (Cofre)session.load(Cofre.class, idCofre);
+			System.out.print("***********************"+cofre.getLatitud()+"\n");
+
+			if (cofre != null) {
+				objeto = (Objeto)session.load(Objeto.class, idobjeto);
+				cofre.addlistaobjetos(objeto);;
+				
+				
+				Query query = session.createQuery("from ObjetoCofreCantidad where idCofre= :idcofre and idobjeto= :idobjeto");
+				query.setParameter("idobjeto",idobjeto);
+				query.setParameter("idcofre", idCofre);            
+				objetocofrecantidad = (ObjetoCofreCantidad) query.uniqueResult();
+				if (objetocofrecantidad !=null ) {
+
+					Query query2 = session.createQuery("update ObjetoCofreCantidad set cantidad= :cantidad where idobjeto= :idobjeto and idCofre= :idcofre");
+					query2.setParameter("cantidad",objetocofrecantidad.getCantidad()+1);
+					query2.setParameter("idobjeto",idobjeto);
+					query2.setParameter("idcofre", idCofre);            
+					if (query2.executeUpdate() >0 ) {
+//						transaction.commit();
+						System.out.print("ya hay una entrada y sumamos +1 en el objetocofre añadido\n");
+					}
+				}
+
+				else{
+					System.out.print("##############################################\n");
+
+					ObjetoCofreCantidad objetocofrecantidad2 = new ObjetoCofreCantidad();
+					objetocofrecantidad2.setCantidad(1);
+					objetocofrecantidad2.setObjeto(objeto);
+					objetocofrecantidad2.setCofre(cofre);
+					session.save(objetocofrecantidad2);
+					System.out.print("ya hay ninguna entrada la creamos (cofre)\n");
+
+				}
+				
+				
+				transaction.commit();
+				s="Objeto cofre acceptado";
+			}
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		System.out.println(s);
+		return s;
+	}
+
+
+
+	@Override
+	public List<ObjetoCantidadVO> listaObjetosCofre(int idCofre) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		Cofre cofre = new Cofre();
+		List<ObjetoCantidadVO> ObjetoVOfin = new ArrayList<ObjetoCantidadVO>();
+
+		try{
+			transaction = session.beginTransaction();
+			cofre = (Cofre)session.load(Cofre.class, idCofre);
+			if (cofre != null) {
+
+				////
+				List<ObjetoCofreCantidad> inventariocofre = cofre.getObjetoscofrecantidads();              
+				for (ObjetoCofreCantidad objcofre: inventariocofre) {
+					System.out.print("obj: "+objcofre.getObjeto().getNombre());
+					Query query2 = session.createQuery("from ObjetoCofreCantidad where idCofre= :idcofre and idobjeto= :idobjeto");
+					query2.setParameter("idobjeto",objcofre.getObjeto().getIdobjeto());
+					query2.setParameter("idcofre",cofre.getIdcofre());            
+					ObjetoCofreCantidad objetocofrecantidad = (ObjetoCofreCantidad) query2.uniqueResult();
+					ObjetoVOfin.add(new ObjetoCantidadVO(objcofre.getObjeto().getIdobjeto(), objcofre.getObjeto().getNombre(), 
+							objcofre.getObjeto().getRareza(), objcofre.getObjeto().getTipo(), 
+							objcofre.getObjeto().getCombo1(), objcofre.getObjeto().getCombo2(), 
+							objcofre.getObjeto().getExito(), objetocofrecantidad.getCantidad()));
+					
+				}
+				////
+
+				transaction.commit();
+
+			}
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return ObjetoVOfin;
+	}
+
+
+
+	@Override
+	public String addCofre(Cofre cofre) {
+		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try{
+			transaction = session.beginTransaction();
+			//colecionUsers.addUser(usuario);
+			session.save(cofre);
+			System.out.println("Cofre añadido");
+			transaction.commit();
+			return "Cofre añadido";
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+			return "Cofre no añadido";
+		}
+		finally {
+			session.close();
+		}
+	}
+
 }
