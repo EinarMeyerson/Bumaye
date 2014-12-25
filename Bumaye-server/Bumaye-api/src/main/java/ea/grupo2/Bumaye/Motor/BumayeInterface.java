@@ -6,8 +6,13 @@ import java.util.List;
 
 
 
+
+
+
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
@@ -23,6 +28,9 @@ public interface BumayeInterface {
 	//funciones de objetos
 	public String addObjeto(Objeto objeto);
 	public String añadirObjetos(int idobjeto, int iduser);
+    public List<ObjetoCantidadVO> listaObjetosUsr(int iduser);
+    public ObjetoVO combinacion(int iduser, String objeto1, String objeto2) throws Exception;
+    public boolean VerificarObjeto(String objeto , int idPersonajeVO) throws Exception;
 	
 	//funciones de cofre
 	

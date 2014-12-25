@@ -12,11 +12,13 @@ import javax.ws.rs.ServerErrorException;
 
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.Motor.BumayeInterface;
 import ea.grupo2.Bumaye.Motor.NoEsTuTurnoException;
 import ea.grupo2.Bumaye.Motor.NoTienesEseAtaqueException;
+import ea.grupo2.Bumaye.Motor.NoTienesEseObjetoException;
 import ea.grupo2.Bumaye.Motor.OperacionesBBDD;
 
 @Path("/batalla")
@@ -50,6 +52,26 @@ public class BatallaResource {
 		    return batallaVO;
 		}
 		
+		
+		@Path("/{idpersonaje}/combinacion/{objeto1}/{objeto2}")
+		@GET
+		@Produces(MediaType.API_BATALLA)
+		public ObjetoVO combinacion (@PathParam("idpersonaje") int idpersonaje, @PathParam("objeto1") String objeto1,@PathParam("objeto2") String objeto2 ) throws Exception{
+			BumayeInterface  m = new OperacionesBBDD();
+			
+				
+		    
+		    
+			ObjetoVO objetoVO = null;
+			try{
+				objetoVO = m.combinacion(idpersonaje,objeto1, objeto2);
+			}
+			catch(NoTienesEseObjetoException e){
+				throw e;
+			}
+				
+		    return objetoVO;
+		}
 		
 		//CAMBIARLAAAAAAAAAAAAAA ES UNA CHAPUZA PARA HACER UNA PRUEBA
 //		

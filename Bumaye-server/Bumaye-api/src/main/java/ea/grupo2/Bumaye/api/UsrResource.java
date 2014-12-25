@@ -10,6 +10,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
@@ -55,4 +56,15 @@ public class UsrResource {
 		
 	    return logeados;
 	}
+	
+	@Path("/listaobjetos/{idusuario}")
+	@GET
+	@Produces(MediaType.API_OBJETOS)
+	public List<ObjetoCantidadVO> listaObjetosPersonaje (@PathParam("idusuario") int idusuario) {
+		BumayeInterface  m = new OperacionesBBDD();
+		List<ObjetoCantidadVO> objetoscantida = m.listaObjetosUsr(idusuario);
+		
+	    return objetoscantida;
+	}
+	
 }

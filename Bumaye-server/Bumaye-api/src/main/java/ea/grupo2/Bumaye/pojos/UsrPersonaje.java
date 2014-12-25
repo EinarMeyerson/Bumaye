@@ -2,6 +2,7 @@
  
 import java.util.List;
  
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,6 +51,9 @@ public class UsrPersonaje {
             @JoinColumn(name = "iduser")}, inverseJoinColumns = { @JoinColumn(name = "idobjeto")})
     private List<Objeto> inventario;
      
+    @OneToMany(mappedBy="usrPersonaje", fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
+	private List<ObjetoCantidad> objetoscantidads;
+    
     public UsrPersonaje (){
     }
      
@@ -168,5 +172,18 @@ public class UsrPersonaje {
 	public void addInventario(Objeto objeto) {
 		inventario.add(objeto);
     }
-     
+
+
+	public List<ObjetoCantidad> getObjetocantidad() {
+		return objetoscantidads;
+	}
+
+
+	public void setObjetocantidad(List<ObjetoCantidad> objetoscantidads) {
+		this.objetoscantidads = objetoscantidads;
+	}
+	public void addObjetocantidad(ObjetoCantidad objetocantidad) {
+		objetoscantidads.add(objetocantidad);
+    }
+
 }
