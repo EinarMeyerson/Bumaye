@@ -94,4 +94,7 @@ public class Cofre {
 	public void addlistaobjetos(Objeto objeto) {
 		lista_objetos.add(objeto);
     }
+	public void removelistaobjetos(Objeto objeto) {
+		lista_objetos.remove(objeto);
+    }
 }

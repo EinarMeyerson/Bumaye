@@ -24,6 +24,10 @@ import java.util.Scanner;
 
 
 
+
+
+
+
 import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -47,9 +51,14 @@ import org.hibernate.Transaction;
 
 
 
+
+
+
+
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
+import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.ListBatallasVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
@@ -371,6 +380,11 @@ public class OperacionesBBDD implements BumayeInterface{
 		//      
 		//Elcolmo usa mazazo
 		//m.batalla(1);
+		
+		m.recogerObjetosCofre(1, 1, 7, 4);
+		m.recogerObjetosCofre(1, 1, 10, 3);
+		
+
 	}
 
 
@@ -1135,12 +1149,9 @@ public class OperacionesBBDD implements BumayeInterface{
 		PersonajeVO personajeVO = getPersonaje(idPersonajeVO);
 		personajeVO.setAtaques(listaAtaquesUsr(idPersonajeVO));
 		if ( personajeVO.getAtaqueVO(idataque) != null){
-			System.out.print("entramos dentro del if de verificar ataque \n");
 			return true;
 		}
 		else{
-			System.out.print("entramos dentro del else de verificar ataque \n");
-
 			return false;
 		}
 	}
@@ -1156,7 +1167,6 @@ public class OperacionesBBDD implements BumayeInterface{
 			transaction = session.beginTransaction();
 			//colecionUsers.addUser(usuario);
 			session.save(objeto);
-			System.out.println("Objeto añadido");
 			transaction.commit();
 			return "Objeto añadido";
 		}
@@ -1202,8 +1212,6 @@ public class OperacionesBBDD implements BumayeInterface{
 					query2.setParameter("idobjeto",idobjeto);
 					query2.setParameter("iduser", iduser);            
 					if (query2.executeUpdate() >0 ) {
-//						transaction.commit();
-						System.out.print("ya hay una entrada y sumamos +1 en el objeto añadido\n");
 					}
 				}
 
@@ -1213,7 +1221,6 @@ public class OperacionesBBDD implements BumayeInterface{
 					objetocantidad2.setObjeto(objeto);;
 					objetocantidad2.setUsrPersonaje(usrper);;
 					session.save(objetocantidad2);
-					System.out.print("ya hay ninguna entrada la creamos\n");
 
 				}
 				
@@ -1288,12 +1295,10 @@ public class OperacionesBBDD implements BumayeInterface{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		ObjetoVO objvo= null;
-		//      UsrPersonaje usrper = null;
 		if(VerificarObjeto(objeto1, iduser)==true && VerificarObjeto(objeto2, iduser)==true){
 
 			try{
 				transaction = session.beginTransaction();   
-				//          usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
 				Query query = session.createQuery("select idobjeto from Objeto where (combo1= :objeto1 and combo2= :objeto2) or (combo1= :objeto2 and combo2= :objeto1)");
 				query.setParameter("objeto1",objeto1);
 				query.setParameter("objeto2", objeto2);            
@@ -1302,7 +1307,6 @@ public class OperacionesBBDD implements BumayeInterface{
 					Objeto obj = (Objeto)session.load(Objeto.class, results);
 					objvo = new ObjetoVO(obj.getIdobjeto(), obj.getNombre(), obj.getRareza(), obj.getTipo(), obj.getCombo1(), obj.getCombo2(), obj.getExito());
 					transaction.commit();
-					System.out.print("Combinacion1 realizada sin contar suerte");
 				}
 	
 			}
@@ -1330,12 +1334,9 @@ public class OperacionesBBDD implements BumayeInterface{
 		PersonajeVO personajeVO = getPersonaje(idPersonajeVO);
 		personajeVO.setInventario(listaObjetosUsr(idPersonajeVO));
 		if ( personajeVO.getObjetoCantidadVO(nombreObjeto) != null){
-			System.out.print("entramos dentro del if de verificar objeto \n");
 			return true;
 		}
 		else{
-			System.out.print("entramos dentro del else de verificar objeto \n");
-
 			return false;
 		}
 	}
@@ -1355,8 +1356,6 @@ public class OperacionesBBDD implements BumayeInterface{
 		try{
 			transaction = session.beginTransaction();   
 			cofre = (Cofre)session.load(Cofre.class, idCofre);
-			System.out.print("***********************"+cofre.getLatitud()+"\n");
-
 			if (cofre != null) {
 				objeto = (Objeto)session.load(Objeto.class, idobjeto);
 				cofre.addlistaobjetos(objeto);;
@@ -1373,24 +1372,16 @@ public class OperacionesBBDD implements BumayeInterface{
 					query2.setParameter("idobjeto",idobjeto);
 					query2.setParameter("idcofre", idCofre);            
 					if (query2.executeUpdate() >0 ) {
-//						transaction.commit();
-						System.out.print("ya hay una entrada y sumamos +1 en el objetocofre añadido\n");
 					}
 				}
 
 				else{
-					System.out.print("##############################################\n");
-
 					ObjetoCofreCantidad objetocofrecantidad2 = new ObjetoCofreCantidad();
 					objetocofrecantidad2.setCantidad(1);
 					objetocofrecantidad2.setObjeto(objeto);
 					objetocofrecantidad2.setCofre(cofre);
 					session.save(objetocofrecantidad2);
-					System.out.print("ya hay ninguna entrada la creamos (cofre)\n");
-
 				}
-				
-				
 				transaction.commit();
 				s="Objeto cofre acceptado";
 			}
@@ -1425,7 +1416,6 @@ public class OperacionesBBDD implements BumayeInterface{
 				////
 				List<ObjetoCofreCantidad> inventariocofre = cofre.getObjetoscofrecantidads();              
 				for (ObjetoCofreCantidad objcofre: inventariocofre) {
-					System.out.print("obj: "+objcofre.getObjeto().getNombre());
 					Query query2 = session.createQuery("from ObjetoCofreCantidad where idCofre= :idcofre and idobjeto= :idobjeto");
 					query2.setParameter("idobjeto",objcofre.getObjeto().getIdobjeto());
 					query2.setParameter("idcofre",cofre.getIdcofre());            
@@ -1465,7 +1455,6 @@ public class OperacionesBBDD implements BumayeInterface{
 			transaction = session.beginTransaction();
 			//colecionUsers.addUser(usuario);
 			session.save(cofre);
-			System.out.println("Cofre añadido");
 			transaction.commit();
 			return "Cofre añadido";
 		}
@@ -1480,4 +1469,134 @@ public class OperacionesBBDD implements BumayeInterface{
 		}
 	}
 
+
+
+	@Override
+	public String eliminarObjetosCofre(int idUser, int idCofre,
+			int idObjeto) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		String s="No has podido recoger nada";
+		UsrPersonaje usrper = null;
+		Objeto objeto = null;
+		Cofre cofre = null;
+		ObjetoCofreCantidad objetocofrecantidad = new ObjetoCofreCantidad();
+
+		try{
+			transaction = session.beginTransaction();   
+			usrper = (UsrPersonaje)session.load(UsrPersonaje.class, idUser);
+			if (usrper != null) {
+				objeto = (Objeto)session.load(Objeto.class, idObjeto);
+
+				Query query = session.createQuery("from ObjetoCofreCantidad where idcofre= :idcofre and idobjeto= :idobjeto");
+				query.setParameter("idobjeto",idObjeto);
+				query.setParameter("idcofre", idCofre);            
+				objetocofrecantidad = (ObjetoCofreCantidad) query.uniqueResult();
+				if (objetocofrecantidad !=null ) {
+
+					Query query2 = session.createQuery("update ObjetoCofreCantidad set cantidad= :cantidad where idobjeto= :idobjeto and idcofre= :idcofre");
+					query2.setParameter("cantidad",objetocofrecantidad.getCantidad()-1);
+					query2.setParameter("idobjeto",idObjeto);
+					query2.setParameter("idcofre", idCofre);            
+					if (query2.executeUpdate() >0 ) {
+					}
+					cofre = (Cofre)session.load(Cofre.class, idCofre);
+					cofre.removelistaobjetos(objeto);
+				}	
+				transaction.commit();
+				s="Has recogido unos objetos";
+			}
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		System.out.println(s);
+		return s;
+	}
+
+
+
+	@Override
+	public String recogerObjetosCofre(int idUser, int idCofre, int idObjeto,
+			int cantidad) {
+		if (VerificarCantidadCofre(idCofre, idObjeto, cantidad)==true){
+			for(int i=0; i<cantidad; i++)
+			{
+				eliminarObjetosCofre(idUser, idCofre, idObjeto);
+				añadirObjetos(idObjeto, idUser);			
+			}
+			limpiezaObjetosCofre();
+			return "Has recogido con exito los objetos";
+
+		}
+		else{
+			return "Estas recogiendo un numero de objetos superior al que hay";
+		}
+	}
+
+
+
+	@Override
+	public boolean VerificarCantidadCofre(int idCofre, int idObjeto, int cantidad) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		ObjetoCofreCantidad objetocofrecantidad = null;
+		boolean s = false;
+		try{
+			Query query = session.createQuery("from ObjetoCofreCantidad where idcofre= :idcofre and idobjeto= :idobjeto");
+			query.setParameter("idobjeto",idObjeto);
+			query.setParameter("idcofre", idCofre);            
+			objetocofrecantidad = (ObjetoCofreCantidad) query.uniqueResult();
+
+			if (objetocofrecantidad.getCantidad() <cantidad){
+				s= false;
+				
+			}
+			else{
+				s= true;
+			}
+		}
+		catch(HibernateException e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return s;
+	}
+
+
+
+	@Override
+	public String limpiezaObjetosCofre() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try{
+			transaction = session.beginTransaction();   
+			//          usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
+			Query query = session.createQuery("delete from ObjetoCofreCantidad where cantidad= :cantidad");
+			query.setParameter("cantidad",0);
+			if (query.executeUpdate() >0 ) {
+				transaction.commit();
+			}
+
+		}
+
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+
+		return "Limpieza realizada";
+
+	}
 }

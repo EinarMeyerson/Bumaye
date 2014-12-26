@@ -10,8 +10,10 @@ import java.util.List;
 
 
 
+
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
+import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
@@ -38,8 +40,11 @@ public interface BumayeInterface {
 	public String addCofre(Cofre cofre);
 	public String añadirObjetosCofre(int idobjeto, int idCofre);
     public List<ObjetoCantidadVO> listaObjetosCofre(int idCofre);
-   
-    
+    public String eliminarObjetosCofre(int idUser, int idCofre, int idObjeto);
+    public String recogerObjetosCofre(int idUser, int idCofre, int idObjeto, int cantidad);
+	public boolean VerificarCantidadCofre(int idCofre, int idObjeto, int cantidad);
+    public String limpiezaObjetosCofre();
+
 	//funciones de inventario
      
     //funciones inreface de los Ataques
