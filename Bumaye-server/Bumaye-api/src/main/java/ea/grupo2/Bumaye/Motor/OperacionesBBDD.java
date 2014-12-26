@@ -1509,7 +1509,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			query2.setParameter("idobjeto",idObjeto);
 			ObjetoCantidad objetoCantidad = (ObjetoCantidad)query2.uniqueResult();
 			
-			if (inventario.size() <5 || objetoCantidad !=null) {
+			if (inventario.size() <20 || objetoCantidad !=null) {
 				s= true;
 				transaction.commit();
 			}
