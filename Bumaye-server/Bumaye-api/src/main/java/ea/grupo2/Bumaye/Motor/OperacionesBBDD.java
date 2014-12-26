@@ -105,103 +105,52 @@ public class OperacionesBBDD implements BumayeInterface{
 		//(nombre objeto, tipo, rareza, combo1, combo2, %exito)
 		
 
-		m.addObjeto(new Objeto ("Poción", "vida", 40, "Hierba", "Seta",90));
-		m.addObjeto(new Objeto ("Hierba", null, 10, null, null,100));
-		m.addObjeto(new Objeto ("Seta", null, 10, null, null,100));
+		m.addObjeto(new Objeto ("pocion", "vida", 40, "hierba", "seta",90));
+		m.addObjeto(new Objeto ("hierba", null, 10, null, null,100));
+		m.addObjeto(new Objeto ("seta", null, 10, null, null,100));
 
-		m.addObjeto(new Objeto ("Elixir", "ataque", 50, "Poción", "Runa roja",60));
-		m.addObjeto(new Objeto ("Runa roja", null, 70, "Piedra", "Seta roja",70));
-		m.addObjeto(new Objeto ("Seta roja", null, 30, null, null,100));
+		m.addObjeto(new Objeto ("elixir", "ataque", 50, "pocion", "runa_muerte",60));
+		m.addObjeto(new Objeto ("runa_muerte", null, 70, "piedra", "calavera",70));
+		m.addObjeto(new Objeto ("seta_roja", null, 30, null, null,100));
 
-		m.addObjeto(new Objeto ("Caldo", "defensa", 50, "Poción", "Runa azul",60));
-		m.addObjeto(new Objeto ("Runa azul", null, 70, "Piedra", "Seta azul",70));
-		m.addObjeto(new Objeto ("Seta azul", null, 30, null, null,100));
+		m.addObjeto(new Objeto ("caldo", "defensa", 50, "pocion", "runa_azul",60));
+		m.addObjeto(new Objeto ("runa_azul", null, 70, "piedra", "seta_azul",70));
+		m.addObjeto(new Objeto ("seta_azul", null, 30, null, null,100));
 
-		m.addObjeto(new Objeto ("Min Bronce", null, 5, null, null,100));
-		m.addObjeto(new Objeto ("Min Oro", null, 5, null, null,100));
-		m.addObjeto(new Objeto ("Min Drag", null, 5, null, null,100));
+		m.addObjeto(new Objeto ("min_bronce", null, 5, null, null,100));
+		m.addObjeto(new Objeto ("min_oro", null, 20, null, null,100));
+		m.addObjeto(new Objeto ("min_drag", null, 30, null, null,100));
 
-		m.addObjeto(new Objeto ("Barra Bronce", null, 50, "Min Bronce", "Herreria",70));
-		m.addObjeto(new Objeto ("Barra Oro", null, 50, "Min Oro", "Herreria",60));
-		m.addObjeto(new Objeto ("Barra Drag", null, 50, "Min Drag", "Herreria",50));
+		m.addObjeto(new Objeto ("barra_bronce", null, 50, "min_bronce", "Herreria",70));
+		m.addObjeto(new Objeto ("barra_oro", null, 60, "min_oro", "Herreria",60));
+		m.addObjeto(new Objeto ("barra_drag", null, 70, "min_drag", "Herreria",50));
 		
 		
-		
-		/* COFRES  */
-		//(longitud, latitud)
-		m.addCofre(new Cofre(15, 20));
-		m.addCofre(new Cofre(38, 22));
-		m.addCofre(new Cofre(3, 24));
-
-		/* AÑADIR OBJETOS A COFRE */
-	      m.añadirObjetosCofre(2, 1);
-	      m.añadirObjetosCofre(3, 1);
-	      m.añadirObjetosCofre(6, 1);
-	      m.añadirObjetosCofre(7, 1);
-	      m.añadirObjetosCofre(9, 1);
-	      m.añadirObjetosCofre(10, 1);
-	      m.añadirObjetosCofre(11, 1);
-	      m.añadirObjetosCofre(13, 1);
-	      System.out.print("Objetos añadias a cofre1");
-	      
-	      m.añadirObjetosCofre(2, 2);
-	      m.añadirObjetosCofre(3, 2);
-	      m.añadirObjetosCofre(6, 2);
-	      m.añadirObjetosCofre(7, 2);
-	      m.añadirObjetosCofre(9, 2);
-	      m.añadirObjetosCofre(10, 2);
-	      m.añadirObjetosCofre(11, 2);
-	      m.añadirObjetosCofre(13, 2);
-//	      m.añadirObjetos(16, 2);
-	      System.out.print("Objetos añadias a cofre2");
-	      
-	      /* AÑADIR OBJETOS A COFRE */
-	      m.añadirObjetosCofre(2, 1);
-	      m.añadirObjetosCofre(3, 1);
-	      m.añadirObjetosCofre(6, 1);
-	      m.añadirObjetosCofre(7, 1);
-	      m.añadirObjetosCofre(9, 1);
-	      m.añadirObjetosCofre(10, 1);
-	      m.añadirObjetosCofre(7, 1);
-	      m.añadirObjetosCofre(9, 1);
-	      m.añadirObjetosCofre(10, 1);
-	      m.añadirObjetosCofre(11, 1);
-	      m.añadirObjetosCofre(13, 1);
-//	      m.añadirObjetos(16, 1);
-	      System.out.print("Objetos añadias a cofre1");
-	      
-	      m.añadirObjetosCofre(2, 2);
-	      m.añadirObjetosCofre(3, 2);
-	      m.añadirObjetosCofre(6, 2);
-	      m.añadirObjetosCofre(7, 2);
-	      m.añadirObjetosCofre(9, 2);
-	      m.añadirObjetosCofre(10, 2);
-	      m.añadirObjetosCofre(11, 2);
-	      m.añadirObjetosCofre(13, 2);
-//	      m.añadirObjetos(16, 2);
-	      System.out.print("Objetos añadias a cofre2");
-		
-		
+		m.addObjeto(new Objeto ("calavera", null, 70, "piedra", "calavera",70));
 		
 		//16 max_runa_cristal_agua
-//		m.addObjeto(new Objeto ("max_runa_cristal_agua", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("max_runa_cristal_hoja", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("max_runa_cristal_nieve", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("max_runa_cristal_rayo", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("runa_cristal_agua", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("runa_cristal_hoja", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("runa_cristal_nieve", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("runa_cristal_rayo", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("runa_muerte", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("runa_agua", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("runa_agua2", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("runa_agua3", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("runa_rayo", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("runa_hoja", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("runa_nieve", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("pedrusco", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("piedra", null, 70, "Piedra", "Seta azul",70));
-//		m.addObjeto(new Objeto ("runa_rayo2", null, 70, "Piedra", "Seta azul",70));
+		m.addObjeto(new Objeto ("pedrusco", null, 20, null, null,100));
+		m.addObjeto(new Objeto ("piedra", null, 10, null, null,100));
+		m.addObjeto(new Objeto ("runa_agua", null, 30, "piedra", "cuenco_agua",70));
+		m.addObjeto(new Objeto ("runa_rayo", null, 30, "pedrusco", "trueno",70));
+		m.addObjeto(new Objeto ("runa_hoja", null, 30, "pedrusco", "hierba",70));
+		m.addObjeto(new Objeto ("runa_nieve", null, 30, "pedrusco", "nieve",70));
+		
+		m.addObjeto(new Objeto ("cristal", null, 60, null, null,100));
+		
+		m.addObjeto(new Objeto ("runa_cristal_agua", null, 70, "cristal", "runa_agua",60));
+		m.addObjeto(new Objeto ("runa_cristal_hoja", null, 70, "cristal", "runa_hoja",60));
+		m.addObjeto(new Objeto ("runa_cristal_nieve", null, 70, "cristal", "runa_nievel",60));
+		m.addObjeto(new Objeto ("runa_cristal_rayo", null, 70, "cristal", "runa_rayo",60));
+		
+		m.addObjeto(new Objeto ("diamante", null, 80, null, null,100));
+		
+		m.addObjeto(new Objeto ("max_runa_cristal_agua", null, 90, "diamante", "runa_cristal_agua",50));
+		m.addObjeto(new Objeto ("max_runa_cristal_hoja", null, 90, "diamante", "runa_cristal_hoja",50));
+		m.addObjeto(new Objeto ("max_runa_cristal_nieve", null, 90, "diamante", "runa_cristal_nieve",50));
+		m.addObjeto(new Objeto ("max_runa_cristal_rayo", null, 90, "diamante", "runa_cristal_rayo",50));
+		
+		
 		//33 la ultima
 		
 
@@ -309,6 +258,48 @@ public class OperacionesBBDD implements BumayeInterface{
 		      m.añadirObjetoInventarioVerificado(13, 1);
 //		      m.añadirObjetos(16, 1);
 		      System.out.print("Objetos añadias a jugador1");
+
+		      
+		      m.añadirObjetos(2, 2);
+		      m.añadirObjetos(3, 2);
+		      m.añadirObjetos(6, 2);
+		      m.añadirObjetos(7, 2);
+		      m.añadirObjetos(9, 2);
+		      m.añadirObjetos(10, 2);
+		      m.añadirObjetos(11, 2);
+		      m.añadirObjetos(13, 2);
+//		      m.añadirObjetos(16, 2);
+		      System.out.print("Objetos añadias a jugador2");
+		      
+		      m.añadirObjetos(1, 3);
+		      m.añadirObjetos(1, 3);
+		      m.añadirObjetos(1, 3);
+		      m.añadirObjetos(1, 3);
+		      m.añadirObjetos(4, 3);
+		      m.añadirObjetos(4, 3);
+		      m.añadirObjetos(4, 3);
+		      m.añadirObjetos(4, 3);
+		      m.añadirObjetos(7, 3);
+		      m.añadirObjetos(7, 3);
+		      m.añadirObjetos(12, 3);
+		      m.añadirObjetos(12, 3);
+		      m.añadirObjetos(12, 3);
+		      m.añadirObjetos(12, 3);
+		      m.añadirObjetos(12, 3);
+		      m.añadirObjetos(12, 3);
+		      m.añadirObjetos(12, 3);
+		      m.añadirObjetos(15, 3);
+		      m.añadirObjetos(15, 3);
+		      m.añadirObjetos(15, 3);
+		      m.añadirObjetos(15, 3);
+		      m.añadirObjetos(15, 3);
+		      m.añadirObjetos(15, 3);
+		      m.añadirObjetos(15, 3);
+		      m.añadirObjetos(20, 3);
+		      m.añadirObjetos(30, 3);
+		      m.añadirObjetos(31, 3);
+		      m.añadirObjetos(32, 3);
+		      System.out.print("Objetos añadias a jugador3");
 
 
 		/* AÑADIR ARMADURAS A PERSONAJES */
