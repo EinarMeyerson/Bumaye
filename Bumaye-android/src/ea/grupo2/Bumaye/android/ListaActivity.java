@@ -6,15 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.google.android.gms.games.Games;
-
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -39,7 +35,6 @@ public class ListaActivity extends ListActivity {
 	String url;
 	private UsrPersonajeAPI api;
 	PopupWindow popUp;
-	int idplayer;
 	PersonajeVO personaje = null;
 	String nom;
 	String serverAddress;
@@ -51,9 +46,7 @@ public class ListaActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lista);
-		SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
-		nom = prefs.getString("nombre", "");
-		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
+        personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
 		api = new UsrPersonajeAPI();
 		
 		 getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
@@ -71,14 +64,14 @@ public class ListaActivity extends ListActivity {
 			finish();
 		}
 		url = "http://" + serverAddress + ":" + serverPort
-				+ "/Bumaye-api/user/lista/"+idplayer;
+				+ "/Bumaye-api/user/lista/"+personaje.getIduser();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 		// Load an array of options names       
 		String[] names = getResources().getStringArray(
 				R.array.nav_options);
-		if (nom!=null)
-			names[0] = Html.fromHtml("<b>"+nom+"</b>").toString();
+		if (personaje.getNombre()!=null)
+			names[0] = Html.fromHtml("<b>"+personaje.getNombre()+"</b>").toString();
 		this.navList = (ListView) findViewById(R.id.left_drawer);
 		// Set previous array as adapter of the list
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
