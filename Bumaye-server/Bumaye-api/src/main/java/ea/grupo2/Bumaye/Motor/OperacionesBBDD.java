@@ -28,11 +28,19 @@ import java.util.Scanner;
 
 
 
+
+
+
+
 import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+
+
+
 
 
 
@@ -61,6 +69,7 @@ import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.ListBatallasVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
@@ -278,74 +287,28 @@ public class OperacionesBBDD implements BumayeInterface{
 		System.out.print("Jugadores añadidos");
 
 		      /* AÑADIR OBJETOS A PERSONAJES */
-		      m.añadirObjetos(2, 1);
-		      m.añadirObjetos(3, 1);
-		      m.añadirObjetos(6, 1);
-		      m.añadirObjetos(7, 1);
-		      m.añadirObjetos(9, 1);
-		      m.añadirObjetos(10, 1);
-		      m.añadirObjetos(11, 1);
-		      m.añadirObjetos(13, 1);
+		      m.añadirObjetoInventarioVerificado(2, 1);
+		      m.añadirObjetoInventarioVerificado(3, 1);
+		      m.añadirObjetoInventarioVerificado(6, 1);
+		      m.añadirObjetoInventarioVerificado(7, 1);
+		      m.añadirObjetoInventarioVerificado(9, 1);
+		      m.añadirObjetoInventarioVerificado(10, 1);
+		      m.añadirObjetoInventarioVerificado(11, 1);
+		      m.añadirObjetoInventarioVerificado(13, 1);
 //		      m.añadirObjetos(16, 1);
 		      System.out.print("Objetos añadias a jugador1");
-		      
-		      m.añadirObjetos(2, 2);
-		      m.añadirObjetos(3, 2);
-		      m.añadirObjetos(6, 2);
-		      m.añadirObjetos(7, 2);
-		      m.añadirObjetos(9, 2);
-		      m.añadirObjetos(10, 2);
-		      m.añadirObjetos(11, 2);
-		      m.añadirObjetos(13, 2);
-//		      m.añadirObjetos(16, 2);
-		      System.out.print("Objetos añadias a jugador2");
 		      
 		      /* AÑADIR OBJETOS A PERSONAJES */
-		      m.añadirObjetos(2, 1);
-		      m.añadirObjetos(3, 1);
-		      m.añadirObjetos(6, 1);
-		      m.añadirObjetos(7, 1);
-		      m.añadirObjetos(9, 1);
-		      m.añadirObjetos(10, 1);
-		      m.añadirObjetos(7, 1);
-		      m.añadirObjetos(9, 1);
-		      m.añadirObjetos(10, 1);
-		      m.añadirObjetos(11, 1);
-		      m.añadirObjetos(13, 1);
+		      m.añadirObjetoInventarioVerificado(2, 1);
+		      m.añadirObjetoInventarioVerificado(3, 1);
+		      m.añadirObjetoInventarioVerificado(6, 1);
+		      m.añadirObjetoInventarioVerificado(7, 1);
+		      m.añadirObjetoInventarioVerificado(9, 1);
+		      m.añadirObjetoInventarioVerificado(10, 1);
+		      m.añadirObjetoInventarioVerificado(11, 1);
+		      m.añadirObjetoInventarioVerificado(13, 1);
 //		      m.añadirObjetos(16, 1);
 		      System.out.print("Objetos añadias a jugador1");
-		      
-		      m.añadirObjetos(2, 2);
-		      m.añadirObjetos(3, 2);
-		      m.añadirObjetos(6, 2);
-		      m.añadirObjetos(7, 2);
-		      m.añadirObjetos(9, 2);
-		      m.añadirObjetos(10, 2);
-		      m.añadirObjetos(11, 2);
-		      m.añadirObjetos(13, 2);
-//		      m.añadirObjetos(16, 2);
-		      System.out.print("Objetos añadias a jugador2");
-		      
-//		      m.añadirObjetos(16, 3);
-//		      m.añadirObjetos(17, 3);
-//		      m.añadirObjetos(18, 3);
-//		      m.añadirObjetos(19, 3);
-//		      m.añadirObjetos(20, 3);
-//		      m.añadirObjetos(21, 3);
-//		      m.añadirObjetos(22, 3);
-//		      m.añadirObjetos(23, 3);
-//		      m.añadirObjetos(24, 3);
-//		      m.añadirObjetos(25, 3);
-//		      m.añadirObjetos(26, 3);
-//		      m.añadirObjetos(27, 3);
-//		      m.añadirObjetos(28, 3);
-//		      m.añadirObjetos(29, 3);
-//		      m.añadirObjetos(30, 3);
-//		      m.añadirObjetos(31, 3);
-//		      m.añadirObjetos(32, 3);
-//		      m.añadirObjetos(33, 3);
-		      System.out.print("Objetos añadias a jugador3");
-
 
 
 		/* AÑADIR ARMADURAS A PERSONAJES */
@@ -374,15 +337,6 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.añadirArmasArmaduras(21, 3);
 		System.out.print("Armaduras añadias a jugador3");
 
-		//      //Ilcapone pide batalla a Elcolmo
-		//      m.iniciarbatalla(new Batalla(1,2,2));
-		//      System.out.print("Jugadores listos para la batalla");
-		//      
-		//Elcolmo usa mazazo
-		//m.batalla(1);
-		
-		m.recogerObjetosCofre(1, 1, 7, 4);
-		m.recogerObjetosCofre(1, 1, 10, 3);
 		
 
 	}
@@ -1192,7 +1146,6 @@ public class OperacionesBBDD implements BumayeInterface{
 		UsrPersonaje usrper = null;
 		Objeto objeto = null;
 		ObjetoCantidad objetocantidad = new ObjetoCantidad();
-
 		try{
 			transaction = session.beginTransaction();   
 			usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
@@ -1402,11 +1355,11 @@ public class OperacionesBBDD implements BumayeInterface{
 
 
 	@Override
-	public List<ObjetoCantidadVO> listaObjetosCofre(int idCofre) {
+	public List<ObjetoCofreCantidadVO> listaObjetosCofre(int idCofre) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		Cofre cofre = new Cofre();
-		List<ObjetoCantidadVO> ObjetoVOfin = new ArrayList<ObjetoCantidadVO>();
+		List<ObjetoCofreCantidadVO> ObjetocofreVOfin = new ArrayList<ObjetoCofreCantidadVO>();
 
 		try{
 			transaction = session.beginTransaction();
@@ -1420,10 +1373,9 @@ public class OperacionesBBDD implements BumayeInterface{
 					query2.setParameter("idobjeto",objcofre.getObjeto().getIdobjeto());
 					query2.setParameter("idcofre",cofre.getIdcofre());            
 					ObjetoCofreCantidad objetocofrecantidad = (ObjetoCofreCantidad) query2.uniqueResult();
-					ObjetoVOfin.add(new ObjetoCantidadVO(objcofre.getObjeto().getIdobjeto(), objcofre.getObjeto().getNombre(), 
-							objcofre.getObjeto().getRareza(), objcofre.getObjeto().getTipo(), 
-							objcofre.getObjeto().getCombo1(), objcofre.getObjeto().getCombo2(), 
-							objcofre.getObjeto().getExito(), objetocofrecantidad.getCantidad()));
+					ObjetocofreVOfin.add(new ObjetoCofreCantidadVO(objcofre.getIdobjetocofrecantidad(), 
+							objetocofrecantidad.getCantidad(), objcofre.getObjeto().getIdobjeto(), 
+							objcofre.getCofre().getIdcofre()));
 					
 				}
 				////
@@ -1441,7 +1393,7 @@ public class OperacionesBBDD implements BumayeInterface{
 		finally {
 			session.close();
 		}
-		return ObjetoVOfin;
+		return ObjetocofreVOfin;
 	}
 
 
@@ -1523,26 +1475,26 @@ public class OperacionesBBDD implements BumayeInterface{
 
 	@Override
 	public String recogerObjetosCofre(int idUser, int idCofre, int idObjeto,
-			int cantidad) {
+			int cantidad) throws Exception {
 		if (VerificarCantidadCofre(idCofre, idObjeto, cantidad)==true){
 			for(int i=0; i<cantidad; i++)
 			{
 				eliminarObjetosCofre(idUser, idCofre, idObjeto);
-				añadirObjetos(idObjeto, idUser);			
+				añadirObjetoInventarioVerificado(idObjeto, idUser);
 			}
 			limpiezaObjetosCofre();
 			return "Has recogido con exito los objetos";
 
 		}
 		else{
-			return "Estas recogiendo un numero de objetos superior al que hay";
+			throw new NoHayTantosObjetosException();
 		}
 	}
 
 
 
 	@Override
-	public boolean VerificarCantidadCofre(int idCofre, int idObjeto, int cantidad) {
+	public boolean VerificarCantidadCofre(int idCofre, int idObjeto, int cantidad) throws Exception{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		ObjetoCofreCantidad objetocofrecantidad = null;
 		boolean s = false;
@@ -1598,5 +1550,56 @@ public class OperacionesBBDD implements BumayeInterface{
 
 		return "Limpieza realizada";
 
+	}
+
+
+
+	@Override
+	public boolean VerificarCapacidadInventario(int idUser, int idObjeto) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		boolean s= false;
+		try{
+			transaction = session.beginTransaction();   
+			//          usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
+			Query query = session.createQuery("from ObjetoCantidad where idUser= :idUser");
+			query.setParameter("idUser",idUser);
+			List<ObjetoCantidad> inventario = query.list();
+			Query query2 = session.createQuery("from ObjetoCantidad where idUser= :idUser and idobjeto= :idobjeto");
+			query2.setParameter("idUser",idUser);
+			query2.setParameter("idobjeto",idObjeto);
+			ObjetoCantidad objetoCantidad = (ObjetoCantidad)query2.uniqueResult();
+			
+			if (inventario.size() <5 || objetoCantidad !=null) {
+				s= true;
+				transaction.commit();
+			}
+			
+		}
+
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+
+		return s;
+	}
+
+
+
+	@Override
+	public String añadirObjetoInventarioVerificado(int idobjeto, int iduser) throws Exception{
+		if (VerificarCapacidadInventario(iduser,idobjeto)==true){
+			añadirObjetos(idobjeto, iduser);	
+			return "Has recogido con exito los objetos";
+		}
+		else{
+			throw new NoTienesEspacioEnInventarioException();
+
+		}
 	}
 }

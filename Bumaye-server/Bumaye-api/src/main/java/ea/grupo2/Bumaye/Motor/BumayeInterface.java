@@ -11,10 +11,13 @@ import java.util.List;
 
 
 
+
+
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
@@ -39,10 +42,10 @@ public interface BumayeInterface {
 	//funciones de cofre
 	public String addCofre(Cofre cofre);
 	public String añadirObjetosCofre(int idobjeto, int idCofre);
-    public List<ObjetoCantidadVO> listaObjetosCofre(int idCofre);
+    public List<ObjetoCofreCantidadVO> listaObjetosCofre(int idCofre);
     public String eliminarObjetosCofre(int idUser, int idCofre, int idObjeto);
-    public String recogerObjetosCofre(int idUser, int idCofre, int idObjeto, int cantidad);
-	public boolean VerificarCantidadCofre(int idCofre, int idObjeto, int cantidad);
+    public String recogerObjetosCofre(int idUser, int idCofre, int idObjeto, int cantidad) throws Exception;
+	public boolean VerificarCantidadCofre(int idCofre, int idObjeto, int cantidad) throws Exception;
     public String limpiezaObjetosCofre();
 
 	//funciones de inventario
@@ -67,6 +70,7 @@ public interface BumayeInterface {
     public String deleteUsrPersonaje(int idUsrPersonaje);
     public PersonajeVO LoginUser(UsuarioVO userlog);
     public PersonajeVO RegistroUser(UsuarioVO userregistrado);
+    public boolean VerificarCapacidadInventario(int idUser, int idObjeto);
     
   //Lista de jugadores logeados basic info
     public List<PersonajeLogeadoVO> listPersonajes(int idUsersolicita);     
@@ -76,7 +80,8 @@ public interface BumayeInterface {
 //  public String añadirPersonajeVO(PersonajeVO personaje);
     public BatallaVO updateAtributosBatallaVO(int idbatallaVO,int idPersonajeActuali, String atributo, float nuevoatributo);
     public BatallaVO ResultadoAtaqueVO(int idataque, int idbatallaVO, int idPersonajeVO) throws Exception;
-     
+    public String añadirObjetoInventarioVerificado(int idobjeto, int iduser) throws Exception;
+    
     //funcion de batalla
     public void PasaTurno(int idBatallaVO);
     public BatallaVO getBatallaVO(int idBatalla);

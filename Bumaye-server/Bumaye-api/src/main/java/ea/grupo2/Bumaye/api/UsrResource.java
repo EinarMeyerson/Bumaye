@@ -11,10 +11,15 @@ import javax.ws.rs.Produces;
 
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.Motor.BumayeInterface;
+import ea.grupo2.Bumaye.Motor.NoEsTuTurnoException;
+import ea.grupo2.Bumaye.Motor.NoHayTantosObjetosException;
+import ea.grupo2.Bumaye.Motor.NoTienesEseAtaqueException;
+import ea.grupo2.Bumaye.Motor.NoTienesEspacioEnInventarioException;
 import ea.grupo2.Bumaye.Motor.OperacionesBBDD;
 /**
  * Root resource (exposed at "myresource" path)
@@ -70,10 +75,41 @@ public class UsrResource {
 	@Path("/listaobjetoscofre/{idcofre}")
 	@GET
 	@Produces(MediaType.API_OBJETOS)
-	public List<ObjetoCantidadVO> listaObjetosCofre (@PathParam("idcofre") int idcofre) {
+	public List<ObjetoCofreCantidadVO> listaObjetosCofre (@PathParam("idcofre") int idcofre) {
 		BumayeInterface  m = new OperacionesBBDD();
-		List<ObjetoCantidadVO> objetoscantida = m.listaObjetosCofre(idcofre);
+		List<ObjetoCofreCantidadVO> objetoscantida = m.listaObjetosCofre(idcofre);
 		
 	    return objetoscantida;
+	}
+	
+	@Path("/{iduser}/añadirobjeto/{idobjeto}")
+	@GET
+	public String añadirObjetoInventario (@PathParam("iduser") int iduser,@PathParam("idobjeto") int idobjeto) throws Exception {
+		BumayeInterface  m = new OperacionesBBDD();
+		String s;
+		try{
+			s = m.añadirObjetoInventarioVerificado(idobjeto, iduser);
+		}
+		catch(NoTienesEspacioEnInventarioException e){
+			throw e;
+		}
+			
+	    return s;
+	}
+	
+	@Path("/{iduser}/cofre/{idcofre}/objeto/{idobjeto}/cantidad/{cantidad}")
+	@GET
+	public String recogerObjetoCofre (@PathParam("iduser") int iduser,@PathParam("idobjeto") int idobjeto,
+			@PathParam("idcofre") int idcofre,@PathParam("cantidad") int cantidad) throws Exception {
+		BumayeInterface  m = new OperacionesBBDD();
+		String s;
+		try{
+			s = m.recogerObjetosCofre(iduser, idcofre, idobjeto, cantidad);
+		}
+		catch(NoHayTantosObjetosException e){
+			throw e;
+		}
+			
+	    return s;
 	}
 }
