@@ -39,6 +39,7 @@
                 android:layout_gravity="right"
                 android:layout_weight="1"
                 android:orientation="vertical" >
+                
 
                 <LinearLayout
                     android:id="@+id/layout1"

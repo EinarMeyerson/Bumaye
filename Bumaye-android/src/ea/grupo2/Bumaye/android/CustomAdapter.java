@@ -12,11 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 public class CustomAdapter extends BaseAdapter{   
 	String [] result;
+	int [] cantidad;
 	Context context;
 	private static LayoutInflater inflater=null;
-	public CustomAdapter(InventarioActivity inventarioActivity, String[] prgmNameList) {
+	public CustomAdapter(InventarioActivity inventarioActivity, String[] prgmNameList, int[] prgmCantidadList) {
 		// TODO Auto-generated constructor stub
 		result=prgmNameList;
+		cantidad=prgmCantidadList;
 		context=inventarioActivity;
 		inflater = ( LayoutInflater )context.
 				getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -42,6 +44,7 @@ public class CustomAdapter extends BaseAdapter{
 	public class Holder
 	{
 		TextView tv;
+		TextView cn;
 		ImageView img;
 	}
 	@Override
@@ -51,8 +54,10 @@ public class CustomAdapter extends BaseAdapter{
 		View rowView;       
 		rowView = inflater.inflate(R.layout.objeto_adapter, null);
 		holder.tv=(TextView) rowView.findViewById(R.id.nombre_objeto);
+		holder.cn=(TextView) rowView.findViewById(R.id.cantidad_objeto);
 		holder.img=(ImageView) rowView.findViewById(R.id.imagen_objeto);       
 		holder.tv.setText(result[position]);
+		holder.cn.setText("          x"+Integer.toString(cantidad[position]));
 		rowView.setTag(holder.tv.getText());
 		
 		Uri uri = Uri.parse("android.resource://ea.grupo2.Bumaye.android/drawable/"+ holder.tv.getText());

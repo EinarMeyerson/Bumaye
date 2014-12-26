@@ -12,7 +12,7 @@ public class CofreVO {
 	@SerializedName("latitud")
 	private float latitud;
 	@SerializedName("lista_objetos")
-	private List<ObjetoVO> lista_objetos;
+	private List<ObjetoCantidadVO> lista_objetos;
 
 	public CofreVO() {
 	}
@@ -47,11 +47,11 @@ public class CofreVO {
 		this.latitud = latitud;
 	}
 
-	public List<ObjetoVO> getLista_objetos() {
+	public List<ObjetoCantidadVO> getLista_objetos() {
 		return lista_objetos;
 	}
 
-	public void setLista_objetos(List<ObjetoVO> lista_objetos) {
+	public void setLista_objetos(List<ObjetoCantidadVO> lista_objetos) {
 		this.lista_objetos = lista_objetos;
 	}
 

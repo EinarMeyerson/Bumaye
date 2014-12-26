@@ -46,7 +46,7 @@ public class PerfilActivity extends Activity {
         getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
         getActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-		// Load an array of options names       
+		// Load an array of options names   
 		String[] names = getResources().getStringArray(
 				R.array.nav_options);
 		if (personaje.getNombre()!=null)

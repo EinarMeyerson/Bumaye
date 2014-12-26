@@ -19,5 +19,12 @@
         android:layout_height="wrap_content"
         android:textSize="25dp"
         android:text="TextView" />
+     <TextView
+        android:id="@+id/cantidad_objeto"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:text="TextView" />
 
 </LinearLayout>
