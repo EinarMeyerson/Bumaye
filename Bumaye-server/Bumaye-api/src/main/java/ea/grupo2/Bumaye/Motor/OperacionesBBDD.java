@@ -6,63 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
@@ -260,45 +208,45 @@ public class OperacionesBBDD implements BumayeInterface{
 		      System.out.print("Objetos añadias a jugador1");
 
 		      
-		      m.añadirObjetos(2, 2);
-		      m.añadirObjetos(3, 2);
-		      m.añadirObjetos(6, 2);
-		      m.añadirObjetos(7, 2);
-		      m.añadirObjetos(9, 2);
-		      m.añadirObjetos(10, 2);
-		      m.añadirObjetos(11, 2);
-		      m.añadirObjetos(13, 2);
+		      m.añadirObjetoInventarioVerificado(2, 2);
+		      m.añadirObjetoInventarioVerificado(3, 2);
+		      m.añadirObjetoInventarioVerificado(6, 2);
+		      m.añadirObjetoInventarioVerificado(7, 2);
+		      m.añadirObjetoInventarioVerificado(9, 2);
+		      m.añadirObjetoInventarioVerificado(10, 2);
+		      m.añadirObjetoInventarioVerificado(11, 2);
+		      m.añadirObjetoInventarioVerificado(13, 2);
 //		      m.añadirObjetos(16, 2);
 		      System.out.print("Objetos añadias a jugador2");
 		      
-		      m.añadirObjetos(1, 3);
-		      m.añadirObjetos(1, 3);
-		      m.añadirObjetos(1, 3);
-		      m.añadirObjetos(1, 3);
-		      m.añadirObjetos(4, 3);
-		      m.añadirObjetos(4, 3);
-		      m.añadirObjetos(4, 3);
-		      m.añadirObjetos(4, 3);
-		      m.añadirObjetos(7, 3);
-		      m.añadirObjetos(7, 3);
-		      m.añadirObjetos(12, 3);
-		      m.añadirObjetos(12, 3);
-		      m.añadirObjetos(12, 3);
-		      m.añadirObjetos(12, 3);
-		      m.añadirObjetos(12, 3);
-		      m.añadirObjetos(12, 3);
-		      m.añadirObjetos(12, 3);
-		      m.añadirObjetos(15, 3);
-		      m.añadirObjetos(15, 3);
-		      m.añadirObjetos(15, 3);
-		      m.añadirObjetos(15, 3);
-		      m.añadirObjetos(15, 3);
-		      m.añadirObjetos(15, 3);
-		      m.añadirObjetos(15, 3);
-		      m.añadirObjetos(20, 3);
-		      m.añadirObjetos(30, 3);
-		      m.añadirObjetos(31, 3);
-		      m.añadirObjetos(32, 3);
+		      m.añadirObjetoInventarioVerificado(1, 3);
+		      m.añadirObjetoInventarioVerificado(1, 3);
+		      m.añadirObjetoInventarioVerificado(1, 3);
+		      m.añadirObjetoInventarioVerificado(1, 3);
+		      m.añadirObjetoInventarioVerificado(4, 3);
+		      m.añadirObjetoInventarioVerificado(4, 3);
+		      m.añadirObjetoInventarioVerificado(4, 3);
+		      m.añadirObjetoInventarioVerificado(4, 3);
+		      m.añadirObjetoInventarioVerificado(7, 3);
+		      m.añadirObjetoInventarioVerificado(7, 3);
+		      m.añadirObjetoInventarioVerificado(12, 3);
+		      m.añadirObjetoInventarioVerificado(12, 3);
+		      m.añadirObjetoInventarioVerificado(12, 3);
+		      m.añadirObjetoInventarioVerificado(12, 3);
+		      m.añadirObjetoInventarioVerificado(12, 3);
+		      m.añadirObjetoInventarioVerificado(12, 3);
+		      m.añadirObjetoInventarioVerificado(12, 3);
+		      m.añadirObjetoInventarioVerificado(15, 3);
+		      m.añadirObjetoInventarioVerificado(15, 3);
+		      m.añadirObjetoInventarioVerificado(15, 3);
+		      m.añadirObjetoInventarioVerificado(15, 3);
+		      m.añadirObjetoInventarioVerificado(15, 3);
+		      m.añadirObjetoInventarioVerificado(15, 3);
+		      m.añadirObjetoInventarioVerificado(15, 3);
+		      m.añadirObjetoInventarioVerificado(20, 3);
+		      m.añadirObjetoInventarioVerificado(30, 3);
+		      m.añadirObjetoInventarioVerificado(31, 3);
+		      m.añadirObjetoInventarioVerificado(32, 3);
 		      System.out.print("Objetos añadias a jugador3");
 
 
