@@ -173,7 +173,6 @@ public class UsrPersonaje {
 		inventario.add(objeto);
     }
 
-
 	public List<ObjetoCantidad> getObjetocantidad() {
 		return objetoscantidads;
 	}

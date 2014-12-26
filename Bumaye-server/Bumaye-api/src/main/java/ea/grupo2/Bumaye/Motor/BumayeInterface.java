@@ -9,8 +9,11 @@ import java.util.List;
 
 
 
+
+
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
+import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
@@ -19,6 +22,7 @@ import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.pojos.ArmasArmaduras;
 import ea.grupo2.Bumaye.pojos.Ataques;
 import ea.grupo2.Bumaye.pojos.Batalla;
+import ea.grupo2.Bumaye.pojos.Cofre;
 import ea.grupo2.Bumaye.pojos.Objeto;
 import ea.grupo2.Bumaye.pojos.UsrPersonaje;
  
@@ -33,7 +37,14 @@ public interface BumayeInterface {
     public boolean VerificarObjeto(String objeto , int idPersonajeVO) throws Exception;
 	
 	//funciones de cofre
-	
+	public String addCofre(Cofre cofre);
+	public String añadirObjetosCofre(int idobjeto, int idCofre);
+    public List<ObjetoCantidadVO> listaObjetosCofre(int idCofre);
+    public String eliminarObjetosCofre(int idUser, int idCofre, int idObjeto);
+    public String recogerObjetosCofre(int idUser, int idCofre, int idObjeto, int cantidad);
+	public boolean VerificarCantidadCofre(int idCofre, int idObjeto, int cantidad);
+    public String limpiezaObjetosCofre();
+
 	//funciones de inventario
      
     //funciones inreface de los Ataques
