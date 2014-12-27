@@ -113,7 +113,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="90dp"
-                        android:onClick="Equipar"
+                        android:onClick="Equipar_Combinar"
                         android:text="Equipar"
                         android:textSize="@dimen/Button" />
                 </LinearLayout>

@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
@@ -214,6 +215,22 @@ public class InventarioActivity extends Activity {
 			}
 		}
 
+	}
+	
+	public void Equipar_Combinar (View v) {
+		
+		String objeto1= nombreObjeto.getText().toString();
+		
+//		nombre = username.getText().toString();
+//		contra = password.getText().toString();
+//		if (nombre.isEmpty() || contra.isEmpty())
+//		{				
+//			Toast.makeText(getApplicationContext(), "Rellene todos los campos",
+//					   Toast.LENGTH_LONG).show();		
+//		}
+//		else{
+//			(new LoginUsrTask()).execute(nombre,contra,url);
+//		}		
 	}
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {

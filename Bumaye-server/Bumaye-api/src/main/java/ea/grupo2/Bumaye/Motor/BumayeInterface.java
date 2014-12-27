@@ -33,7 +33,7 @@ public interface BumayeInterface {
 	public String addObjeto(Objeto objeto);
 	public String añadirObjetos(int idobjeto, int iduser);
     public List<ObjetoCantidadVO> listaObjetosUsr(int iduser);
-    public ObjetoVO combinacion(int iduser, String objeto1, String objeto2) throws Exception;
+    public ObjetoCantidadVO combinacion(int iduser, String objeto1, String objeto2) throws Exception;
     public boolean VerificarObjeto(String objeto , int idPersonajeVO) throws Exception;
 	
 	//funciones de cofre

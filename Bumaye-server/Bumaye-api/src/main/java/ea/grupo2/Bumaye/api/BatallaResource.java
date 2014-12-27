@@ -24,74 +24,53 @@ import ea.grupo2.Bumaye.Motor.OperacionesBBDD;
 @Path("/batalla")
 public class BatallaResource {
 
-	    /**
-	     * Method handling HTTP GET requests. The returned object will be sent
-	     * to the client as "text/plain" media type.
-	     *
-	     * @return String that will be returned as a text/plain response.
-	     */
+	/**
+	 * Method handling HTTP GET requests. The returned object will be sent
+	 * to the client as "text/plain" media type.
+	 *
+	 * @return String that will be returned as a text/plain response.
+	 */
 	@GET
 	public String HolaBumaye(){
 		return "Bumaye san!";
 	} 
-	
-		@Path("/{idbatalla}/jugador/{idPersonaje}/ataque/{idataque}")
-		@GET
-		@Produces(MediaType.API_BATALLA)
-		public BatallaVO ataqueBatalla (@PathParam("idbatalla") int idbatalla,@PathParam("idPersonaje") int idPersonaje, @PathParam("idataque") int idataque) throws Exception {
-			BumayeInterface  m = new OperacionesBBDD();
-			
-			BatallaVO batallaVO = null;
-			try{
-				batallaVO = m.ResultadoAtaqueVO(idataque, idbatalla, idPersonaje);
-			}
-			catch(NoEsTuTurnoException | NoTienesEseAtaqueException e){
-				throw e;
-			}
-				
-		    return batallaVO;
+
+	@Path("/{idbatalla}/jugador/{idPersonaje}/ataque/{idataque}")
+	@GET
+	@Produces(MediaType.API_BATALLA)
+	public BatallaVO ataqueBatalla (@PathParam("idbatalla") int idbatalla,@PathParam("idPersonaje") int idPersonaje, @PathParam("idataque") int idataque) throws Exception {
+		BumayeInterface  m = new OperacionesBBDD();
+
+		BatallaVO batallaVO = null;
+		try{
+			batallaVO = m.ResultadoAtaqueVO(idataque, idbatalla, idPersonaje);
 		}
-		
-		
-		@Path("/{idpersonaje}/combinacion/{objeto1}/{objeto2}")
-		@GET
-		@Produces(MediaType.API_BATALLA)
-		public ObjetoVO combinacion (@PathParam("idpersonaje") int idpersonaje, @PathParam("objeto1") String objeto1,@PathParam("objeto2") String objeto2 ) throws Exception{
-			BumayeInterface  m = new OperacionesBBDD();
-			
-				
-		    
-		    
-			ObjetoVO objetoVO = null;
-			try{
-				objetoVO = m.combinacion(idpersonaje,objeto1, objeto2);
-			}
-			catch(NoTienesEseObjetoException e){
-				throw e;
-			}
-				
-		    return objetoVO;
+		catch(NoEsTuTurnoException | NoTienesEseAtaqueException e){
+			throw e;
 		}
-		
-		//CAMBIARLAAAAAAAAAAAAAA ES UNA CHAPUZA PARA HACER UNA PRUEBA
-//		
-//		@Path("/prueba")
-//		@GET
-//		@Produces(MediaType.API_BATALLA)
-//		public BatallaVO iniciarBatalla () {
-//			BumayeInterface  m = new OperacionesBBDD();
-//			
-//			ArrayList<PersonajeVO> listaPersonajesVO = new ArrayList<PersonajeVO>();
-//	        UsuarioVO u1 = new UsuarioVO("Ilcapone", "1234", "palotes@pushi");
-//	        listaPersonajesVO.add(m.LoginUser(u1));
-//	 
-//	        UsuarioVO u2 = new UsuarioVO("Elcolmo", "1234", "mañana@quizas.si");
-//	        listaPersonajesVO.add(m.LoginUser(u2));
-//			
-//			BatallaVO batallaVO = m.iniciarBatallaVO(listaPersonajesVO);
-//			
-//		    return batallaVO;
-//		}
-		
-		
+
+		return batallaVO;
+	}
+
+	//CAMBIARLAAAAAAAAAAAAAA ES UNA CHAPUZA PARA HACER UNA PRUEBA
+	//		
+	//		@Path("/prueba")
+	//		@GET
+	//		@Produces(MediaType.API_BATALLA)
+	//		public BatallaVO iniciarBatalla () {
+	//			BumayeInterface  m = new OperacionesBBDD();
+	//			
+	//			ArrayList<PersonajeVO> listaPersonajesVO = new ArrayList<PersonajeVO>();
+	//	        UsuarioVO u1 = new UsuarioVO("Ilcapone", "1234", "palotes@pushi");
+	//	        listaPersonajesVO.add(m.LoginUser(u1));
+	//	 
+	//	        UsuarioVO u2 = new UsuarioVO("Elcolmo", "1234", "mañana@quizas.si");
+	//	        listaPersonajesVO.add(m.LoginUser(u2));
+	//			
+	//			BatallaVO batallaVO = m.iniciarBatallaVO(listaPersonajesVO);
+	//			
+	//		    return batallaVO;
+	//		}
+
+
 }

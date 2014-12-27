@@ -95,6 +95,8 @@ public class OperacionesBBDD implements BumayeInterface{
 		/* OBJETOS  */
 		//(nombre objeto, tipo, rareza, combo1, combo2, %exito)
 		
+		
+		
 
 		m.addObjeto(new Objeto ("pocion", "vida", 40, "hierba", "seta",90));
 		m.addObjeto(new Objeto ("hierba", null, 10, null, null,100));
@@ -112,9 +114,9 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.addObjeto(new Objeto ("min_oro", null, 20, null, null,100));
 		m.addObjeto(new Objeto ("min_drag", null, 30, null, null,100));
 
-		m.addObjeto(new Objeto ("barra_bronce", null, 50, "min_bronce", "Herreria",70));
-		m.addObjeto(new Objeto ("barra_oro", null, 60, "min_oro", "Herreria",60));
-		m.addObjeto(new Objeto ("barra_drag", null, 70, "min_drag", "Herreria",50));
+		m.addObjeto(new Objeto ("barra_bronce", null, 50, "min_bronce", "herreria",70));
+		m.addObjeto(new Objeto ("barra_oro", null, 60, "min_oro", "herreria",60));
+		m.addObjeto(new Objeto ("barra_drag", null, 70, "min_drag", "herreria",50));
 		
 		
 		m.addObjeto(new Objeto ("calavera", null, 70, "piedra", "calavera",70));
@@ -140,6 +142,8 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.addObjeto(new Objeto ("max_runa_cristal_hoja", null, 90, "diamante", "runa_cristal_hoja",50));
 		m.addObjeto(new Objeto ("max_runa_cristal_nieve", null, 90, "diamante", "runa_cristal_nieve",50));
 		m.addObjeto(new Objeto ("max_runa_cristal_rayo", null, 90, "diamante", "runa_cristal_rayo",50));
+		
+		m.addObjeto(new Objeto ("herreria", null, 100, null, null,90));
 		
 		
 		//33 la ultima
@@ -303,6 +307,7 @@ public class OperacionesBBDD implements BumayeInterface{
 		      m.añadirObjetos(30, 3);
 		      m.añadirObjetos(31, 3);
 		      m.añadirObjetos(32, 3);
+		      m.añadirObjetos(33, 3);
 		      System.out.print("Objetos añadias a jugador3");
 
 
@@ -340,8 +345,8 @@ public class OperacionesBBDD implements BumayeInterface{
 		//Elcolmo usa mazazo
 		//m.batalla(1);
 		
-		m.recogerObjetosCofre(1, 1, 7, 4);
-		m.recogerObjetosCofre(1, 1, 10, 3);
+//		m.recogerObjetosCofre(1, 1, 7, 4);
+//		m.recogerObjetosCofre(1, 1, 10, 3);
 		
 
 	}
@@ -1218,7 +1223,7 @@ public class OperacionesBBDD implements BumayeInterface{
 				////
 				List<ObjetoCantidad> inventario = u.getObjetocantidad();              
 				for (ObjetoCantidad obj: inventario) {
-					System.out.print("obj: "+obj.getObjeto().getNombre());
+					System.out.print("obj: "+obj.getObjeto().getNombre() +"\n");
 					Query query2 = session.createQuery("from ObjetoCantidad where idUser= :iduser and idobjeto= :idobjeto");
 					query2.setParameter("idobjeto",obj.getObjeto().getIdobjeto());
 					query2.setParameter("iduser", u.getIduser());            
@@ -1250,10 +1255,10 @@ public class OperacionesBBDD implements BumayeInterface{
 
 
 	@Override		
-	public ObjetoVO combinacion(int iduser, String objeto1, String objeto2) throws Exception{
+	public ObjetoCantidadVO combinacion(int iduser, String objeto1, String objeto2) throws Exception{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
-		ObjetoVO objvo= null;
+		ObjetoCantidadVO objvo= null;
 		if(VerificarObjeto(objeto1, iduser)==true && VerificarObjeto(objeto2, iduser)==true){
 
 			try{
@@ -1264,7 +1269,7 @@ public class OperacionesBBDD implements BumayeInterface{
 				int results = (Integer)query.uniqueResult();
 				if (results >0 ) {
 					Objeto obj = (Objeto)session.load(Objeto.class, results);
-					objvo = new ObjetoVO(obj.getIdobjeto(), obj.getNombre(), obj.getRareza(), obj.getTipo(), obj.getCombo1(), obj.getCombo2(), obj.getExito());
+					objvo = new ObjetoCantidadVO(obj.getIdobjeto(), obj.getNombre(), obj.getRareza(), obj.getTipo(), obj.getCombo1(), obj.getCombo2(), obj.getExito(), 1);
 					transaction.commit();
 				}
 	
@@ -1293,9 +1298,12 @@ public class OperacionesBBDD implements BumayeInterface{
 		PersonajeVO personajeVO = getPersonaje(idPersonajeVO);
 		personajeVO.setInventario(listaObjetosUsr(idPersonajeVO));
 		if ( personajeVO.getObjetoCantidadVO(nombreObjeto) != null){
+			System.out.print("Si que lo tiene" + nombreObjeto);
 			return true;
 		}
 		else{
+			
+			System.out.print("no lo tiene");
 			return false;
 		}
 	}

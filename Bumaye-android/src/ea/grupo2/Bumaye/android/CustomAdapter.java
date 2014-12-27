@@ -1,5 +1,7 @@
 package ea.grupo2.Bumaye.android;
 
+import ea.grupo2.Bumaye.android.InventarioActivity;
+import ea.grupo2.Bumaye.android.R;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;

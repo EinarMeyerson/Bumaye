@@ -10,11 +10,15 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
+import ea.grupo2.Bumaye.ClasesVO.CombinacionVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.Motor.BumayeInterface;
+import ea.grupo2.Bumaye.Motor.NoEsTuTurnoException;
+import ea.grupo2.Bumaye.Motor.NoTienesEseAtaqueException;
+import ea.grupo2.Bumaye.Motor.NoTienesEseObjetoException;
 import ea.grupo2.Bumaye.Motor.OperacionesBBDD;
 /**
  * Root resource (exposed at "myresource" path)
@@ -75,5 +79,25 @@ public class UsrResource {
 		List<ObjetoCantidadVO> objetoscantida = m.listaObjetosCofre(idcofre);
 		
 	    return objetoscantida;
+	}
+	
+	
+	@Path("/combinacion")
+	@POST
+    @Consumes(MediaType.API_COMBINACION)
+	@Produces(MediaType.API_OBJETOS)
+	public ObjetoCantidadVO combinacionObjeto (CombinacionVO objeto)throws Exception  {
+		BumayeInterface  m = new OperacionesBBDD();
+		ObjetoCantidadVO nuevobjeto=null;
+		
+		try{
+			nuevobjeto = m.combinacion(objeto.getIduser(), objeto.getCombo1(), objeto.getCombo2());
+		}
+		catch(NoTienesEseObjetoException e){
+			throw e;
+		}
+		
+		
+	    return nuevobjeto;
 	}
 }
