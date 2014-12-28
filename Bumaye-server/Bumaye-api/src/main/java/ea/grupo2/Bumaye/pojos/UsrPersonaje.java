@@ -3,6 +3,7 @@
 import java.util.List;
  
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -185,4 +186,7 @@ public class UsrPersonaje {
 		objetoscantidads.add(objetocantidad);
     }
 
+	public void removeinventario(Objeto objeto) {
+		inventario.remove(objeto);
+    }
 }

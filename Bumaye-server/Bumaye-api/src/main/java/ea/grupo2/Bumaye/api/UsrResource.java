@@ -18,6 +18,7 @@ import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.Motor.BumayeInterface;
 import ea.grupo2.Bumaye.Motor.NoEsTuTurnoException;
+import ea.grupo2.Bumaye.Motor.NoExisteEsaCombinacionException;
 import ea.grupo2.Bumaye.Motor.NoHayTantosObjetosException;
 import ea.grupo2.Bumaye.Motor.NoTienesEseAtaqueException;
 import ea.grupo2.Bumaye.Motor.NoTienesEseObjetoException;
@@ -94,9 +95,9 @@ public class UsrResource {
 		ObjetoCantidadVO nuevobjeto=null;
 		
 		try{
-			nuevobjeto = m.combinacion(objeto.getIduser(), objeto.getCombo1(), objeto.getCombo2());
+			nuevobjeto = m.combinacionFinal(objeto.getIduser(), objeto.getCombo1(), objeto.getCombo2());
 		}
-		catch(NoTienesEseObjetoException e){
+		catch(NoTienesEseObjetoException | NoExisteEsaCombinacionException e){
 			throw e;
 		}
 		
