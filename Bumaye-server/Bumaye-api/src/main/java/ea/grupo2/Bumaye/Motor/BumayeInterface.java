@@ -79,6 +79,8 @@ public interface BumayeInterface {
     
   //Lista de jugadores logeados basic info
     public List<PersonajeLogeadoVO> listPersonajes(int idUsersolicita);     
+    //Lista de cofres info
+    public List<CofreVO> listCofres();     
      
     //funciones PersojaneVO
     public PersonajeVO getPersonaje(int idPersonaje);

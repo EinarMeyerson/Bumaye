@@ -1029,7 +1029,38 @@ public class OperacionesBBDD implements BumayeInterface{
 		}
 		return personajeslogeados;
 	}
+	@Override
+	public List<CofreVO> listCofres() {
+		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		List<CofreVO> cofres = new ArrayList<CofreVO>();
+		System.out.print("Usuario solicita cofres\n" );
 
+		try{
+			transaction = session.beginTransaction();
+			List<Cofre> u = (List<Cofre>)session.createQuery("from UsrPersonaje").list();
+			if (u != null) {               
+				for (Cofre cof: u) {
+
+						CofreVO p = new CofreVO(cof.getIdcofre(),cof.getLongitud(),cof.getLatitud());
+						cofres.add(p);
+					
+				}
+				transaction.commit();
+			}
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return cofres;
+	}
 
 
 	@Override
