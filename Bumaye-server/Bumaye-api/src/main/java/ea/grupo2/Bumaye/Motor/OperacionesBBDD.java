@@ -1039,7 +1039,7 @@ public class OperacionesBBDD implements BumayeInterface{
 
 		try{
 			transaction = session.beginTransaction();
-			List<Cofre> u = (List<Cofre>)session.createQuery("from UsrPersonaje").list();
+			List<Cofre> u = (List<Cofre>)session.createQuery("from Cofre").list();
 			if (u != null) {               
 				for (Cofre cof: u) {
 
