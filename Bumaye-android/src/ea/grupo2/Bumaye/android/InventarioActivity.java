@@ -1,6 +1,8 @@
 package ea.grupo2.Bumaye.android;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import android.app.Activity;
@@ -119,23 +121,17 @@ public class InventarioActivity extends Activity {
 	public String[] getnomObjetos (PersonajeVO person){
 
 		int cantidad=cantidadObjetos();
+		List<String> objetosrepetidos= new ArrayList<String>(cantidad);
 		String [] nomObjetos = new String[cantidad];
 		int i=0;
-		String objetorepetido ="";
 		for(ObjetoCantidadVO objet: person.getInventario())
 		{
-			if (objetorepetido.equals(objet.getNombre()))
+			if(objetosrepetidos.contains(objet.getNombre())==false)
 			{
-
-			}
-			else
-			{
-
+				objetosrepetidos.add(objet.getNombre());
 				nomObjetos[i]= objet.getNombre();
-				objetorepetido= objet.getNombre();
 				i++;
 			}
-
 		}
 		for (ArmaArmaduraVO arm: person.getArmasarmaduras())
 		{
@@ -150,19 +146,14 @@ public class InventarioActivity extends Activity {
 
 		int cantidad=cantidadObjetos();
 		int [] canObjetos = new int[cantidad];
+		List<String> objetosrepetidos= new ArrayList<String>(cantidad);
 		int i=0;
-		String objetorepetido ="";
 		for(ObjetoCantidadVO objet: person.getInventario())
 		{
-			if (objetorepetido.equals(objet.getNombre()))
+			if(objetosrepetidos.contains(objet.getNombre())==false)
 			{
-
-			}
-			else
-			{
-
+				objetosrepetidos.add(objet.getNombre());
 				canObjetos[i]= objet.getCantidad();
-				objetorepetido= objet.getNombre();
 				i++;
 			}
 
@@ -179,21 +170,16 @@ public class InventarioActivity extends Activity {
 	public int cantidadObjetos ()
 	{
 		int cantidad=0;
-		String objetorepetido ="";
+		List<String> objetosrepetidos= new ArrayList<String>(cantidad);
 		for(ObjetoCantidadVO objet: personaje.getInventario())
 		{
-			if (objetorepetido.equals(objet.getNombre()))
+			if(objetosrepetidos.contains(objet.getNombre())==false)
 			{
-
-			}
-			else
-			{
-
-				objetorepetido= objet.getNombre();
-				cantidad++;
+				objetosrepetidos.add(objet.getNombre());
 			}
 
 		}
+		cantidad=cantidad+objetosrepetidos.size();
 		for (ArmaArmaduraVO arm: personaje.getArmasarmaduras())
 		{
 
