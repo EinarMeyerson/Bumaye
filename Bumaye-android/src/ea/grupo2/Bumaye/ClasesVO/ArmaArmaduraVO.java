@@ -17,6 +17,8 @@ public class ArmaArmaduraVO implements Serializable  {
 	private String tipo;
 	@SerializedName("defensa")
 	private float defensa;
+	@SerializedName("equipada")
+	private int equipada;
 	@SerializedName("ataque")
 	private float ataque;
 	@SerializedName("ataques")
@@ -26,11 +28,12 @@ public class ArmaArmaduraVO implements Serializable  {
 	}
 	
 	public ArmaArmaduraVO(int idarmaarmadura, String nombrenombrearm,
-			String tipo, float defensa, float ataque) {
+			String tipo, float defensa, float ataque, int equipada) {
 		this.idarmaarmadura = idarmaarmadura;
 		this.nombre = nombrenombrearm;
 		this.tipo = tipo;
 		this.defensa = defensa;
+		this.equipada = equipada;
 		this.ataque = ataque;
 	}
 
@@ -79,6 +82,14 @@ public class ArmaArmaduraVO implements Serializable  {
 
 	public void setAtaques(List<AtaqueVO> ataques) {
 		this.ataques = ataques;
+	}
+
+	public int getEquipada() {
+		return equipada;
+	}
+
+	public void setEquipada(int equipada) {
+		this.equipada = equipada;
 	}
 	
 

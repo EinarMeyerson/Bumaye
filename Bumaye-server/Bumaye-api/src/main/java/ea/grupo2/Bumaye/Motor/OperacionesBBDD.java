@@ -25,6 +25,7 @@ import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.hibernate.HibernateUtil;
+import ea.grupo2.Bumaye.pojos.ArmaArmaduraEquipada;
 import ea.grupo2.Bumaye.pojos.ArmasArmaduras;
 import ea.grupo2.Bumaye.pojos.Ataques;
 import ea.grupo2.Bumaye.pojos.Batalla;
@@ -262,6 +263,10 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.añadirArmasArmaduras(13, 2);
 		System.out.print("Armaduras añadidas a jugador2");
 
+		m.añadirArmasArmaduras(14, 3);
+		m.añadirArmasArmaduras(9, 3);
+		m.añadirArmasArmaduras(10, 3);
+		m.añadirArmasArmaduras(11, 3);
 		m.añadirArmasArmaduras(20, 3);
 		m.añadirArmasArmaduras(16, 3);
 		m.añadirArmasArmaduras(17, 3);
@@ -269,7 +274,32 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.añadirArmasArmaduras(19, 3);
 		m.añadirArmasArmaduras(21, 3);
 		System.out.print("Armaduras añadias a jugador3");
+		
+		
+		/* EQUIPAR ARMADURAS A PERSONAJES */
+		m.añadirArmasArmadurasEquipada(1, 1);
+		m.añadirArmasArmadurasEquipada(2, 1);
+		m.añadirArmasArmadurasEquipada(3, 1);
+		m.añadirArmasArmadurasEquipada(4, 1);
+		m.añadirArmasArmadurasEquipada(5, 1);
+		m.añadirArmasArmadurasEquipada(6, 1);
+		System.out.print("Equipado el jugador1");
 
+		m.añadirArmasArmadurasEquipada(14, 2);
+		m.añadirArmasArmadurasEquipada(9, 2);
+		m.añadirArmasArmadurasEquipada(10, 2);
+		m.añadirArmasArmadurasEquipada(11, 2);
+		m.añadirArmasArmadurasEquipada(12, 2);
+		m.añadirArmasArmadurasEquipada(13, 2);
+		System.out.print("Equipado el jugador2");
+
+		m.añadirArmasArmadurasEquipada(20, 3);
+		m.añadirArmasArmadurasEquipada(16, 3);
+		m.añadirArmasArmadurasEquipada(17, 3);
+		m.añadirArmasArmadurasEquipada(18, 3);
+		m.añadirArmasArmadurasEquipada(19, 3);
+		m.añadirArmasArmadurasEquipada(21, 3);
+		System.out.print("Equipado el jugador3");
 
 	}
 	
@@ -550,6 +580,10 @@ public class OperacionesBBDD implements BumayeInterface{
 			armaarmadura = (ArmasArmaduras)session.load(ArmasArmaduras.class, idarmaarmadura);
 
 			usrper.addArmasArmaduras(armaarmadura);
+			//por defecto al añadir una armadura a un usuario la dejamos desequipada
+			desequiparArmasArmadurasEquipada(armaarmadura.getIdArmasArmaduras(),usrper.getIduser());
+			
+			
 			//          updateAtributos(armaarmadura, iduser);
 			try{
 				Query query = session.createQuery("update UsrPersonaje set ataque= :uataque" +", defensa= :udefensa" +"  where iduser= :id");
@@ -609,15 +643,21 @@ public class OperacionesBBDD implements BumayeInterface{
 				personajelog = new PersonajeVO(u.getIduser(),u.getIdGCM(), u.getNombre(), u.getVida(), u.getDefensa(), u.getAtaque(), u.getLatitud(), u.getLongitud());
 				for (ArmasArmaduras arm: u.getArmasarmaduras()) {
 					//Sacar armaduras y ataques y pasarselos al personaje
-					ArmaArmaduraVO armunica= new ArmaArmaduraVO(arm.getIdArmasArmaduras(), arm.getNombre(), arm.getTipo(), arm.getDefensa(), arm.getAtaque());
-					//sacar ataques
-					List<Ataques> ataques = arm.getAtaques();
-					for (Ataques atac: ataques) {
-						AtaqueVO ataquevo = new AtaqueVO(atac.getIdAtaque(), atac.getNombre(), atac.getAtributoAfectado(), atac.getFactorDaño(), atac.getPorcentajeAcierto(), atac.getJugadorAfectado(), atac.getVecesUso());
-						System.out.print("***********Lista de ataques: " + ataquevo.getNombreataque());
-						armunica.addAtaques(ataquevo);
-					}
-					armaduraspersonaje.add(armunica);
+					
+					//miramos si la armadura esta equipada o desequipada
+					int equipamiento= verificarArmaArmaduraEquipada(arm.getIdArmasArmaduras(),u.getIduser());
+					
+						ArmaArmaduraVO armunica= new ArmaArmaduraVO(arm.getIdArmasArmaduras(), arm.getNombre(), arm.getTipo(), arm.getDefensa(), equipamiento ,arm.getAtaque());
+						//sacar ataques
+						List<Ataques> ataques = arm.getAtaques();
+						for (Ataques atac: ataques) {
+							AtaqueVO ataquevo = new AtaqueVO(atac.getIdAtaque(), atac.getNombre(), atac.getAtributoAfectado(), atac.getFactorDaño(), atac.getPorcentajeAcierto(), atac.getJugadorAfectado(), atac.getVecesUso());
+							System.out.print("***********Lista de ataques: " + ataquevo.getNombreataque());
+							armunica.addAtaques(ataquevo);
+						}
+						armaduraspersonaje.add(armunica);
+					
+					
 				}
 				personajelog.setArmasarmaduras(armaduraspersonaje);
 				
@@ -1049,7 +1089,38 @@ public class OperacionesBBDD implements BumayeInterface{
 		}
 		return personajeslogeados;
 	}
+	@Override
+	public List<CofreVO> listCofres() {
+		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		List<CofreVO> cofres = new ArrayList<CofreVO>();
+		System.out.print("Usuario solicita cofres\n" );
 
+		try{
+			transaction = session.beginTransaction();
+			List<Cofre> u = (List<Cofre>)session.createQuery("from Cofre").list();
+			if (u != null) {               
+				for (Cofre cof: u) {
+
+						CofreVO p = new CofreVO(cof.getIdcofre(),cof.getLongitud(),cof.getLatitud());
+						cofres.add(p);
+					
+				}
+				transaction.commit();
+			}
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return cofres;
+	}
 
 
 	@Override
@@ -1484,6 +1555,20 @@ public class OperacionesBBDD implements BumayeInterface{
 	}
 
 	@Override
+	public String añadirObjetoInventarioVerificado(int idobjeto, int iduser) throws Exception{
+		if (VerificarCapacidadInventario(iduser,idobjeto)==true){
+			añadirObjetos(idobjeto, iduser);	
+			return "Has recogido con exito los objetos";
+		}
+		else{
+			throw new NoTienesEspacioEnInventarioException();
+	
+		}
+	}
+
+
+
+	@Override
 	public String limpiezaObjetosCofre() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
@@ -1547,16 +1632,284 @@ public class OperacionesBBDD implements BumayeInterface{
 	}
 
 	@Override
-	public String añadirObjetoInventarioVerificado(int idobjeto, int iduser) throws Exception{
-		if (VerificarCapacidadInventario(iduser,idobjeto)==true){
-			añadirObjetos(idobjeto, iduser);	
-			return "Has recogido con exito los objetos";
-		}
-		else{
-			throw new NoTienesEspacioEnInventarioException();
+	public String añadirArmasArmadurasEquipada(int idarmaarmadura, int iduser) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		String s="fallo al equipar armadura";
+		UsrPersonaje usrper = null;
+		ArmasArmaduras armaarmadura=null;
+		ArmaArmaduraEquipada equipada= new ArmaArmaduraEquipada();
+		try{
+			transaction = session.beginTransaction();   
+			usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
+			if (usrper != null) {
+				
+				armaarmadura = (ArmasArmaduras)session.load(ArmasArmaduras.class, idarmaarmadura);
+				
+				Query query = session.createQuery("from ArmaArmaduraEquipada where idUser= :iduser and idArmasArmaduras= :idArmasArmaduras");
+				query.setParameter("idArmasArmaduras",idarmaarmadura);
+				query.setParameter("iduser", iduser);            
+				equipada = (ArmaArmaduraEquipada) query.uniqueResult();
+				if (equipada !=null ) {
+
+					Query query2 = session.createQuery("update ArmaArmaduraEquipada set equipada= :equipada where idArmasArmaduras= :idArmasArmaduras and idUser= :iduser");
+					query2.setParameter("equipada",1);
+					query2.setParameter("idArmasArmaduras",idarmaarmadura);
+					query2.setParameter("iduser", iduser);            
+					if (query2.executeUpdate() >0 ) {
+						s="Armadura equipada\n";
+					}
+			}
+
+			else{
+				ArmaArmaduraEquipada equipada2 = new ArmaArmaduraEquipada();
+				equipada2.setEquipada(1);
+				equipada2.setArmasArmaduras(armaarmadura);;
+				equipada2.setUsrPersonaje(usrper);;
+				session.save(equipada2);
+				s="Armadura equipada\n";
+
+			}
+				
+				transaction.commit();
+				
+			}
 
 		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		System.out.println(s);
+		return s;
 	}
+
+
+
+	@Override
+	public String desequiparArmasArmadurasEquipada(int idarmaarmadura,
+			int iduser) {
+		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		String s="fallo al desequipar armadura";
+		UsrPersonaje usrper = null;
+		ArmasArmaduras armaarmadura=null;
+		ArmaArmaduraEquipada equipada= new ArmaArmaduraEquipada();
+		try{
+			transaction = session.beginTransaction();   
+			usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
+			if (usrper != null) {
+				
+				armaarmadura = (ArmasArmaduras)session.load(ArmasArmaduras.class, idarmaarmadura);
+				
+				Query query = session.createQuery("from ArmaArmaduraEquipada where idUser= :iduser and idArmasArmaduras= :idArmasArmaduras");
+				query.setParameter("idArmasArmaduras",idarmaarmadura);
+				query.setParameter("iduser", iduser);            
+				equipada = (ArmaArmaduraEquipada) query.uniqueResult();
+				if (equipada !=null ) {
+
+					Query query2 = session.createQuery("update ArmaArmaduraEquipada set equipada= :equipada where idArmasArmaduras= :idArmasArmaduras and idUser= :iduser");
+					query2.setParameter("equipada",0);
+					query2.setParameter("idArmasArmaduras",idarmaarmadura);
+					query2.setParameter("iduser", iduser);            
+					if (query2.executeUpdate() >0 ) {
+						s="Armadura desequipada\n";
+					}
+			}
+
+			else{
+				ArmaArmaduraEquipada equipada2 = new ArmaArmaduraEquipada();
+				equipada2.setEquipada(0);
+				equipada2.setArmasArmaduras(armaarmadura);;
+				equipada2.setUsrPersonaje(usrper);;
+				session.save(equipada2);
+				s="Armadura desequipada\n";
+
+			}
+				
+				transaction.commit();
+				
+			}
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		System.out.println(s);
+		return s;
+	}
+
+
+
+	@Override
+	public int verificarArmaArmaduraEquipada(int idarmaarmadura, int iduser) {
+		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		String s="fallo al verificar armadura";
+		UsrPersonaje usrper = null;
+		ArmaArmaduraEquipada equipada= new ArmaArmaduraEquipada();
+		int equipadaarmadura=0;
+		try{
+			transaction = session.beginTransaction();   
+			usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
+			if (usrper != null) {
+				
+				Query query = session.createQuery("from ArmaArmaduraEquipada where idUser= :iduser and idArmasArmaduras= :idArmasArmaduras");
+				query.setParameter("idArmasArmaduras",idarmaarmadura);
+				query.setParameter("iduser", iduser);            
+				equipada = (ArmaArmaduraEquipada) query.uniqueResult();
+				if (equipada !=null ) {
+					s="farmadura verificada";
+					if (equipada.getEquipada()==1)
+					{
+						equipadaarmadura=1;
+						
+					}
+					else
+					{
+						equipadaarmadura=0;
+					}
+			}
+
+			else{
+				equipadaarmadura=0;
+
+			}
+				
+				transaction.commit();
+				
+			}
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		System.out.println(s);
+		return equipadaarmadura;
+	}
+
+
+
+	@Override
+	public List<ArmaArmaduraVO> listaArmasArmadurasUsr(int iduser) {
+		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		UsrPersonaje u = new UsrPersonaje();
+		List<ArmaArmaduraVO> ArmaArmaduraVOfin = new ArrayList<ArmaArmaduraVO>();
+
+		try{
+			transaction = session.beginTransaction();
+			u = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
+			if (u != null) {
+
+				////
+				List<ArmaArmaduraEquipada> armequipadas = u.getArmaarmaduraequipada();              
+				for (ArmaArmaduraEquipada armequip: armequipadas) {
+					System.out.print("obj: "+armequip.getArmasArmaduras().getNombre() +"\n");
+					Query query2 = session.createQuery("from ArmaArmaduraEquipada where idUser= :iduser and idarmaarmadura= :idarmaarmadura");
+					query2.setParameter("idarmaarmadura",armequip.getArmasArmaduras().getIdArmasArmaduras());
+					query2.setParameter("iduser", u.getIduser());            
+					ArmaArmaduraEquipada armequipadisima = (ArmaArmaduraEquipada) query2.uniqueResult();
+					ArmaArmaduraVOfin.add(new ArmaArmaduraVO(armequip.getArmasArmaduras().getIdArmasArmaduras(), armequip.getArmasArmaduras().getNombre(), armequip.getArmasArmaduras().getTipo(), armequip.getArmasArmaduras().getDefensa(),armequipadisima.getEquipada() ,armequipadisima.getArmasArmaduras().getAtaque()));
+					
+				}
+				////
+
+				transaction.commit();
+
+			}
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return ArmaArmaduraVOfin;
+	}
+
+
+
+	@Override
+	public PersonajeVO getPersonajeCompleto(int idPersonaje) {
+		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		UsrPersonaje u = new UsrPersonaje();
+		PersonajeVO personajevo= null;
+		List<ArmaArmaduraVO> armaduraspersonaje = new ArrayList<ArmaArmaduraVO>();
+		List<ObjetoCantidadVO> listobjetos = new ArrayList<ObjetoCantidadVO>();
+		try{
+			transaction = session.beginTransaction();
+			u = (UsrPersonaje)session.load(UsrPersonaje.class, idPersonaje);
+			if (u != null) {
+				transaction.commit();
+				personajevo = new PersonajeVO(u.getIduser(),u.getIdGCM(), u.getNombre(), u.getVida(), u.getDefensa(), u.getAtaque(), u.getLatitud(), u.getLongitud());
+				for (ArmasArmaduras arm: u.getArmasarmaduras()) {
+					//Sacar armaduras y ataques y pasarselos al personaje
+					
+					//miramos si la armadura esta equipada o desequipada
+					int equipamiento= verificarArmaArmaduraEquipada(arm.getIdArmasArmaduras(),u.getIduser());
+					
+						ArmaArmaduraVO armunica= new ArmaArmaduraVO(arm.getIdArmasArmaduras(), arm.getNombre(), arm.getTipo(), arm.getDefensa(), equipamiento ,arm.getAtaque());
+						//sacar ataques
+						List<Ataques> ataques = arm.getAtaques();
+						for (Ataques atac: ataques) {
+							AtaqueVO ataquevo = new AtaqueVO(atac.getIdAtaque(), atac.getNombre(), atac.getAtributoAfectado(), atac.getFactorDaño(), atac.getPorcentajeAcierto(), atac.getJugadorAfectado(), atac.getVecesUso());
+							System.out.print("***********Lista de ataques: " + ataquevo.getNombreataque());
+							armunica.addAtaques(ataquevo);
+						}
+						armaduraspersonaje.add(armunica);
+					
+					
+				}
+				personajevo.setArmasarmaduras(armaduraspersonaje);
+				
+				
+				//Añadimos los objetos al personaje VO
+				for (Objeto objeto: u.getInventario()) {
+					Query query2 = session.createQuery("from ObjetoCantidad where idUser= :iduser and idobjeto= :idobjeto");
+					query2.setParameter("idobjeto",objeto.getIdobjeto());
+					query2.setParameter("iduser", personajevo.getIduser());            
+					ObjetoCantidad objetocantidad = (ObjetoCantidad) query2.uniqueResult();
+					ObjetoCantidadVO objcan= new ObjetoCantidadVO(objeto.getIdobjeto(), objeto.getNombre(), objeto.getRareza(), objeto.getTipo(), objeto.getCombo1(), objeto.getCombo2(), objeto.getExito(), objetocantidad.getCantidad());
+					
+					listobjetos.add(objcan);
+				}
+				personajevo.setInventario(listobjetos);				
+			}
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return personajevo;
+	}
+	
 
 	@Override
 	public ObjetoCantidadVO combinacionFinal(int iduser, String objeto1, String objeto2)

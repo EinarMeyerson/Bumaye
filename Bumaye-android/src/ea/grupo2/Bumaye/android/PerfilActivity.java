@@ -92,6 +92,10 @@ public class PerfilActivity extends Activity {
 
 		for (ArmaArmaduraVO arm: personaje.getArmasarmaduras()) {
 			
+			
+			//solo la pinta si esta equipada
+			if (arm.getEquipada()==1){
+			
 			for (AtaqueVO atac: arm.getAtaques()) {
 
 				String afectado;
@@ -143,6 +147,8 @@ public class PerfilActivity extends Activity {
 				//botas
 				botasimagen.setImageURI(uri);
 			}
+			
+			}
 
 
 		}
@@ -160,6 +166,7 @@ public class PerfilActivity extends Activity {
 		{
 			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
 			{
+				if (arm.getEquipada()==1){
 				AtaqueVO ataces = new AtaqueVO();
 
 				for (AtaqueVO atac: arm.getAtaques()) {
@@ -174,12 +181,14 @@ public class PerfilActivity extends Activity {
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
+				}
 			}
 		}
 		if (view.getId()==R.id.guantes)
 		{
 			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
 			{
+				if (arm.getEquipada()==1){
 				AtaqueVO ataces = new AtaqueVO();
 
 				for (AtaqueVO atac: arm.getAtaques()) {
@@ -194,12 +203,14 @@ public class PerfilActivity extends Activity {
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
+				}
 			}
 		}
 		if (view.getId()==R.id.coraza)
 		{
 			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
 			{
+				if (arm.getEquipada()==1){
 				AtaqueVO ataces = new AtaqueVO();
 
 				for (AtaqueVO atac: arm.getAtaques()) {
@@ -214,12 +225,14 @@ public class PerfilActivity extends Activity {
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
+				}
 			}
 		}
 		if (view.getId()==R.id.arma)
 		{
 			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
 			{
+				if (arm.getEquipada()==1){
 				AtaqueVO ataces = new AtaqueVO();
 
 				for (AtaqueVO atac: arm.getAtaques()) {
@@ -234,12 +247,14 @@ public class PerfilActivity extends Activity {
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
+				}
 			}
 		}
 		if (view.getId()==R.id.piernas)
 		{
 			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
 			{
+				if (arm.getEquipada()==1){
 				AtaqueVO ataces = new AtaqueVO();
 
 				for (AtaqueVO atac: arm.getAtaques()) {
@@ -254,12 +269,14 @@ public class PerfilActivity extends Activity {
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
 				}
+				}
 			}
 		}
 		if (view.getId()==R.id.botas)
 		{
 			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
 			{
+				if (arm.getEquipada()==1){
 				AtaqueVO ataces = new AtaqueVO();
 
 				for (AtaqueVO atac: arm.getAtaques()) {
@@ -273,6 +290,7 @@ public class PerfilActivity extends Activity {
 					}
 					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
 					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+				}
 				}
 			}
 		}

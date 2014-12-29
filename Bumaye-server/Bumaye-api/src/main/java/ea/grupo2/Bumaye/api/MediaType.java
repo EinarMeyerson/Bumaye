@@ -9,6 +9,6 @@ public class MediaType {
 	public final static String API_LOGEADOS = "application/vnd.bumaye.api.personajelogeado+json";
 	public final static String API_OBJETOS = "application/vnd.bumaye.api.objetos+json";
 	public final static String API_COMBINACION = "application/vnd.bumaye.api.combinacion+json";
-
+	public final static String API_EQUIPAMIENTO = "application/vnd.bumaye.api.equipamiento+json";
 
 }

@@ -9,6 +9,7 @@ public class ArmaArmaduraVO {
 	private String nombrearmaarmadura;
 	private String tipo;
 	private float defensa;
+	private int equipada;
 	private float ataque;
 	private List<AtaqueVO> ataques = new ArrayList<AtaqueVO>();
 	
@@ -16,11 +17,12 @@ public class ArmaArmaduraVO {
 	}
 	
 	public ArmaArmaduraVO(int idarmaarmadura, String nombrenombrearm,
-			String tipo, float defensa, float ataque) {
+			String tipo, float defensa,int equipada, float ataque) {
 		this.idarmaarmadura = idarmaarmadura;
 		this.nombrearmaarmadura = nombrenombrearm;
 		this.tipo = tipo;
 		this.defensa = defensa;
+		this.equipada= equipada;
 		this.ataque = ataque;
 	}
 
@@ -65,6 +67,14 @@ public class ArmaArmaduraVO {
 	}
 	public void addAtaques(AtaqueVO ataque) {
 		ataques.add(ataque);
+	}
+
+	public int getEquipada() {
+		return equipada;
+	}
+
+	public void setEquipada(int equipada) {
+		this.equipada = equipada;
 	}
 
 }

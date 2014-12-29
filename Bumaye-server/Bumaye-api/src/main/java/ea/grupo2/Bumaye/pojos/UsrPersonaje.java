@@ -60,6 +60,9 @@ public class UsrPersonaje {
     @OneToMany(mappedBy="usrPersonaje", fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
 	private List<ObjetoCantidad> objetoscantidads;
     
+    @OneToMany(mappedBy="usrPersonaje", fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
+	private List<ArmaArmaduraEquipada> armaarmaduraequipada;
+    
     public UsrPersonaje (){
     }
 
@@ -194,6 +197,19 @@ public class UsrPersonaje {
 	public void addObjetocantidad(ObjetoCantidad objetocantidad) {
 		objetoscantidads.add(objetocantidad);
     }
+
+
+	public List<ArmaArmaduraEquipada> getArmaarmaduraequipada() {
+		return armaarmaduraequipada;
+	}
+
+	public void setArmaarmaduraequipada( List<ArmaArmaduraEquipada> armaarmaduraequipada) {
+		this.armaarmaduraequipada = armaarmaduraequipada;
+	}
+	public void addArmaarmaduraequipada(ArmaArmaduraEquipada armarmaduraequipada) {
+		armaarmaduraequipada.add(armarmaduraequipada);
+    }
+	
 
 	public void removeinventario(Objeto objeto) {
 		inventario.remove(objeto);
