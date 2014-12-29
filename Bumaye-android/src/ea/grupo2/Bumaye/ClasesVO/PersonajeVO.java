@@ -148,17 +148,5 @@ public void setInventario(List<ObjetoCantidadVO> inventario) {
 public void addInventario(ObjetoCantidadVO objeto) {
 	inventario.add(objeto);
 }
-
-//public List<AtaqueVO> getAtaques() {
-//	return ataques;
-//}
-//
-//
-//public void setAtaques(List<AtaqueVO> ataques) {
-//	this.ataques = ataques;
-//}
-
-
-
    
 }

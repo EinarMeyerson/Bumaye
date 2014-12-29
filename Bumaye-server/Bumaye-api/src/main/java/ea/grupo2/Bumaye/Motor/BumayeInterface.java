@@ -13,6 +13,8 @@ import java.util.List;
 
 
 
+
+import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
@@ -63,6 +65,10 @@ public interface BumayeInterface {
     public String updateArmasArmadurasBBDD(int idArmasArmaduras, ArmasArmaduras armasarmaduras);
     public String deleteArmasArmadurasBBDD(int idArmasArmaduras);
     public String añadirArmasArmaduras(int idarmaarmadura, int iduser);
+    public String añadirArmasArmadurasEquipada(int idarmaarmadura, int iduser);
+    public String desequiparArmasArmadurasEquipada(int idarmaarmadura, int iduser);
+    public int verificarArmaArmaduraEquipada(int idarmaarmadura, int iduser);
+    public List<ArmaArmaduraVO> listaArmasArmadurasUsr(int iduser);
  
     //funciones interface usuario/personaje
     public String addUsrPersonaje(UsrPersonaje usrpersonaje);
@@ -77,7 +83,7 @@ public interface BumayeInterface {
      
     //funciones PersojaneVO
     public PersonajeVO getPersonaje(int idPersonaje);
-//  public String añadirPersonajeVO(PersonajeVO personaje);
+    public PersonajeVO getPersonajeCompleto(int idPersonaje);
     public BatallaVO updateAtributosBatallaVO(int idbatallaVO,int idPersonajeActuali, String atributo, float nuevoatributo);
     public BatallaVO ResultadoAtaqueVO(int idataque, int idbatallaVO, int idPersonajeVO) throws Exception;
     public String añadirObjetoInventarioVerificado(int idobjeto, int iduser) throws Exception;

@@ -4,4 +4,5 @@ public class MediaType {
 	// Media type
 	public final static String API_USER = "application/vnd.bumaye.api.user+json";
 	public final static String API_PERSONAJE = "application/vnd.bumaye.api.personaje+json";
+	public final static String API_EQUIPAMIENTO = "application/vnd.bumaye.api.equipamiento+json";
 }

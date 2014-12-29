@@ -41,7 +41,7 @@ public class ArmasArmaduras {
 		this.setNombre(nombre);
 		this.setTipo(tipo);
 		this.setDefensa(defensa);
-		this.setAtaque(ataque);
+		this.setAtaque(ataque);;
 	}
 
 	public int getIdArmasArmaduras() {
@@ -96,6 +96,4 @@ public class ArmasArmaduras {
 	public void addAtaque(Ataques ataque) {
 		ataques.add(ataque);
 	}
-
-	
 }

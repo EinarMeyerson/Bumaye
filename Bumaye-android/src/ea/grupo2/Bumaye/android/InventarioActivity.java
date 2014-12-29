@@ -1,11 +1,18 @@
 package ea.grupo2.Bumaye.android;
 
+import java.io.IOException;
+import java.util.Properties;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
@@ -25,26 +32,31 @@ import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
 
 public class InventarioActivity extends Activity {
 
+	private final static String TAG = LoginActivity.class.getName();
 	private ListView navList;
 	private DrawerLayout mDrawerLayout;
 	String url;
+	String serverAddress;
+	String serverPort;
 	PersonajeVO personaje;
 	ListView lv;
 	Context context;
 	TextView nombreObjeto, rareza, exito, combo1, combo2, tipo, cantidad;
 	ImageView imgObjeto;
 	Button equipar;
+	private UsrPersonajeAPI api;
 	public static int [] imgObjetos;
-
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inventario_prueva);
+
+		api = new UsrPersonajeAPI();
 
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -64,6 +76,18 @@ public class InventarioActivity extends Activity {
 		navList.setAdapter(adapter);
 		navList.setOnItemClickListener(new DrawerItemClickListener());
 
+		//preparar la url para los equipamientos
+		AssetManager assetManager = getAssets();
+		Properties config = new Properties();
+		try {
+			config.load(assetManager.open("config.properties"));
+			serverAddress = config.getProperty("server.address");
+			serverPort = config.getProperty("server.port");
+			Log.d(TAG, "Configured server " + serverAddress + ":" + serverPort);
+		} catch (IOException e) {
+			Log.e(TAG, e.getMessage(), e);
+			finish();
+		}
 
 		//inicializamos el ListView
 		lv=(ListView) findViewById(R.id.listObjetos);
@@ -102,11 +126,11 @@ public class InventarioActivity extends Activity {
 		{
 			if (objetorepetido.equals(objet.getNombre()))
 			{
-				Log.d("IGUALES","si son iguales");
+
 			}
 			else
 			{
-				Log.d("Distintos",objetorepetido);
+
 				nomObjetos[i]= objet.getNombre();
 				objetorepetido= objet.getNombre();
 				i++;
@@ -132,11 +156,11 @@ public class InventarioActivity extends Activity {
 		{
 			if (objetorepetido.equals(objet.getNombre()))
 			{
-				Log.d("IGUALES","si son iguales");
+
 			}
 			else
 			{
-				Log.d("Distintos",objetorepetido);
+
 				canObjetos[i]= objet.getCantidad();
 				objetorepetido= objet.getNombre();
 				i++;
@@ -160,11 +184,11 @@ public class InventarioActivity extends Activity {
 		{
 			if (objetorepetido.equals(objet.getNombre()))
 			{
-				Log.d("IGUALES","si son iguales");
+
 			}
 			else
 			{
-				Log.d("Distintos",objetorepetido);
+
 				objetorepetido= objet.getNombre();
 				cantidad++;
 			}
@@ -195,7 +219,8 @@ public class InventarioActivity extends Activity {
 				//cantidad.setText("Cantidad: " + objet.getCantidad());
 				Uri uri = Uri.parse("android.resource://ea.grupo2.Bumaye.android/drawable/"+objet.getNombre());
 				imgObjeto.setImageURI(uri);
-				equipar.setVisibility(View.INVISIBLE);
+				equipar.setVisibility(View.VISIBLE);
+				equipar.setText("Combinar");
 			}
 		}
 		for (ArmaArmaduraVO arm: personaje.getArmasarmaduras())
@@ -205,32 +230,164 @@ public class InventarioActivity extends Activity {
 				nombreObjeto.setText(arm.getNombre());
 				rareza.setText("Ataque: "+arm.getAtaque());
 				exito.setText("Defensa: "+arm.getDefensa());
-				combo1.setText("Tipo: "+ arm.getTipo());
-				combo2.setText("");
-				tipo.setText("");
+				combo1.setText("");
+				combo2.setText("Tipo: ");
+				tipo.setText(arm.getTipo());
 				//cantidad.setText("Cantidad: " + objet.getCantidad());
 				Uri uri = Uri.parse("android.resource://ea.grupo2.Bumaye.android/drawable/"+arm.getNombre());
 				imgObjeto.setImageURI(uri);
-				equipar.setVisibility(View.VISIBLE);
+
+				if (arm.getEquipada()==1)
+				{
+					equipar.setVisibility(View.VISIBLE);
+					equipar.setText("Desequipar");
+				}
+				else
+				{
+					equipar.setVisibility(View.VISIBLE);
+					equipar.setText("Equipar");
+				}
 			}
 		}
 
 	}
-	
+
 	public void Equipar_Combinar (View v) {
-		
-		String objeto1= nombreObjeto.getText().toString();
-		
-//		nombre = username.getText().toString();
-//		contra = password.getText().toString();
-//		if (nombre.isEmpty() || contra.isEmpty())
-//		{				
-//			Toast.makeText(getApplicationContext(), "Rellene todos los campos",
-//					   Toast.LENGTH_LONG).show();		
-//		}
-//		else{
-//			(new LoginUsrTask()).execute(nombre,contra,url);
-//		}		
+
+		String boton = equipar.getText().toString();
+
+		if (boton.equals("Equipar"))
+		{
+			String nombreArmadura= nombreObjeto.getText().toString();
+			String tipoarmadura= tipo.getText().toString();
+			int idarmequipada=0;
+			int idarmdesequipada=0;
+
+			for (ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+			{
+				if (nombreArmadura==arm.getNombre()){
+					idarmequipada=arm.getIdarmaarmadura();
+				}
+
+			}
+			for (ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+			{
+				if ((tipoarmadura.equals(arm.getTipo())) && (arm.getEquipada()==1)){
+					idarmdesequipada= arm.getIdarmaarmadura();
+				}
+
+			}
+
+			url = "http://" + serverAddress + ":" + serverPort
+					+ "/Bumaye-api/user/equipar";
+			(new EquiparUsrTask()).execute(Integer.toString(idarmequipada),Integer.toString(idarmdesequipada),url);
+
+		}
+
+		if (boton.equals("Desequipar"))
+		{
+			String nombreArmadura= nombreObjeto.getText().toString();
+			String tipoarmadura= tipo.getText().toString();
+			int idarmdesequipada=0;
+
+			for (ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+			{
+				if (nombreArmadura==arm.getNombre()){
+					idarmdesequipada=arm.getIdarmaarmadura();
+				}
+
+			}
+
+			url = "http://" + serverAddress + ":" + serverPort
+					+ "/Bumaye-api/user/desequipar";
+			(new DesequiparUsrTask()).execute(Integer.toString(idarmdesequipada),url);
+
+		}
+
+
+	}
+
+	private class EquiparUsrTask extends AsyncTask<String, Void, PersonajeVO> {
+		private ProgressDialog pd;
+		@Override
+		protected PersonajeVO doInBackground(String... params) {
+			PersonajeVO person  = new PersonajeVO();
+			person = api.equiparUser(personaje.getIduser(),Integer.parseInt(params[0]),Integer.parseInt(params[1]),params[2]);			
+			return person;
+		}
+
+		@Override
+		protected void onPostExecute(PersonajeVO result) {
+			Log.d("Usuario equipado:",result.getNombre().toString());
+			if (pd != null) {
+				pd.dismiss();
+			}
+			if (result.getNombre() != "")
+			{
+				Log.e(TAG,result.getNombre());
+				Equipado(result);
+			}
+			else{				
+				wrongEquipado();
+			}		
+		}
+
+		@Override
+		protected void onPreExecute() {
+			pd = new ProgressDialog(InventarioActivity.this);
+			pd.setTitle("Equipando");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+			pd.show();
+		}
+	}
+
+	private class DesequiparUsrTask extends AsyncTask<String, Void, PersonajeVO> {
+		private ProgressDialog pd;
+		@Override
+		protected PersonajeVO doInBackground(String... params) {
+			PersonajeVO person  = new PersonajeVO();
+			person = api.desequiparUser(personaje.getIduser(),Integer.parseInt(params[0]),params[1]);			
+			return person;
+		}
+
+		@Override
+		protected void onPostExecute(PersonajeVO result) {
+			Log.d("Usuario desequipado:",result.getNombre().toString());
+			if (pd != null) {
+				pd.dismiss();
+			}
+			if (result.getNombre() != "")
+			{
+				Log.e(TAG,result.getNombre());
+				Equipado(result);
+			}
+			else{				
+				wrongEquipado();
+			}		
+		}
+
+		@Override
+		protected void onPreExecute() {
+			pd = new ProgressDialog(InventarioActivity.this);
+			pd.setTitle("Desequipando");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+			pd.show();
+		}
+	}
+
+	private void Equipado(PersonajeVO person){
+
+		Intent intent = new Intent(this, InventarioActivity.class);
+		intent.putExtra("url", url);
+		intent.putExtra("personaje", person);
+		startActivity(intent);
+		finish();
+	}
+	private void wrongEquipado(){
+		Toast.makeText(getApplicationContext(), "Error al equiparse",
+				Toast.LENGTH_LONG).show();
 	}
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {

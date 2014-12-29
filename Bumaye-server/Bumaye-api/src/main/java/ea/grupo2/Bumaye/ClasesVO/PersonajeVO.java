@@ -177,7 +177,7 @@ public class PersonajeVO {
 	
     public ObjetoCantidadVO getObjetoCantidadVO(String nombreObjeto) {
     	ObjetoCantidadVO objetocantidadVO = mapObjetoVO.get(nombreObjeto);
-    	System.out.print("Objeto es : " + objetocantidadVO.getNombre());
+//    	System.out.print("Objeto es : " + objetocantidadVO.getNombre());
         return objetocantidadVO;
         
     }

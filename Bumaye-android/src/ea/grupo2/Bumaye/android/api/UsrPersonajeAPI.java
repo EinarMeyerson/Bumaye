@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import ea.grupo2.Bumaye.ClasesVO.EquipamientoVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
@@ -202,7 +203,93 @@ public class UsrPersonajeAPI {
 		return person;
 		
 	}
-
 	
+	public PersonajeVO equiparUser (int iduser,int idarmequipada, int idesequipada,  String url) {		
+		Log.d(TAG, "Equiparse()");
+		PersonajeVO person = new PersonajeVO();
+		EquipamientoVO equip = new EquipamientoVO();
+		equip.setIdarmequipada(idarmequipada);
+		equip.setIdesequipada(idesequipada);
+		equip.setIduser(iduser);
+		
+        Gson gson = new GsonBuilder().create();
+        
+		HttpClient httpClient = new DefaultHttpClient();
+		httpClient = WebServiceUtils.getHttpClient();
+		
+		HttpPost post = new HttpPost(url);
+		HttpResponse response;
+		StringEntity params;
+		
+		try {
+			params = new StringEntity(gson.toJson(equip));
+	        post.addHeader("content-type", MediaType.API_EQUIPAMIENTO);
+	        post.setEntity(params);
+			response = httpClient.execute(post);
+			HttpEntity entity = response.getEntity();
+			Reader reader = new InputStreamReader(entity.getContent());
+			person = gson.fromJson(reader, PersonajeVO.class);
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NullPointerException e){
+			Log.d(TAG, "No equipado");
+			person = new PersonajeVO();
+			person.setNombre("");
+		}
+		
+		return person;
+		
+	}
+	
+	public PersonajeVO desequiparUser (int iduser, int idesequipada,  String url) {		
+		Log.d(TAG, "Equiparse()");
+		PersonajeVO person = new PersonajeVO();
+		EquipamientoVO equip = new EquipamientoVO();
+		equip.setIdarmequipada(0);// cero porque no hay nada que equipar y por no crear una clase entera nueva
+		equip.setIdesequipada(idesequipada);
+		equip.setIduser(iduser);
+		
+        Gson gson = new GsonBuilder().create();
+        
+		HttpClient httpClient = new DefaultHttpClient();
+		httpClient = WebServiceUtils.getHttpClient();
+		
+		HttpPost post = new HttpPost(url);
+		HttpResponse response;
+		StringEntity params;
+		
+		try {
+			params = new StringEntity(gson.toJson(equip));
+	        post.addHeader("content-type", MediaType.API_EQUIPAMIENTO);
+	        post.setEntity(params);
+			response = httpClient.execute(post);
+			HttpEntity entity = response.getEntity();
+			Reader reader = new InputStreamReader(entity.getContent());
+			person = gson.fromJson(reader, PersonajeVO.class);
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NullPointerException e){
+			Log.d(TAG, "No Desequipado");
+			person = new PersonajeVO();
+			person.setNombre("");
+		}
+		
+		return person;
+		
+	}
 
 }
