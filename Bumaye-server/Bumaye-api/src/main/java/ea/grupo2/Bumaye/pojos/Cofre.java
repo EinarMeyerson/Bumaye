@@ -22,9 +22,9 @@ public class Cofre {
 	@Column(name="idcofre")
 	private int idcofre;
 	@Column(unique = true, name="longitud")
-	private float longitud;
+	private double longitud;
 	@Column(unique = true, name="latitud")
-	private float latitud;
+	private double latitud;
 
 	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "Cofre_Objeto", joinColumns = { 
@@ -38,7 +38,7 @@ public class Cofre {
     }
      
      
-    public Cofre(float longitud, float latitud) {
+    public Cofre(double latitud, double longitud) {
     	
         this.longitud = longitud;
         this.latitud = latitud;
@@ -52,19 +52,19 @@ public class Cofre {
 		this.idcofre = idcofre;
 	}
 
-	public float getLongitud() {
+	public double getLongitud() {
 		return longitud;
 	}
 
-	public void setLongitud(float longitud) {
+	public void setLongitud(double longitud) {
 		this.longitud = longitud;
 	}
 
-	public float getLatitud() {
+	public double getLatitud() {
 		return latitud;
 	}
 
-	public void setLatitud(float latitud) {
+	public void setLatitud(double latitud) {
 		this.latitud = latitud;
 	}
 

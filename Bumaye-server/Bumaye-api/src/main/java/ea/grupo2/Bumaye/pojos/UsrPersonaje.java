@@ -4,6 +4,7 @@ import java.util.List;
  
 
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +36,11 @@ public class UsrPersonaje {
     @Column(name="defensa")
     private float defensa;
     @Column(name="ataque")
-    private float ataque;   
+    private float ataque;
+	@Column(name="longitud")
+	private double longitud;
+	@Column(name="latitud")
+	private double latitud;
      
     @ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "UsrPersonaje_Batallas", joinColumns = { 
@@ -57,20 +62,24 @@ public class UsrPersonaje {
     
     public UsrPersonaje (){
     }
-     
-     
-    public UsrPersonaje(String username,String idGCM, String password, String nombre, float vida, float defensa, float ataque) {
-    	this.idGCM = idGCM;
-        this.username = username;
-        this.password = password;
-        this.nombre = nombre;
-        this.vida = vida;
-        this.defensa = defensa;
-        this.ataque = ataque;
-    }
- 
- 
-    public int getIduser() {
+
+
+    public UsrPersonaje(String idGCM, String username,
+			String password, String nombre, float vida, float defensa,
+			float ataque, double latitud, double longitud) {
+		super();
+		this.idGCM = idGCM;
+		this.username = username;
+		this.password = password;
+		this.nombre = nombre;
+		this.vida = vida;
+		this.defensa = defensa;
+		this.ataque = ataque;
+		this.longitud = longitud;
+		this.latitud = latitud;
+	}
+
+	public int getIduser() {
         return iduser;
     }
     public void setIduser(int iduser) {
@@ -189,4 +198,25 @@ public class UsrPersonaje {
 	public void removeinventario(Objeto objeto) {
 		inventario.remove(objeto);
     }
+
+
+	public double getLongitud() {
+		return longitud;
+	}
+
+
+	public void setLongitud(double longitud) {
+		this.longitud = longitud;
+	}
+
+
+	public double getLatitud() {
+		return latitud;
+	}
+
+
+	public void setLatitud(double latitud) {
+		this.latitud = latitud;
+	}
+
 }
