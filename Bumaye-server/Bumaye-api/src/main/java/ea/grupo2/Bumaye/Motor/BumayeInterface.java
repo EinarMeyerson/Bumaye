@@ -15,6 +15,7 @@ import java.util.List;
 
 
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
+
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
@@ -40,7 +41,9 @@ public interface BumayeInterface {
     public List<ObjetoCantidadVO> listaObjetosUsr(int iduser);
     public ObjetoCantidadVO combinacion(int iduser, String objeto1, String objeto2) throws Exception;
     public boolean VerificarObjeto(String objeto , int idPersonajeVO) throws Exception;
-	
+    public ObjetoCantidadVO combinacionFinal(int iduser, String objeto1, String objeto2) throws Exception;
+    public ObjetoCantidadVO getObjeto(String objeto, int idUser);
+    
 	//funciones de cofre
 	public String addCofre(Cofre cofre);
 	public String añadirObjetosCofre(int idobjeto, int idCofre);
@@ -51,7 +54,9 @@ public interface BumayeInterface {
     public String limpiezaObjetosCofre();
 
 	//funciones de inventario
-     
+    public String eliminarObjetosInventario(int idUser, int idObjeto);
+    public String limpiezaObjetosInventario();
+
     //funciones inreface de los Ataques
     public String addAtaqueBBDD(Ataques ataque, int idarmaarmadura);
     public String updateAtaqueBBDD(int idAtaque, Ataques ataque);
@@ -80,6 +85,8 @@ public interface BumayeInterface {
     
   //Lista de jugadores logeados basic info
     public List<PersonajeLogeadoVO> listPersonajes(int idUsersolicita);     
+    //Lista de cofres info
+    public List<CofreVO> listCofres();     
      
     //funciones PersojaneVO
     public PersonajeVO getPersonaje(int idPersonaje);

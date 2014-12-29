@@ -32,14 +32,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
-import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
+import ea.grupo2.Bumaye.android.api.MapAPI;
 
 public class MapActivity extends FragmentActivity{
 	private final static String TAG = MapActivity.class.getName();
 	private ListView navList;
     private DrawerLayout mDrawerLayout;
-	private UsrPersonajeAPI api;
+	private MapAPI api;
 	String url;
 	PopupWindow popUp;
 	String serverAddress;
@@ -47,13 +48,14 @@ public class MapActivity extends FragmentActivity{
     private GoogleMap map;
 	PersonajeVO personaje =null;
 	List<PersonajeVO> personajes = new ArrayList<PersonajeVO>();
+	List<CofreVO> cofres = new ArrayList<CofreVO>();
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);		
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
-		api = new UsrPersonajeAPI();
+		api = new MapAPI();
         map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 
 		 getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
@@ -100,7 +102,12 @@ public class MapActivity extends FragmentActivity{
 		protected void onPostExecute(List<PersonajeVO> result) {						
 			personajes = result;
 	    	Log.e(TAG, "Lista de personajes tamaño: " +personajes.size());
-	    	mapa();
+	    	Log.e(TAG, "RECORDAR CAMBIAR URL PARA LISTA COFRES!!");
+	    	// CAMBIAR URL
+	    	
+	    	url = "http://" + serverAddress + ":" + serverPort
+					+ "/Bumaye-api/user/listacofres";
+	    	(new LoadList2Task()).execute(url);		
 			if (pd != null) {
 				pd.dismiss();
 			}
@@ -116,7 +123,37 @@ public class MapActivity extends FragmentActivity{
 		}
 
 	}
-    private void mapa(){
+
+	private class LoadList2Task extends AsyncTask<String, Void, List<CofreVO>> {
+		private ProgressDialog pd;
+
+		@Override
+		protected List<CofreVO> doInBackground(String... params) {
+			List<CofreVO> notas = api.getAllItem(params[0]);
+			return notas;
+		}
+
+		@Override
+		protected void onPostExecute(List<CofreVO> result) {						
+			cofres = result;
+	    	Log.e(TAG, "Lista de cofres tamaño: " +cofres.size());
+	    	opMapa();
+			if (pd != null) {
+				pd.dismiss();
+			}
+		}
+
+		@Override
+		protected void onPreExecute() {
+			pd = new ProgressDialog(MapActivity.this);
+			pd.setTitle("Loading Items...");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+			pd.show();
+		}
+
+	}
+    private void opMapa(){
         map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 //        
 //    	MapFragment mapFragment = (MapFragment) getFragmentManager()
@@ -134,7 +171,16 @@ public class MapActivity extends FragmentActivity{
             .snippet("Luchar!")
             .title(pers.getNombre()+" - \nAtaque: "+pers.getAtaque()+"\nDefensa: "+pers.getDefensa()));
     		
-		}    	
+		}    
+    	for (int i=0;  i < cofres.size() ; i++){
+	    	CofreVO cof = cofres.get(i);	    	
+	    	Lon = cof.getLongitud();
+	    	Lat = cof.getLatitud();
+    		map.addMarker(new MarkerOptions()
+            .position(new LatLng(Lat, Lon))
+            .title("Cofre nº: "+cof.getIdcofre()));
+    		
+		}    
     	map.setOnInfoWindowClickListener(new OnInfoWindowClickListener()
     	{
     	    @Override public void onInfoWindowClick(Marker arg0) {
