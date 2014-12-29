@@ -21,8 +21,8 @@ import ea.grupo2.Bumaye.pojos.ObjetoCofreCantidad;
 public class CofreVO {
 
 	private int idcofre;
-	private float longitud;
-	private float latitud;
+	private double longitud;
+	private double latitud;
 	private List<ObjetoVO> lista_objetos;
 	private List<ObjetoCofreCantidadVO> objetoscofrecantidads;
 	
@@ -32,7 +32,7 @@ public class CofreVO {
 	public CofreVO (){
     }
 	
-	public CofreVO(int idcofre, float longitud, float latitud) {
+	public CofreVO(int idcofre, double latitud, double longitud) {
 		super();
 		this.idcofre = idcofre;
 		this.longitud = longitud;
@@ -58,19 +58,19 @@ public class CofreVO {
 		this.idcofre = idcofre;
 	}
 
-	public float getLongitud() {
+	public double getLongitud() {
 		return longitud;
 	}
 
-	public void setLongitud(float longitud) {
+	public void setLongitud(double longitud) {
 		this.longitud = longitud;
 	}
 
-	public float getLatitud() {
+	public double getLatitud() {
 		return latitud;
 	}
 
-	public void setLatitud(float latitud) {
+	public void setLatitud(double latitud) {
 		this.latitud = latitud;
 	}
 

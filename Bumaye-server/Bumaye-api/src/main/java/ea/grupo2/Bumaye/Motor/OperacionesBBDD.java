@@ -182,12 +182,12 @@ public class OperacionesBBDD implements BumayeInterface{
 
 
 		//      /* PERSONAJES */
-		m.addUsrPersonaje(new UsrPersonaje("albert@hotmail.com",null,"spot","Spot",100,10,10));
-		m.addUsrPersonaje(new UsrPersonaje("eianr@hotmail.com",null,"1234","Elcolmo",100,10,10));
-		m.addUsrPersonaje(new UsrPersonaje("juan@hotmail.com",null,"1234","Ilcapone",100,10,10));
+		m.addUsrPersonaje(new UsrPersonaje("albert@hotmail.com",null,"spot","Spot",100,10,10,41.215016, 1.727201));
+		m.addUsrPersonaje(new UsrPersonaje("eianr@hotmail.com",null,"1234","Elcolmo",100,10,10,41.376700, 2.114187));
+		m.addUsrPersonaje(new UsrPersonaje("juan@hotmail.com",null,"1234","Ilcapone",100,10,10, 42.571684, -0.547046));
 		System.out.print("Jugadores añadidos");
 
-		      /* AÑADIR OBJETOS A PERSONAJES */
+		/* AÑADIR OBJETOS A PERSONAJES */
 		      m.añadirObjetoInventarioVerificado(2, 1);
 		      m.añadirObjetoInventarioVerificado(3, 1);
 		      m.añadirObjetoInventarioVerificado(2, 1);
@@ -300,14 +300,34 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.añadirArmasArmadurasEquipada(19, 3);
 		m.añadirArmasArmadurasEquipada(21, 3);
 		System.out.print("Equipado el jugador3");
-		
-
 
 	}
+	
+	
+	@Override
+	public double distance(double lat1, double lat2, double lon1, double lon2) {
 
+	    final int R = 6371; // Radius of the earth
 
+	    Double latDistance = deg2rad(lat2 - lat1);
+	    Double lonDistance = deg2rad(lon2 - lon1);
+	    Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+	            + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2))
+	            * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+	    Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	    double distance = R * c * 1000; // convert to meters
+	    System.out.print(distance);
 
-	public static int randInt() {
+	    return distance;
+	}
+
+	@Override
+	public double deg2rad(double deg) {
+	    return (deg * Math.PI / 180.0);
+	}
+
+	@Override
+	public int randInt() {
 
 		int min =0;
 		int max = 99;
@@ -620,7 +640,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			//UsrPersonaje us  = (UsrPersonaje)session.load(UsrPersonaje.class, userlog.getUsername());
 			if (u != null) {
 				transaction.commit();
-				personajelog = new PersonajeVO(u.getIduser(),u.getIdGCM(), u.getNombre(), u.getVida(), u.getDefensa(), u.getAtaque());
+				personajelog = new PersonajeVO(u.getIduser(),u.getIdGCM(), u.getNombre(), u.getVida(), u.getDefensa(), u.getAtaque(), u.getLatitud(), u.getLongitud());
 				for (ArmasArmaduras arm: u.getArmasarmaduras()) {
 					//Sacar armaduras y ataques y pasarselos al personaje
 					
@@ -836,7 +856,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			personaje = (UsrPersonaje)session.load(UsrPersonaje.class, idPersonaje);
 			if (personaje!= null) {
 
-				personajevo = new PersonajeVO(personaje.getIduser(),personaje.getIdGCM(), personaje.getNombre(), personaje.getVida(), personaje.getDefensa(), personaje.getAtaque());
+				personajevo = new PersonajeVO(personaje.getIduser(),personaje.getIdGCM(), personaje.getNombre(), personaje.getVida(), personaje.getDefensa(), personaje.getAtaque(), personaje.getLatitud(), personaje.getLongitud());
 				transaction.commit();
 
 			}
@@ -909,7 +929,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			else
 			{
 				transaction.commit();
-				addUsrPersonaje(new UsrPersonaje(userregistrado.getEmail(),userregistrado.getIdGCM(), userregistrado.getPass(), userregistrado.getUsername(),100,10,10));
+				addUsrPersonaje(new UsrPersonaje(userregistrado.getEmail(),userregistrado.getIdGCM(), userregistrado.getPass(), userregistrado.getUsername(),100,10,10, userregistrado.getLatitud(),userregistrado.getLongitud()));
 
 				//Volvemos a realizar la query para solicitar el id del usuario recien creado
 				Query queri = session.createQuery("from UsrPersonaje as u where u.nombre='" + userregistrado.getUsername() + "'");
@@ -930,7 +950,7 @@ public class OperacionesBBDD implements BumayeInterface{
 
 					//Creamos la Clase PersonajeVO para mandarle al usuario todos sus atributos
 
-					UsuarioVO nuevousuariologeado = new UsuarioVO(p.getNombre(),p.getIdGCM(),p.getPassword(), userregistrado.getEmail());
+					UsuarioVO nuevousuariologeado = new UsuarioVO(p.getNombre(),p.getIdGCM(),p.getPassword(), userregistrado.getEmail(), userregistrado.getLatitud(),userregistrado.getLongitud());
 
 					personajeregistrado = LoginUser(nuevousuariologeado);
 
@@ -1844,7 +1864,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			u = (UsrPersonaje)session.load(UsrPersonaje.class, idPersonaje);
 			if (u != null) {
 				transaction.commit();
-				personajevo = new PersonajeVO(u.getIduser(),u.getIdGCM(), u.getNombre(), u.getVida(), u.getDefensa(), u.getAtaque());
+				personajevo = new PersonajeVO(u.getIduser(),u.getIdGCM(), u.getNombre(), u.getVida(), u.getDefensa(), u.getAtaque(), u.getLatitud(), u.getLongitud());
 				for (ArmasArmaduras arm: u.getArmasarmaduras()) {
 					//Sacar armaduras y ataques y pasarselos al personaje
 					
@@ -1932,8 +1952,8 @@ public class OperacionesBBDD implements BumayeInterface{
 				query.setParameter("idobjeto",idObjeto);
 				query.setParameter("idUser", idUser);            
 				objetocantidad = (ObjetoCantidad) query.uniqueResult();
-				if (objetocantidad !=null ) {
-
+				if (objetocantidad !=null && objeto.getTipo()!="herramienta") {
+					
 					Query query2 = session.createQuery("update ObjetoCantidad set cantidad= :cantidad where idobjeto= :idobjeto and idUser= :idUser");
 					query2.setParameter("cantidad",objetocantidad.getCantidad()-1);
 					query2.setParameter("idobjeto",idObjeto);
@@ -2016,6 +2036,51 @@ public class OperacionesBBDD implements BumayeInterface{
 			session.close();
 		}
 		return objcanVO;
+	}
+
+
+	@Override
+	public boolean VerificarDistanciaCofre(int iduser, int idcofre) {
+		
+		PersonajeVO pers = getPersonaje(iduser);
+		CofreVO cofre = getCofre(idcofre);
+		boolean verif=false;
+		if (distance(pers.getLatitud(), cofre.getLatitud(), pers.getLongitud(), cofre.getLongitud())<=100){
+			verif = true;
+		}
+		else{
+			throw new NoEstasSuficientementeCercaException();
+
+		}	
+		return verif;
+	}
+
+
+	@Override
+	public CofreVO getCofre(int idcofre) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		Cofre cofre = new Cofre();
+		CofreVO cofreVO= null;
+		try{
+			transaction = session.beginTransaction();
+			cofre = (Cofre)session.load(Cofre.class, idcofre);
+			if (cofre!= null) {
+
+				cofreVO = new CofreVO(idcofre, cofre.getLatitud(), cofre.getLongitud());
+				transaction.commit();
+
+			}
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return cofreVO;
 	}
 
 }

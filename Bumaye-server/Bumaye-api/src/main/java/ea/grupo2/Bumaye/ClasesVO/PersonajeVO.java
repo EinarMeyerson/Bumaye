@@ -13,6 +13,8 @@ public class PersonajeVO {
 	private float vida;
 	private float defensa;
 	private float ataque;
+	private double longitud;
+	private double latitud;
 	private List<ArmaArmaduraVO> armasarmaduras;
 	private List<AtaqueVO> ataques;
 	private List<ObjetoCantidadVO> inventario;
@@ -25,18 +27,22 @@ public class PersonajeVO {
 	public PersonajeVO (){
 	}
 
-
-	public PersonajeVO(int iduser,String idGCM, String nombre, float vida,float defensa, float ataque) {
+	public PersonajeVO(int iduser, String idGCM, String nombre, float vida,
+			float defensa, float ataque, double latitud,  double longitud) {
+		super();
 		this.iduser = iduser;
 		this.idGCM = idGCM;
 		this.nombre = nombre;
 		this.vida = vida;
 		this.defensa = defensa;
 		this.ataque = ataque;
+		this.longitud = longitud;
+		this.latitud = latitud;
 	}
+
 	public PersonajeVO getPersonajeVO()
 	{
-		PersonajeVO personaje = new PersonajeVO(this.iduser, this.idGCM, this.nombre, this.vida, this.defensa, this.ataque);
+		PersonajeVO personaje = new PersonajeVO(this.iduser, this.idGCM, this.nombre, this.vida, this.defensa, this.ataque, this.latitud, this.longitud);
 		return personaje;
 	}
 
@@ -181,5 +187,25 @@ public class PersonajeVO {
         return objetocantidadVO;
         
     }
+
+
+	public double getLongitud() {
+		return longitud;
+	}
+
+
+	public void setLongitud(double longitud) {
+		this.longitud = longitud;
+	}
+
+
+	public double getLatitud() {
+		return latitud;
+	}
+
+
+	public void setLatitud(double latitud) {
+		this.latitud = latitud;
+	}
 
 }

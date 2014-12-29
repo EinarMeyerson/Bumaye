@@ -35,6 +35,12 @@ import ea.grupo2.Bumaye.pojos.UsrPersonaje;
  
 public interface BumayeInterface {
 	
+	//funciones extras, como randomint o distancia entre puntos
+	
+	public double distance(double lat1, double lat2, double lon1, double lon2);
+	public double deg2rad(double deg);
+	public int randInt();
+	
 	//funciones de objetos
 	public String addObjeto(Objeto objeto);
 	public String añadirObjetos(int idobjeto, int iduser);
@@ -52,6 +58,9 @@ public interface BumayeInterface {
     public String recogerObjetosCofre(int idUser, int idCofre, int idObjeto, int cantidad) throws Exception;
 	public boolean VerificarCantidadCofre(int idCofre, int idObjeto, int cantidad) throws Exception;
     public String limpiezaObjetosCofre();
+    public boolean VerificarDistanciaCofre(int iduser, int idcofre);
+    public CofreVO getCofre(int idcofre);
+
 
 	//funciones de inventario
     public String eliminarObjetosInventario(int idUser, int idObjeto);

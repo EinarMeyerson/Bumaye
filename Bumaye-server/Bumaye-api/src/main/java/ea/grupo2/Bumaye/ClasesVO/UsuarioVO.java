@@ -6,17 +6,25 @@ public class UsuarioVO {
 	private String username;
 	private String pass;
 	private String email;
+	private double longitud;
+	private double latitud;
 	
 	public UsuarioVO (){
 	}
 
-public UsuarioVO(String username,String idGCM, String pass, String email) {
-	this.idGCM = idGCM;
-	this.username=username;
-	this.pass=pass;
-	this.email=email;
-}
 	
+	public UsuarioVO(String idGCM, String username, String pass, String email,
+			double latitud, double longitud) {
+		super();
+		this.idGCM = idGCM;
+		this.username = username;
+		this.pass = pass;
+		this.email = email;
+		this.longitud = longitud;
+		this.latitud = latitud;
+	}
+
+
 	public String getUsername() {
 		return username;
 	}
@@ -44,5 +52,21 @@ public UsuarioVO(String username,String idGCM, String pass, String email) {
 
 	public void setIdGCM(String idGCM) {
 		this.idGCM = idGCM;
+	}
+
+	public double getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(double longitud) {
+		this.longitud = longitud;
+	}
+
+	public double getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(double latitud) {
+		this.latitud = latitud;
 	}
 }
