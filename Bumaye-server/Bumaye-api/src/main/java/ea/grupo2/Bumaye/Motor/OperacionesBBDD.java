@@ -100,7 +100,7 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.addObjeto(new Objeto ("max_runa_cristal_nieve", null, 90, "diamante", "runa_cristal_nieve",50));
 		m.addObjeto(new Objeto ("max_runa_cristal_rayo", null, 90, "diamante", "runa_cristal_rayo",50));
 		
-		m.addObjeto(new Objeto ("herreria", null, 100, null, null,90));
+		m.addObjeto(new Objeto ("herreria", "herramienta", 100, null, null,90));
 		
 		
 		//33 la ultima
