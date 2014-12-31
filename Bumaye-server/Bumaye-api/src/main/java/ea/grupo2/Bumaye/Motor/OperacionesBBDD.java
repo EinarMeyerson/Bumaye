@@ -56,49 +56,49 @@ public class OperacionesBBDD implements BumayeInterface{
 		//(nombre objeto, tipo, rareza, combo1, combo2, %exito)
 
 		m.addObjeto(new Objeto ("pocion", "vida", 40, "hierba", "seta",90));
-		m.addObjeto(new Objeto ("hierba", null, 10, null, null,100));
-		m.addObjeto(new Objeto ("seta", null, 10, null, null,100));
+		m.addObjeto(new Objeto ("hierba", "basico", 10, null, null,100));
+		m.addObjeto(new Objeto ("seta", "basico", 10, null, null,100));
 
 		m.addObjeto(new Objeto ("elixir", "ataque", 50, "pocion", "runa_muerte",60));
-		m.addObjeto(new Objeto ("runa_muerte", null, 70, "piedra", "calavera",70));
-		m.addObjeto(new Objeto ("seta_roja", null, 30, null, null,100));
+		m.addObjeto(new Objeto ("runa_muerte", "runa", 70, "piedra", "calavera",70));
+		m.addObjeto(new Objeto ("seta_roja", "basico", 30, null, null,100));
 
 		m.addObjeto(new Objeto ("caldo", "defensa", 50, "pocion", "runa_azul",60));
-		m.addObjeto(new Objeto ("runa_azul", null, 70, "piedra", "seta_azul",70));
-		m.addObjeto(new Objeto ("seta_azul", null, 30, null, null,100));
+		m.addObjeto(new Objeto ("runa_azul", "runa", 70, "piedra", "seta_azul",70));
+		m.addObjeto(new Objeto ("seta_azul", "basico", 30, null, null,100));
 
-		m.addObjeto(new Objeto ("min_bronce", null, 5, null, null,100));
-		m.addObjeto(new Objeto ("min_oro", null, 20, null, null,100));
-		m.addObjeto(new Objeto ("min_drag", null, 30, null, null,100));
+		m.addObjeto(new Objeto ("min_bronce", "mineral", 5, null, null,100));
+		m.addObjeto(new Objeto ("min_oro", "mineral", 20, null, null,100));
+		m.addObjeto(new Objeto ("min_drag", "mineral", 30, null, null,100));
 
-		m.addObjeto(new Objeto ("barra_bronce", null, 50, "min_bronce", "herreria",70));
-		m.addObjeto(new Objeto ("barra_oro", null, 60, "min_oro", "herreria",60));
-		m.addObjeto(new Objeto ("barra_drag", null, 70, "min_drag", "herreria",50));
+		m.addObjeto(new Objeto ("barra_bronce", "barra", 50, "min_bronce", "herreria",70));
+		m.addObjeto(new Objeto ("barra_oro", "barra", 60, "min_oro", "herreria",60));
+		m.addObjeto(new Objeto ("barra_drag", "barra", 70, "min_drag", "herreria",50));
 		
 		
-		m.addObjeto(new Objeto ("calavera", null, 70, "piedra", "calavera",70));
+		m.addObjeto(new Objeto ("calavera", "??????", 70, "piedra", "calavera",70));
 		
 		//16 max_runa_cristal_agua
-		m.addObjeto(new Objeto ("pedrusco", null, 20, null, null,100));
-		m.addObjeto(new Objeto ("piedra", null, 10, null, null,100));
-		m.addObjeto(new Objeto ("runa_agua", null, 30, "piedra", "cuenco_agua",70));
-		m.addObjeto(new Objeto ("runa_rayo", null, 30, "pedrusco", "trueno",70));
-		m.addObjeto(new Objeto ("runa_hoja", null, 30, "pedrusco", "hierba",70));
-		m.addObjeto(new Objeto ("runa_nieve", null, 30, "pedrusco", "nieve",70));
+		m.addObjeto(new Objeto ("pedrusco", "basico", 20, null, null,100));
+		m.addObjeto(new Objeto ("piedra", "basico", 10, null, null,100));
+		m.addObjeto(new Objeto ("runa_agua", "runa", 30, "piedra", "cuenco_agua",70));
+		m.addObjeto(new Objeto ("runa_rayo", "runa", 30, "pedrusco", "trueno",70));
+		m.addObjeto(new Objeto ("runa_hoja", "runa", 30, "pedrusco", "hierba",70));
+		m.addObjeto(new Objeto ("runa_nieve", "runa", 30, "pedrusco", "nieve",70));
 		
-		m.addObjeto(new Objeto ("cristal", null, 60, null, null,100));
+		m.addObjeto(new Objeto ("cristal", "basico", 60, null, null,100));
 		
-		m.addObjeto(new Objeto ("runa_cristal_agua", null, 70, "cristal", "runa_agua",60));
-		m.addObjeto(new Objeto ("runa_cristal_hoja", null, 70, "cristal", "runa_hoja",60));
-		m.addObjeto(new Objeto ("runa_cristal_nieve", null, 70, "cristal", "runa_nievel",60));
-		m.addObjeto(new Objeto ("runa_cristal_rayo", null, 70, "cristal", "runa_rayo",60));
+		m.addObjeto(new Objeto ("runa_cristal_agua", "runa", 70, "cristal", "runa_agua",60));
+		m.addObjeto(new Objeto ("runa_cristal_hoja", "runa", 70, "cristal", "runa_hoja",60));
+		m.addObjeto(new Objeto ("runa_cristal_nieve", "runa", 70, "cristal", "runa_nievel",60));
+		m.addObjeto(new Objeto ("runa_cristal_rayo", "runa", 70, "cristal", "runa_rayo",60));
 		
-		m.addObjeto(new Objeto ("diamante", null, 80, null, null,100));
+		m.addObjeto(new Objeto ("diamante", "basico", 80, null, null,100));
 		
-		m.addObjeto(new Objeto ("max_runa_cristal_agua", null, 90, "diamante", "runa_cristal_agua",50));
-		m.addObjeto(new Objeto ("max_runa_cristal_hoja", null, 90, "diamante", "runa_cristal_hoja",50));
-		m.addObjeto(new Objeto ("max_runa_cristal_nieve", null, 90, "diamante", "runa_cristal_nieve",50));
-		m.addObjeto(new Objeto ("max_runa_cristal_rayo", null, 90, "diamante", "runa_cristal_rayo",50));
+		m.addObjeto(new Objeto ("max_runa_cristal_agua", "runa", 90, "diamante", "runa_cristal_agua",50));
+		m.addObjeto(new Objeto ("max_runa_cristal_hoja", "runa", 90, "diamante", "runa_cristal_hoja",50));
+		m.addObjeto(new Objeto ("max_runa_cristal_nieve", "runa", 90, "diamante", "runa_cristal_nieve",50));
+		m.addObjeto(new Objeto ("max_runa_cristal_rayo", "runa", 90, "diamante", "runa_cristal_rayo",50));
 		
 		m.addObjeto(new Objeto ("herreria", "herramienta", 100, null, null,90));
 		
@@ -242,6 +242,10 @@ public class OperacionesBBDD implements BumayeInterface{
 		      m.añadirObjetoInventarioVerificado(31, 3);
 		      m.añadirObjetoInventarioVerificado(32, 3);
 		      m.añadirObjetoInventarioVerificado(33, 3);
+		      m.añadirObjetoInventarioVerificado(33, 3);
+		      m.añadirObjetoInventarioVerificado(33, 3);
+		      m.añadirObjetoInventarioVerificado(33, 3);
+
 		      System.out.print("Objetos añadias a jugador3");
 
 
@@ -1947,21 +1951,28 @@ public class OperacionesBBDD implements BumayeInterface{
 			usrper = (UsrPersonaje)session.load(UsrPersonaje.class, idUser);
 			if (usrper != null) {
 				objeto = (Objeto)session.load(Objeto.class, idObjeto);
-
+				System.out.print("tipo: "+objeto.getTipo()+"\n");
 				Query query = session.createQuery("from ObjetoCantidad where idUser= :idUser and idobjeto= :idobjeto");
 				query.setParameter("idobjeto",idObjeto);
 				query.setParameter("idUser", idUser);            
 				objetocantidad = (ObjetoCantidad) query.uniqueResult();
-				if (objetocantidad !=null && objeto.getTipo()!="herramienta") {
-					
-					Query query2 = session.createQuery("update ObjetoCantidad set cantidad= :cantidad where idobjeto= :idobjeto and idUser= :idUser");
-					query2.setParameter("cantidad",objetocantidad.getCantidad()-1);
-					query2.setParameter("idobjeto",idObjeto);
-					query2.setParameter("idUser", idUser);            
-					if (query2.executeUpdate() >0 ) {
+				if (objetocantidad !=null) {
+					if(objeto.getTipo().equals("herramienta")==true){
+						System.out.print("entramos dentro del if herramienta\n");
+
 					}
-					usrper.removeinventario(objeto);
-				}	
+					else{
+						System.out.print("entramos dentro del else herramienta\n");
+						Query query2 = session.createQuery("update ObjetoCantidad set cantidad= :cantidad where idobjeto= :idobjeto and idUser= :idUser");
+						query2.setParameter("cantidad",objetocantidad.getCantidad()-1);
+						query2.setParameter("idobjeto",idObjeto);
+						query2.setParameter("idUser", idUser);            
+						if (query2.executeUpdate() >0 ) {
+						}
+						usrper.removeinventario(objeto);
+					}
+				}
+
 				transaction.commit();
 				s="Has eliminado unos objtos de tu inventarios";
 			}
