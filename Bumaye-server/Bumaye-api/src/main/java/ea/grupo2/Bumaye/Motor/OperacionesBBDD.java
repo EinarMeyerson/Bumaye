@@ -2094,4 +2094,37 @@ public class OperacionesBBDD implements BumayeInterface{
 		return cofreVO;
 	}
 
+
+	@Override
+	public String CambiarPosicionUser(int iduser, double latitud,
+			double longitud) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		String s="update posicion rechazado";
+		try{
+			transaction = session.beginTransaction();   
+			Query query = session.createQuery("update UsrPersonaje set latitud= :latitud and longitud= :longitud where iduser= :id");
+			query.setParameter("id",iduser);
+			query.setParameter("longitud", longitud);  
+			query.setParameter("latitud", latitud);            
+
+			int result = query.executeUpdate();
+			if (result >0 ) {
+				transaction.commit();
+				System.out.print("Update posicion realizado");
+			}
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+
+		return s;
+	
+	}
+
 }

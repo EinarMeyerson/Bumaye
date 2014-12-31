@@ -173,4 +173,15 @@ public class UsrResource {
 		PersonajeVO personaje = m.getPersonajeCompleto(equipo.getIduser());
 		return personaje;
 	}
+	
+	@Path("/posicionnueva/{iduser}/{latitud}/{longitud}")
+	@GET
+	@Produces(MediaType.API_LOGEADOS)
+	public String CambioPosicion(@PathParam("iduser") int iduser, @PathParam("latitud") int latitud, @PathParam("longitud") int longitud) {
+		BumayeInterface  m = new OperacionesBBDD();
+		
+		String s = m.CambiarPosicionUser(iduser, latitud, longitud);
+
+		return s;
+	}
 }
