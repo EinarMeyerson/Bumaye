@@ -110,6 +110,7 @@ public class LoginActivity extends Activity {
 			SharedPreferences.Editor editor = prefs.edit();
 			editor.putString("nombre", nombre);
 			editor.putString("password", contra);
+			editor.putString("iduser", Long.toString(person.getIduser()));
 			editor.commit();
 		
 		Intent intent = new Intent(this, PerfilActivity.class);

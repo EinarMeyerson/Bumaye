@@ -11,14 +11,23 @@ public class UsuarioVO {
 	private String email;
 	@SerializedName("idGCM")
 	private String idGCM;
+	@SerializedName("longitud")
+	private double longitud;
+	@SerializedName("latitud")
+	private double latitud;
+	
 	public UsuarioVO (){
 	}
 
-public UsuarioVO(String username, String pass, String email, String idGCM) {
-	this.username=username;
-	this.pass=pass;
-	this.email=email;
-	this.idGCM=idGCM;
+public UsuarioVO(String idGCM, String username, String pass, String email,
+		double latitud, double longitud) {
+	super();
+	this.idGCM = idGCM;
+	this.username = username;
+	this.pass = pass;
+	this.email = email;
+	this.longitud = longitud;
+	this.latitud = latitud;
 }
 	
 	public String getUsername() {
@@ -48,5 +57,21 @@ public UsuarioVO(String username, String pass, String email, String idGCM) {
 
 	public void setIdGCM(String idGCM) {
 		this.idGCM = idGCM;
+	}
+
+	public double getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(double longitud) {
+		this.longitud = longitud;
+	}
+
+	public double getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(double latitud) {
+		this.latitud = latitud;
 	}
 }
