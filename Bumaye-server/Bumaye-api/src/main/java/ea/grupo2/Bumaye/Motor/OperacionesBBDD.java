@@ -182,9 +182,9 @@ public class OperacionesBBDD implements BumayeInterface{
 
 
 		//      /* PERSONAJES */
-		m.addUsrPersonaje(new UsrPersonaje("albert@hotmail.com",null,"spot","Spot",100,10,10,41.215016, 1.727201));
-		m.addUsrPersonaje(new UsrPersonaje("eianr@hotmail.com",null,"1234","Elcolmo",100,10,10,41.376700, 2.114187));
-		m.addUsrPersonaje(new UsrPersonaje("juan@hotmail.com",null,"1234","Ilcapone",100,10,10, 42.571684, -0.547046));
+		m.addUsrPersonaje(new UsrPersonaje(null,"albert@hotmail.com","spot","Spot",100,10,10,41.215016, 1.727201));
+		m.addUsrPersonaje(new UsrPersonaje(null,"eianr@hotmail.com","1234","Elcolmo",100,10,10,41.376700, 2.114187));
+		m.addUsrPersonaje(new UsrPersonaje(null,"juan@hotmail.com","1234","Ilcapone",100,10,10, 42.571684, -0.547046));
 		System.out.print("Jugadores añadidos");
 
 		/* AÑADIR OBJETOS A PERSONAJES */
@@ -2092,6 +2092,39 @@ public class OperacionesBBDD implements BumayeInterface{
 			session.close();
 		}
 		return cofreVO;
+	}
+
+
+	@Override
+	public String CambiarPosicionUser(int iduser, double latitud,
+			double longitud) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		String s="update posicion rechazado";
+		try{
+			transaction = session.beginTransaction();   
+			Query query = session.createQuery("update UsrPersonaje set latitud= :latitud and longitud= :longitud where iduser= :id");
+			query.setParameter("id",iduser);
+			query.setParameter("longitud", longitud);  
+			query.setParameter("latitud", latitud);            
+
+			int result = query.executeUpdate();
+			if (result >0 ) {
+				transaction.commit();
+				System.out.print("Update posicion realizado");
+			}
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+
+		return s;
+	
 	}
 
 }
