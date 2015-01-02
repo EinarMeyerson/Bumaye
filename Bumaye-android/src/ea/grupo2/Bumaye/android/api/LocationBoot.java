@@ -1,5 +1,6 @@
-package ea.grupo2.Bumaye.android;
+package ea.grupo2.Bumaye.android.api;
 
+import ea.grupo2.Bumaye.android.LocationService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

@@ -1,13 +1,9 @@
 package ea.grupo2.Bumaye.Motor;
 
-import java.io.Console;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
-import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -20,7 +16,6 @@ import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.ListBatallasVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
-import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
@@ -52,6 +47,14 @@ public class OperacionesBBDD implements BumayeInterface{
 		//        m.iniciarBatallaVO(listaPersonajesVO);
 		//        m.getBatallaVO(1);
 
+		/* COFRES  */
+		//(idcofre, latitud, longitud)
+
+		m.addCofre(new Cofre (2.23456,41.1234));
+		m.addCofre(new Cofre (1.23456,40.1234));
+		m.addCofre(new Cofre (1.21456,41.124));
+
+		
 		/* OBJETOS  */
 		//(nombre objeto, tipo, rareza, combo1, combo2, %exito)
 
@@ -1074,7 +1077,7 @@ public class OperacionesBBDD implements BumayeInterface{
 					{
 
 						System.out.print("Lista de usuarios: " + userlogeado.getIduser() + "\n");
-						PersonajeLogeadoVO p = new PersonajeLogeadoVO(userlogeado.getIduser(), userlogeado.getNombre(), userlogeado.getVida(), userlogeado.getDefensa(), userlogeado.getAtaque());
+						PersonajeLogeadoVO p = new PersonajeLogeadoVO(userlogeado.getIduser(), userlogeado.getNombre(), userlogeado.getVida(), userlogeado.getDefensa(), userlogeado.getAtaque(), userlogeado.getLatitud(),userlogeado.getLongitud());
 						personajeslogeados.add(p);
 					}
 

@@ -67,6 +67,15 @@ public class UsrResource {
 
 		return logeados;
 	}
+	@Path("/listacofres")
+	@GET
+	@Produces(MediaType.API_OBJETOS)
+	public List<CofreVO> listaCofres () {
+		BumayeInterface  m = new OperacionesBBDD();
+		List<CofreVO> cofres = m.listCofres();
+
+		return cofres;
+	}
 
 	@Path("/listaobjetos/{idusuario}")
 	@GET

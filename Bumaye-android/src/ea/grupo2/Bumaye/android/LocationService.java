@@ -27,7 +27,7 @@ public class LocationService extends Service implements LocationListener{
 	String serverPort;
 	String iduser;
 	String url;
-	double lat,lng;
+	String lat,lng;
     @Override
     public void onCreate() {
     	api = new UsrPersonajeAPI();
@@ -62,8 +62,9 @@ public class LocationService extends Service implements LocationListener{
 	@Override
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
-		lat = location.getLatitude();
-		lng = location.getLongitude();
+		lat = Double.toString(location.getLatitude());
+		lng = Double.toString(location.getLongitude());
+		Log.e(TAG, "Ubicació: "+ lat + ","+lng);
 		url = "http://" + serverAddress + ":" + serverPort
 				+ "/Bumaye-api/user/posicionnueva/"+iduser+"/"+lat+"/"+lng;
 		locateInBackground();

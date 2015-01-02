@@ -7,17 +7,21 @@ public class PersonajeLogeadoVO {
 	   private float vida;
 	   private float defensa;
 	   private float ataque;
+	   private double lat;
+	   private double lng;
 	   
 	   public PersonajeLogeadoVO (){
 		}
 		
 
-	public PersonajeLogeadoVO(int iduser, String nombre, float vida,float defensa, float ataque) {
+	public PersonajeLogeadoVO(int iduser, String nombre, float vida,float defensa, float ataque, double lat, double lng) {
 		this.iduser = iduser;
 		this.nombre = nombre;
 		this.vida = vida;
 		this.defensa = defensa;
 		this.ataque = ataque;
+		this.lat = lat;
+		this.lng = lng;
 	}
 	   
 	public int getIduser() {
@@ -49,6 +53,26 @@ public class PersonajeLogeadoVO {
 	}
 	public void setAtaque(float ataque) {
 		this.ataque = ataque;
+	}
+
+
+	public double getLat() {
+		return lat;
+	}
+
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+
+	public double getLng() {
+		return lng;
+	}
+
+
+	public void setLng(double lng) {
+		this.lng = lng;
 	}
 
 }

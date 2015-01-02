@@ -56,7 +56,7 @@ public class RegisterActivity extends Activity {
 	SharedPreferences prefs;
 	Context context;
 	public LocationManager locationManager;
-    public MyLocationListener listener;
+	public MyLocationListener listener;
 	String regid;
 	private ProgressDialog pdd;
 
@@ -84,15 +84,10 @@ public class RegisterActivity extends Activity {
 		password = (EditText) findViewById(R.id.password);
 		passconf = (EditText) findViewById(R.id.passconf);
 		email = (EditText) findViewById(R.id.mail);
-		
+
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        listener = new MyLocationListener();        
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
-        pdd = new ProgressDialog(RegisterActivity.this);
-		pdd.setTitle("Getting Location...");
-		pdd.setCancelable(false);
-		pdd.setIndeterminate(true);
-		pdd.show();
+		listener = new MyLocationListener();
+
 	}
 
 	public void Regist(View v) {
@@ -110,14 +105,20 @@ public class RegisterActivity extends Activity {
 			Toast.makeText(getApplicationContext(), "Rellene todos los campos",
 					Toast.LENGTH_LONG).show();
 		} else {
-			if (contra.equals(confirm))
-			{
+			if (contra.equals(confirm)) {
+				locationManager.requestLocationUpdates(
+						LocationManager.NETWORK_PROVIDER, 0, 0, listener);
+				pdd = new ProgressDialog(RegisterActivity.this);
+				pdd.setTitle("Getting Location...");
+				pdd.setCancelable(false);
+				pdd.setIndeterminate(true);
+				pdd.show();
 				if (regid.isEmpty()) {
 					registerInBackground();
 				} else
-					(new RegistUsrTask()).execute(nombre, contra, mail, regid,lat,lng, url);
-			}
-			else
+					(new RegistUsrTask()).execute(nombre, contra, mail, regid,
+							lat, lng, url);
+			} else
 				wrongConfirm();
 		}
 
@@ -137,8 +138,8 @@ public class RegisterActivity extends Activity {
 		@Override
 		protected PersonajeVO doInBackground(String... params) {
 			PersonajeVO person = new PersonajeVO();
-			person = api.registUsr(params[0], params[1], params[2], params[3], params[4], params[5],
-					params[6]);
+			person = api.registUsr(params[0], params[1], params[2], params[3],
+					params[4], params[5], params[6]);
 
 			return person;
 		}
@@ -175,7 +176,8 @@ public class RegisterActivity extends Activity {
 		editor.putString("password", contra);
 		editor.putString("iduser", Long.toString(person.getIduser()));
 		editor.commit();
-
+		Intent myIntent = new Intent(this, LocationService.class);
+		this.startService(myIntent);
 		Intent intent = new Intent(this, PerfilActivity.class);
 		intent.putExtra("url", url);
 		intent.putExtra("personaje", person);
@@ -215,13 +217,13 @@ public class RegisterActivity extends Activity {
 		// Check if app was updated; if so, it must clear the registration ID
 		// since the existing regID is not guaranteed to work with the new
 		// app version.
-//		int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION,
-//				Integer.MIN_VALUE);
-//		int currentVersion = getAppVersion(context);
-//		if (registeredVersion != currentVersion) {
-//			Log.i(TAG, "App version changed.");
-//			return "";
-//		}
+		// int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION,
+		// Integer.MIN_VALUE);
+		// int currentVersion = getAppVersion(context);
+		// if (registeredVersion != currentVersion) {
+		// Log.i(TAG, "App version changed.");
+		// return "";
+		// }
 		return registrationId;
 	}
 
@@ -307,34 +309,28 @@ public class RegisterActivity extends Activity {
 		editor.putInt(PROPERTY_APP_VERSION, appVersion);
 		editor.commit();
 	}
-	
-	public class MyLocationListener implements LocationListener
-    {
 
-        public void onLocationChanged(final Location loc)
-        {           
-               	lat = Double.toString(loc.getLatitude());
-               	lng = Double.toString(loc.getLongitude());    
-                locationManager.removeUpdates(listener);
-                if (pdd != null) {
-    				pdd.dismiss();
-    			}        
-        }
+	public class MyLocationListener implements LocationListener {
 
-        public void onProviderDisabled(String provider)
-        {
-        }
+		public void onLocationChanged(final Location loc) {
+			lat = Double.toString(loc.getLatitude());
+			lng = Double.toString(loc.getLongitude());
+			Log.e(TAG, "Lat: "+ lat + " Long: "+lng);
+			locationManager.removeUpdates(listener);
+			if (pdd != null) {
+				pdd.dismiss();
+			}
+		}
 
+		public void onProviderDisabled(String provider) {
+		}
 
-        public void onProviderEnabled(String provider)
-        {
-        }
+		public void onProviderEnabled(String provider) {
+		}
 
+		public void onStatusChanged(String provider, int status, Bundle extras) {
 
-        public void onStatusChanged(String provider, int status, Bundle extras)
-        {
+		}
 
-        }
-
-    }
+	}
 }
