@@ -184,7 +184,6 @@ public class UsrResource {
 	
 	@Path("/posicionnueva/{iduser}/{latitud}/{longitud}")
 	@PUT
-	@Consumes(MediaType.API_PUNTO)
 	public String CambioPosicion(@PathParam("iduser") int iduser,@PathParam("latitud") double latitud,@PathParam("longitud") double longitud) {
 		BumayeInterface  m = new OperacionesBBDD();
 //		double latitud = punt.getLatitud();

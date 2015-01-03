@@ -936,7 +936,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			else
 			{
 				transaction.commit();
-				addUsrPersonaje(new UsrPersonaje(userregistrado.getEmail(),userregistrado.getIdGCM(), userregistrado.getPass(), userregistrado.getUsername(),100,10,10, userregistrado.getLatitud(),userregistrado.getLongitud()));
+				addUsrPersonaje(new UsrPersonaje(userregistrado.getIdGCM(),userregistrado.getEmail(), userregistrado.getPass(), userregistrado.getUsername(),100,10,10, userregistrado.getLatitud(),userregistrado.getLongitud()));
 
 				//Volvemos a realizar la query para solicitar el id del usuario recien creado
 				Query queri = session.createQuery("from UsrPersonaje as u where u.nombre='" + userregistrado.getUsername() + "'");
@@ -2105,11 +2105,13 @@ public class OperacionesBBDD implements BumayeInterface{
 		Transaction transaction = null;
 		String s="update posicion rechazado";
 		try{
-			transaction = session.beginTransaction();   
-			Query query = session.createQuery("update UsrPersonaje set latitud= :latitud and longitud= :longitud where iduser= :id");
+			transaction = session.beginTransaction(); 
+			System.out.print("Ubicacion de user "+iduser+", latitud: "+latitud+" longitud: "+longitud);
+
+			Query query = session.createQuery("update UsrPersonaje set latitud= :latitud, longitud= :longitud where iduser= :id");
 			query.setParameter("id",iduser);
-			query.setParameter("longitud", longitud);  
-			query.setParameter("latitud", latitud);            
+			query.setParameter("latitud", latitud);   
+			query.setParameter("longitud", longitud);           
 
 			int result = query.executeUpdate();
 			if (result >0 ) {

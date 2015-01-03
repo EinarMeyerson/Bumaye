@@ -19,8 +19,8 @@ import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
 
 public class LocationService extends Service implements LocationListener{
 	private final static String TAG = LocationService.class.getName();
-	static final int MIN_TIME = 1000*60;
-	static final int MIN_DIST = 100;
+	static final int MIN_TIME = 1000*30;
+	static final int MIN_DIST = 50;
 	LocationManager lm;    
 	private UsrPersonajeAPI api;
 	String serverAddress;
@@ -47,11 +47,6 @@ public class LocationService extends Service implements LocationListener{
 		
     	lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     	lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DIST, this);
-    }
-
-    @Override
-    public void onDestroy() {
-       
     }
 
     @Override
