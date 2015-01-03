@@ -27,6 +27,7 @@ import com.google.gson.reflect.TypeToken;
 import ea.grupo2.Bumaye.ClasesVO.EquipamientoVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.ClasesVO.PuntoVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 
 // METODOS LLAMADOS POR LAS DISTINTAS ACTIVITY
@@ -166,13 +167,13 @@ public class UsrPersonajeAPI {
 	}
 	public void locateUsr(String url) {		
 		Log.d(TAG, "Ubicacion() en API");
-		        
+//		PuntoVO punt = new PuntoVO();
 		HttpClient httpClient = new DefaultHttpClient();
 		httpClient = WebServiceUtils.getHttpClient();
 		HttpPut put = new HttpPut(url);
 		
 		try {
-	        //put.addHeader("content-type", MediaType.API_USER);
+	       // put.addHeader("content-type", MediaType.API_PUNTO);
 			httpClient.execute(put);
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block

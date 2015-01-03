@@ -10,7 +10,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.CombinacionVO;
 import ea.grupo2.Bumaye.ClasesVO.EquipamientoVO;
@@ -18,12 +17,11 @@ import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.ClasesVO.PuntoVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.Motor.BumayeInterface;
-import ea.grupo2.Bumaye.Motor.NoEsTuTurnoException;
 import ea.grupo2.Bumaye.Motor.NoExisteEsaCombinacionException;
 import ea.grupo2.Bumaye.Motor.NoHayTantosObjetosException;
-import ea.grupo2.Bumaye.Motor.NoTienesEseAtaqueException;
 import ea.grupo2.Bumaye.Motor.NoTienesEseObjetoException;
 import ea.grupo2.Bumaye.Motor.NoTienesEspacioEnInventarioException;
 import ea.grupo2.Bumaye.Motor.OperacionesBBDD;
@@ -186,9 +184,11 @@ public class UsrResource {
 	
 	@Path("/posicionnueva/{iduser}/{latitud}/{longitud}")
 	@PUT
-	public String CambioPosicion(@PathParam("iduser") int iduser, @PathParam("latitud") int latitud, @PathParam("longitud") int longitud) {
+	@Consumes(MediaType.API_PUNTO)
+	public String CambioPosicion(@PathParam("iduser") int iduser,@PathParam("latitud") double latitud,@PathParam("longitud") double longitud) {
 		BumayeInterface  m = new OperacionesBBDD();
-		
+//		double latitud = punt.getLatitud();
+//		double longitud = punt.getLongitud();
 		String s = m.CambiarPosicionUser(iduser, latitud, longitud);
 
 		return s;

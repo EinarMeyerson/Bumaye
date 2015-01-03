@@ -67,7 +67,7 @@ public class LocationService extends Service implements LocationListener{
 		Log.e(TAG, "Ubicació: "+ lat + ","+lng);
 		url = "http://" + serverAddress + ":" + serverPort
 				+ "/Bumaye-api/user/posicionnueva/"+iduser+"/"+lat+"/"+lng;
-		locateInBackground();
+		(new LocateInBackground()).execute(url);
 	}
 
 	@Override
@@ -87,14 +87,12 @@ public class LocationService extends Service implements LocationListener{
 		// TODO Auto-generated method stub
 		
 	}
-	private void locateInBackground() {
-		new AsyncTask<String, Void, Void>() {
+	private class LocateInBackground extends AsyncTask<String, Void, Void> {
 			@Override
 			protected Void doInBackground(String... params) {
 				api.locateUsr(params[0]);
 				return null;								
 			}			
-		}.execute(null, null, null);
-	}
+		};	
     
 }

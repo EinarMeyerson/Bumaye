@@ -113,11 +113,7 @@ public class RegisterActivity extends Activity {
 				pdd.setCancelable(false);
 				pdd.setIndeterminate(true);
 				pdd.show();
-				if (regid.isEmpty()) {
-					registerInBackground();
-				} else
-					(new RegistUsrTask()).execute(nombre, contra, mail, regid,
-							lat, lng, url);
+
 			} else
 				wrongConfirm();
 		}
@@ -146,15 +142,19 @@ public class RegisterActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(PersonajeVO result) {
-			Log.d("LOGIN", result.toString());
 			if (pd != null) {
 				pd.dismiss();
 			}
-			if (result.getNombre() != "") {
-				Log.e(TAG, result.getNombre());
-				Registrado(result);
-			} else
-				userPillado();
+			if (result == null) {
+				Toast.makeText(getApplicationContext(), "Server not active",
+						Toast.LENGTH_LONG).show();
+				finish();
+			} else {
+				if (result.getNombre() != "") {
+					Registrado(result);
+				} else
+					userPillado();
+			}
 		}
 
 		@Override
@@ -169,20 +169,26 @@ public class RegisterActivity extends Activity {
 	}
 
 	private void Registrado(PersonajeVO person) {
-		SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",
-				Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs.edit();
-		editor.putString("nombre", nombre);
-		editor.putString("password", contra);
-		editor.putString("iduser", Long.toString(person.getIduser()));
-		editor.commit();
-		Intent myIntent = new Intent(this, LocationService.class);
-		this.startService(myIntent);
-		Intent intent = new Intent(this, PerfilActivity.class);
-		intent.putExtra("url", url);
-		intent.putExtra("personaje", person);
-		startActivity(intent);
-		finish();
+		if (person == null) {
+			Toast.makeText(getApplicationContext(), "Server not active",
+					Toast.LENGTH_LONG).show();
+			finish();
+		} else {
+			SharedPreferences prefs = getSharedPreferences(
+					"upc.eetac.ea.bumaye", Context.MODE_PRIVATE);
+			SharedPreferences.Editor editor = prefs.edit();
+			editor.putString("nombre", nombre);
+			editor.putString("password", contra);
+			editor.putString("iduser", Long.toString(person.getIduser()));
+			editor.commit();
+			Intent myIntent = new Intent(this, LocationService.class);
+			this.startService(myIntent);
+			Intent intent = new Intent(this, PerfilActivity.class);
+			intent.putExtra("url", url);
+			intent.putExtra("personaje", person);
+			startActivity(intent);
+			finish();
+		}
 	}
 
 	private void wrongConfirm() {
@@ -294,8 +300,8 @@ public class RegisterActivity extends Activity {
 			protected void onPostExecute(String msg) {
 				Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
 						.show();
-				(new RegistUsrTask()).execute(nombre, contra, mail, regid, url);
-
+				(new RegistUsrTask()).execute(nombre, contra, mail, regid, lat,
+						lng, url);
 			}
 		}.execute(null, null, null);
 	}
@@ -315,10 +321,18 @@ public class RegisterActivity extends Activity {
 		public void onLocationChanged(final Location loc) {
 			lat = Double.toString(loc.getLatitude());
 			lng = Double.toString(loc.getLongitude());
-			Log.e(TAG, "Lat: "+ lat + " Long: "+lng);
-			locationManager.removeUpdates(listener);
-			if (pdd != null) {
-				pdd.dismiss();
+			if (lat.equals(null)) {
+			} else {
+				Log.e(TAG, "Lat: " + lat + " Long: " + lng);
+				locationManager.removeUpdates(listener);
+				if (pdd != null) {
+					pdd.dismiss();
+				}
+				if (regid.isEmpty()) {
+					registerInBackground();
+				} else
+					(new RegistUsrTask()).execute(nombre, contra, mail, regid,
+							lat, lng, url);
 			}
 		}
 

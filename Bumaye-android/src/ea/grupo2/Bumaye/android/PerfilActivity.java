@@ -42,7 +42,12 @@ public class PerfilActivity extends Activity {
 		url = (String) getIntent().getExtras().get("url");
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        
+        if (personaje.getIduser()==0)
+		{
+			Toast.makeText(getApplicationContext(), "Server not active",
+					   Toast.LENGTH_LONG).show();
+			finish();
+		}
         getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
         getActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
