@@ -329,17 +329,19 @@ public class InventarioActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(PersonajeVO result) {
-			Log.d("Usuario :",result.getNombre().toString());
 			if (pd != null) {
 				pd.dismiss();
 			}
-			if (result.getNombre() != "")
+			if (result.getNombre()==null)
 			{
-				Log.e(TAG,result.getNombre());
+				sinCombinacion();
+			}
+			else if (result.getNombre() != "")
+			{
 				Equipado(result);
 			}
 			else{				
-				wrongEquipado();
+				wrongCombinacion();
 			}		
 		}
 
@@ -409,6 +411,7 @@ public class InventarioActivity extends Activity {
 				Equipado(result);
 			}
 			else{				
+				
 				wrongEquipado();
 			}		
 		}
@@ -434,6 +437,19 @@ public class InventarioActivity extends Activity {
 	private void wrongEquipado(){
 		Toast.makeText(getApplicationContext(), "Error al equiparse",
 				Toast.LENGTH_LONG).show();
+	}
+	private void wrongCombinacion(){
+		Toast.makeText(getApplicationContext(), "Error al combinar",
+				Toast.LENGTH_LONG).show();
+	}
+	private void sinCombinacion(){
+		Intent intent = new Intent(this, InventarioActivity.class);
+		intent.putExtra("url", url);
+		intent.putExtra("personaje", personaje);
+		Toast.makeText(getApplicationContext(), "Esa combinacion no existe",
+				Toast.LENGTH_LONG).show();
+		startActivity(intent);
+		finish();
 	}
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
