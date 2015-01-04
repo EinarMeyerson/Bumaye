@@ -91,8 +91,8 @@ public class UsrResource {
 	@Path("/combinacion")
 	@POST
 	@Consumes(MediaType.API_COMBINACION)
-	@Produces(MediaType.API_OBJETOS)
-	public ObjetoCantidadVO combinacionObjeto (CombinacionVO objeto)throws Exception  {
+	@Produces(MediaType.API_PERSONAJE)
+	public PersonajeVO combinacionObjeto (CombinacionVO objeto)throws Exception  {
 		BumayeInterface  m = new OperacionesBBDD();
 		ObjetoCantidadVO nuevobjeto=null;
 
@@ -102,9 +102,9 @@ public class UsrResource {
 		catch(NoTienesEseObjetoException | NoExisteEsaCombinacionException e){
 			throw e;
 		}
+		PersonajeVO personaje = m.getPersonajeCompleto(objeto.getIduser());
 
-
-		return nuevobjeto;
+		return personaje;
 	}
 
 	@Path("/{iduser}/añadirobjeto/{idobjeto}")
@@ -148,11 +148,14 @@ public class UsrResource {
 		System.out.print("Desequipar arma de id: " +equipo.getIdesequipada());
 		System.out.print("Equipar arma de id: " +equipo.getIdarmequipada());
 		String equipado= m.añadirArmasArmadurasEquipada(equipo.getIdarmequipada(), equipo.getIduser());
+		m.updateAtributosEquipada_UserArmasArmaduras(equipo.getIdarmequipada(), equipo.getIduser());
 		
+		//en caso de que halla algo ya equipado lo desequipamos
 		if (equipo.getIdesequipada()!=0)
 		{
 
 		String desequipado= m.desequiparArmasArmadurasEquipada(equipo.getIdesequipada(),equipo.getIduser());
+		m.updateAtributosDesequipada_UserArmasArmaduras(equipo.getIdesequipada(), equipo.getIduser());
 		}
 
 		PersonajeVO personaje = m.getPersonajeCompleto(equipo.getIduser());
@@ -169,7 +172,8 @@ public class UsrResource {
 		System.out.print("Desequipar arma de id: " +equipo.getIdesequipada());
 
 		String desequipado= m.desequiparArmasArmadurasEquipada(equipo.getIdesequipada(),equipo.getIduser());
-
+		m.updateAtributosDesequipada_UserArmasArmaduras(equipo.getIdesequipada(), equipo.getIduser());
+		
 		PersonajeVO personaje = m.getPersonajeCompleto(equipo.getIduser());
 		return personaje;
 	}

@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import ea.grupo2.Bumaye.ClasesVO.CombinacionVO;
 import ea.grupo2.Bumaye.ClasesVO.EquipamientoVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
@@ -162,46 +163,46 @@ public class UsrPersonajeAPI {
 		
 	}
 	
-	public ObjetoCantidadVO combinacionObjetos (String combo1, String combo2, String url) {		
-		Log.d(TAG, "combinacionObjetos()");
-		ObjetoCantidadVO person = new ObjetoCantidadVO();
-//		UsuarioVO dev = new UsuarioVO();
-//		dev.setUsername(texto);
-//		dev.setPass(pass);
-//        Gson gson = new GsonBuilder().create();
-//        
-//		HttpClient httpClient = new DefaultHttpClient();
-//		httpClient = WebServiceUtils.getHttpClient();
-//		
-//		HttpPost post = new HttpPost(url);
-//		HttpResponse response;
-//		StringEntity params;
-//		
-//		try {
-//			params = new StringEntity(gson.toJson(dev));
-//	        post.addHeader("content-type", MediaType.API_USER);
-//	        post.setEntity(params);
-//			response = httpClient.execute(post);
-//			HttpEntity entity = response.getEntity();
-//			Reader reader = new InputStreamReader(entity.getContent());
-//			person = gson.fromJson(reader, PersonajeVO.class);
-//		} catch (UnsupportedEncodingException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}catch (ClientProtocolException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (NullPointerException e){
-//			Log.d(TAG, "No logeado");
-//			person = new PersonajeVO();
-//			person.setNombre("");
-//		}
-//		
-		return person;
+	public PersonajeVO combinacionObjetos (int iduser, String combo1, String combo2, String url) {		
+		Log.d(TAG, "Combinacion()");
+		PersonajeVO person = new PersonajeVO();
+		CombinacionVO combinacion = new CombinacionVO();
+		combinacion.setCombo1(combo1);
+		combinacion.setCombo2(combo2);
+		combinacion.setIduser(iduser);
+        Gson gson = new GsonBuilder().create();
+        
+		HttpClient httpClient = new DefaultHttpClient();
+		httpClient = WebServiceUtils.getHttpClient();
 		
+		HttpPost post = new HttpPost(url);
+		HttpResponse response;
+		StringEntity params;
+		
+		try {
+			params = new StringEntity(gson.toJson(combinacion));
+	        post.addHeader("content-type", MediaType.API_COMBINACION);
+	        post.setEntity(params);
+			response = httpClient.execute(post);
+			HttpEntity entity = response.getEntity();
+			Reader reader = new InputStreamReader(entity.getContent());
+			person = gson.fromJson(reader, PersonajeVO.class);
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NullPointerException e){
+			Log.d(TAG, "No combinado");
+			person = new PersonajeVO();
+			person.setNombre("");
+		}
+		
+		return person;
 	}
 	
 	public PersonajeVO equiparUser (int iduser,int idarmequipada, int idesequipada,  String url) {		
@@ -291,5 +292,8 @@ public class UsrPersonajeAPI {
 		return person;
 		
 	}
+	
+	
+	
 
 }
