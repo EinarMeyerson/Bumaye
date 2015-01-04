@@ -93,6 +93,7 @@ public interface BumayeInterface {
     public PersonajeVO LoginUser(UsuarioVO userlog);
     public PersonajeVO RegistroUser(UsuarioVO userregistrado);
     public boolean VerificarCapacidadInventario(int idUser, int idObjeto);
+    public String CambiarPosicionUser(int iduser, double latitud, double longitud);
     
   //Lista de jugadores logeados basic info
     public List<PersonajeLogeadoVO> listPersonajes(int idUsersolicita);     

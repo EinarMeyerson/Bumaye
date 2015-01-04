@@ -19,7 +19,7 @@ import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
 
 public class LoginActivity extends Activity {
-	
+
 	private final static String TAG = LoginActivity.class.getName();
 	String serverAddress;
 	String serverPort;
@@ -48,50 +48,52 @@ public class LoginActivity extends Activity {
 			Log.e(TAG, e.getMessage(), e);
 			finish();
 		}
-		url = "http://" + serverAddress + ":" + serverPort
-					+ "/Bumaye-api/user";
+		url = "http://" + serverAddress + ":" + serverPort + "/Bumaye-api/user";
 		username = (EditText) findViewById(R.id.username);
 		password = (EditText) findViewById(R.id.password);
 
 	}
+
 	public void Login(View v) {
 		nombre = username.getText().toString();
 		contra = password.getText().toString();
-		if (nombre.isEmpty() || contra.isEmpty())
-		{				
+		if (nombre.isEmpty() || contra.isEmpty()) {
 			Toast.makeText(getApplicationContext(), "Rellene todos los campos",
-					   Toast.LENGTH_LONG).show();		
+					Toast.LENGTH_LONG).show();
+		} else {
+			(new LoginUsrTask()).execute(nombre, contra, url);
 		}
-		else{
-			(new LoginUsrTask()).execute(nombre,contra,url);
-		}		
 	}
-	
+
 	// SE LLAMA AL METODO loginUsr DE LA API
 	// SE LE MANDA LA URL Y DEVOLVEMOS UN PersonajeVO
 	private class LoginUsrTask extends AsyncTask<String, Void, PersonajeVO> {
 		private ProgressDialog pd;
+
 		@Override
 		protected PersonajeVO doInBackground(String... params) {
-			PersonajeVO person  = new PersonajeVO();
-			person = api.loginUsr(params[0],params[1],params[2]);			
+			PersonajeVO person = new PersonajeVO();
+			person = api.loginUsr(params[0], params[1], params[2]);
+
 			return person;
 		}
 
 		@Override
 		protected void onPostExecute(PersonajeVO result) {
-			Log.d("Login de:",result.getNombre().toString());
 			if (pd != null) {
 				pd.dismiss();
 			}
-			if (result.getNombre() != "")
-			{
-				Log.e(TAG,result.getNombre());
-				Logeado(result);
-			}
-			else{				
+			if (result.getNombre() != "") {
+				if (result.getIduser() == 0) {
+					Toast.makeText(getApplicationContext(),
+							"Server not active", Toast.LENGTH_LONG).show();
+					finish();
+				} else {
+					Logeado(result);
+				}
+			} else {
 				wronglogin();
-			}		
+			}
 		}
 
 		@Override
@@ -103,24 +105,29 @@ public class LoginActivity extends Activity {
 			pd.show();
 		}
 	}
-	
-	private void Logeado(PersonajeVO person){
-		SharedPreferences prefs =
-			     getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE);			 
-			SharedPreferences.Editor editor = prefs.edit();
-			editor.putString("nombre", nombre);
-			editor.putString("password", contra);
-			editor.commit();
-		
+
+	private void Logeado(PersonajeVO person) {
+		SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",
+				Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString("nombre", nombre);
+		editor.putString("password", contra);
+		editor.putString("iduser", Long.toString(person.getIduser()));
+		editor.commit();
+
+		Intent myIntent = new Intent(this, LocationService.class);
+		this.startService(myIntent);
 		Intent intent = new Intent(this, PerfilActivity.class);
 		intent.putExtra("url", url);
 		intent.putExtra("personaje", person);
 		startActivity(intent);
 		finish();
+
 	}
-	private void wronglogin(){
+
+	private void wronglogin() {
 		Toast.makeText(getApplicationContext(), "Incorrect user/pass",
-				   Toast.LENGTH_LONG).show();
+				Toast.LENGTH_LONG).show();
 		password.setText("");
 	}
 }

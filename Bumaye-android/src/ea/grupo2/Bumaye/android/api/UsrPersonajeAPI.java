@@ -14,6 +14,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -27,6 +28,7 @@ import ea.grupo2.Bumaye.ClasesVO.CombinacionVO;
 import ea.grupo2.Bumaye.ClasesVO.EquipamientoVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.ClasesVO.PuntoVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 
 // METODOS LLAMADOS POR LAS DISTINTAS ACTIVITY
@@ -118,7 +120,7 @@ public class UsrPersonajeAPI {
 	}
 	
 // MIRAR QUE DEVUELVE LA API CUANDO HACES LA API (ESTARIA BIEN NO DEVOLVER NADA)
-	public PersonajeVO registUsr(String texto, String pass, String mail,String idGCM, String url) {		
+	public PersonajeVO registUsr(String texto, String pass, String mail,String idGCM,String lat, String lng, String url) {		
 		Log.d(TAG, "Register() en API");
 		Log.d(TAG, url);
 		PersonajeVO person = null;
@@ -127,6 +129,8 @@ public class UsrPersonajeAPI {
 		dev.setPass(pass);
 		dev.setEmail(mail);
 		dev.setIdGCM(idGCM);
+		dev.setLatitud(Double.parseDouble(lat));
+		dev.setLongitud(Double.parseDouble(lng));
         Gson gson = new GsonBuilder().create();
         
 		HttpClient httpClient = new DefaultHttpClient();
@@ -162,7 +166,28 @@ public class UsrPersonajeAPI {
 		return person;
 		
 	}
-	
+	public void locateUsr(String url) {		
+		Log.d(TAG, "Ubicacion() en API");
+//		PuntoVO punt = new PuntoVO();
+		HttpClient httpClient = new DefaultHttpClient();
+		httpClient = WebServiceUtils.getHttpClient();
+		HttpPut put = new HttpPut(url);
+		
+		try {
+	       // put.addHeader("content-type", MediaType.API_PUNTO);
+			httpClient.execute(put);
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 	
+		
+	}
 	public PersonajeVO combinacionObjetos (int iduser, String combo1, String combo2, String url) {		
 		Log.d(TAG, "Combinacion()");
 		PersonajeVO person = new PersonajeVO();

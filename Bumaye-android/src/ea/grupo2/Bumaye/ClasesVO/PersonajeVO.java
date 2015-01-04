@@ -23,24 +23,33 @@ public class PersonajeVO implements Serializable{
 	private List<ArmaArmaduraVO> armasarmaduras = new ArrayList<ArmaArmaduraVO>();
 	@SerializedName("inventario")
 	private List<ObjetoCantidadVO> inventario = new ArrayList<ObjetoCantidadVO>();
-
+	@SerializedName("longitud")
+	private double longitud;
+	@SerializedName("latitud")
+	private double latitud;
+	
    public PersonajeVO (){
 	}
 	
 
-public PersonajeVO(int iduser, String idGCM, String nombre, float vida,float defensa, float ataque) {
-	this.iduser = iduser;
-	this.idGCM = idGCM;
-	this.nombre = nombre;
-	this.vida = vida;
-	this.defensa = defensa;
-	this.ataque = ataque;
-}
-public PersonajeVO getPersonajeVO()
-{
-	PersonajeVO personaje = new PersonajeVO(this.iduser,this.idGCM, this.nombre, this.vida, this.defensa, this.ataque);
-	return personaje;
-}
+   public PersonajeVO(int iduser, String idGCM, String nombre, float vida,
+			float defensa, float ataque, double latitud,  double longitud) {
+		super();
+		this.iduser = iduser;
+		this.idGCM = idGCM;
+		this.nombre = nombre;
+		this.vida = vida;
+		this.defensa = defensa;
+		this.ataque = ataque;
+		this.longitud = longitud;
+		this.latitud = latitud;
+	}
+	public PersonajeVO getPersonajeVO()
+	{
+		PersonajeVO personaje = new PersonajeVO(this.iduser, this.idGCM, this.nombre, this.vida, this.defensa, this.ataque, this.latitud, this.longitud);
+		return personaje;
+	}
+
 
 
 //funcion que actualiza los atributos afectados por un ataque
@@ -147,6 +156,26 @@ public void setInventario(List<ObjetoCantidadVO> inventario) {
 
 public void addInventario(ObjetoCantidadVO objeto) {
 	inventario.add(objeto);
+}
+
+
+public double getLongitud() {
+	return longitud;
+}
+
+
+public void setLongitud(double longitud) {
+	this.longitud = longitud;
+}
+
+
+public double getLatitud() {
+	return latitud;
+}
+
+
+public void setLatitud(double latitud) {
+	this.latitud = latitud;
 }
    
 }

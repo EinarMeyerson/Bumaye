@@ -28,6 +28,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -160,25 +161,22 @@ public class MapActivity extends FragmentActivity{
 //			    .findFragmentById(R.id.map);
 //			mapFragment.getMapAsync(this);
         Log.e(TAG, "Dentro del mapa");
-    	double Lon = 1.705791;
-    	double Lat = 41.221788;
+
     	for (int i=0;  i < personajes.size() ; i++){
-	    	PersonajeVO pers = personajes.get(i);
-	    	Lon = Lon+1;
-	    	Lat = Lat+1;
+	    	PersonajeVO pers = personajes.get(i);	    	
     		map.addMarker(new MarkerOptions()
-            .position(new LatLng(Lat, Lon))
+            .position(new LatLng(pers.getLatitud(), pers.getLongitud()))
             .snippet("Luchar!")
-            .title(pers.getNombre()+" - \nAtaque: "+pers.getAtaque()+"\nDefensa: "+pers.getDefensa()));
+            .title(pers.getNombre()+" - \nAtaque: "+pers.getAtaque()+"\nDefensa: "+pers.getDefensa())
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
     		
 		}    
     	for (int i=0;  i < cofres.size() ; i++){
-	    	CofreVO cof = cofres.get(i);	    	
-	    	Lon = cof.getLongitud();
-	    	Lat = cof.getLatitud();
+	    	CofreVO cof = cofres.get(i);	    		    	
     		map.addMarker(new MarkerOptions()
-            .position(new LatLng(Lat, Lon))
-            .title("Cofre nº: "+cof.getIdcofre()));
+            .position(new LatLng(cof.getLatitud(), cof.getLongitud()))
+            .title("Cofre nº: "+cof.getIdcofre())
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
     		
 		}    
     	map.setOnInfoWindowClickListener(new OnInfoWindowClickListener()
@@ -197,7 +195,7 @@ public class MapActivity extends FragmentActivity{
     	    map.setOnMyLocationChangeListener(myLocationChangeListener);
     	
     	    // COMENTAR SI QUEREIS MOVER EL MAPA DENTRO DE LA APP!!!
-    	    map.getUiSettings().setAllGesturesEnabled(false);
+    	    map.getUiSettings().setAllGesturesEnabled(true);
     	    }
 
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
