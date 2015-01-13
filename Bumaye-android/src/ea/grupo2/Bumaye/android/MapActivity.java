@@ -184,6 +184,7 @@ public class MapActivity extends FragmentActivity {
 			map.addMarker(new MarkerOptions()
 					.position(new LatLng(cof.getLatitud(), cof.getLongitud()))
 					.title("Cofre")
+					.snippet("Recoger!")
 					.icon(BitmapDescriptorFactory.fromResource(R.drawable.treasure_chest_marker)));
 
 		}
@@ -251,7 +252,7 @@ public class MapActivity extends FragmentActivity {
 		map.setOnMyLocationChangeListener(myLocationChangeListener);
 
 		// COMENTAR SI QUEREIS MOVER EL MAPA DENTRO DE LA APP!!!
-		map.getUiSettings().setAllGesturesEnabled(false);
+		map.getUiSettings().setAllGesturesEnabled(true);
 	}
 
 	private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
@@ -265,7 +266,7 @@ public class MapActivity extends FragmentActivity {
 				pdc.dismiss();
 			}
 			if (map != null) {
-				map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 08.0f));
+				map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 04.0f));
 			}
 
 		}
