@@ -16,6 +16,7 @@ import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.ListBatallasVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
@@ -2268,5 +2269,121 @@ public class OperacionesBBDD implements BumayeInterface{
 		}
 		return idGCM;
 	}
+	
+	@Override
+	public BatallaVO UtilizarObjeto(int idbatallaVO, String nombreObj, int mod) {
 
+		BatallaVO batallaVO = getBatallaVO(idbatallaVO);
+		BatallaVO UbatallaVO = getBatallaVO(idbatallaVO);
+		int idUser = batallaVO.getListajugadores().get(mod).getIduser();
+		ObjetoCantidadVO objcanVO = getObjeto(nombreObj, idUser);
+
+
+		String atributo = objcanVO.getTipo();
+
+		switch(atributo){
+
+		case "vida":
+			float dañoVida =objcanVO.getRareza()/10;
+			System.out.print("Daño vida: "+dañoVida+"\n");
+			float nuevaVida = batallaVO.getListajugadores().get(mod).getVida()+dañoVida;
+			if (nuevaVida>100){
+				nuevaVida=100;
+			}
+			UbatallaVO= updateAtributosBatallaVO(idbatallaVO,batallaVO.getListajugadores().get(mod).getIduser(), "vida", nuevaVida);
+
+
+		case "ataque":
+			float dañoAtaque = objcanVO.getRareza()/10;
+			float nuevoAtaque = batallaVO.getListajugadores().get(mod).getAtaque()+dañoAtaque;
+			UbatallaVO= updateAtributosBatallaVO(idbatallaVO,batallaVO.getListajugadores().get(mod).getIduser(), "ataque", nuevoAtaque);
+
+		case "defensa":
+			float dañoDefensa = objcanVO.getRareza()/10;
+			float nuevoDefensa = batallaVO.getListajugadores().get(mod).getDefensa()+dañoDefensa;
+			UbatallaVO= updateAtributosBatallaVO(idbatallaVO,batallaVO.getListajugadores().get(mod).getIduser(), "defensa", nuevoDefensa);
+
+		}
+
+	
+
+		return UbatallaVO;
+
+	}
+
+	@Override
+	public BatallaVO ResultadoUtilizarObjetoVO(String nombreObj, int idbatallaVO, int idPersonajeVO) throws Exception{
+
+		BatallaVO batallaVO = getBatallaVO(idbatallaVO);
+		int mod = batallaVO.getTurno() % batallaVO.getListajugadores().size();
+		int posicionBatalla = batallaVO.getPosicionPersonajeVO(idPersonajeVO);
+		
+		int idUser = batallaVO.getListajugadores().get(mod).getIduser();
+		ObjetoCantidadVO objcanVO = getObjeto(nombreObj, idUser);
+		
+		if(VerificarTurno(idbatallaVO, posicionBatalla)==true){
+			System.out.print("entramos dentros if VerificarTurno \n");
+			
+			if(VerificarObjeto(nombreObj, idPersonajeVO)==true)
+			{
+				int i = EfectuarObjeto(objcanVO.getIdobjeto());
+				//Nos metemos en la funcion EfectuarAtaque para saber si el ataque se va a efectuar(i=1) o no (i=0)
+				if (i==1){
+					BatallaVO returnBatallaVO = UtilizarObjeto(idbatallaVO, nombreObj, mod);
+					PasaTurno(idbatallaVO);
+					return returnBatallaVO;
+				}
+				//La funcion EfectuarAtaque devuelve 0 por lo que el ataque no se va a efectuar
+				else{
+					PasaTurno(idbatallaVO);
+
+					return batallaVO;
+				}
+			}
+			else
+			{
+				throw new NoTienesEseObjetoException();
+			}
+		}
+		else{
+			throw new NoEsTuTurnoException();
+
+		}
+	}
+	
+	@Override
+	public int EfectuarObjeto(int idobjeto) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		int i = 0;
+		float probabilidad = 0;
+		Objeto objeto = null;
+		try{
+			transaction = session.beginTransaction();   
+			objeto = (Objeto)session.load(Objeto.class, idobjeto);
+			probabilidad = objeto.getExito();
+			// En este momento siempre va ser mayor que 0 porque no hacemos ningun UPDATE.
+			if (probabilidad >= randInt()) {
+				transaction.commit();
+				System.out.println("El ataque se va a realizar");
+				i=1;
+			}
+			else{
+				System.out.println("El ataque no se va a realizar po culpa de la probabilidad");
+
+			}
+
+
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return i;
+	}
 }
