@@ -1088,6 +1088,7 @@ public class OperacionesBBDD implements BumayeInterface{
 						System.out.print("Latitud: " + p.getLat() + "\n");
 						if (distance(PersonajeSolicita.getLatitud(), p.getLat(), PersonajeSolicita.getLongitud(), p.getLng())<=1000)
 						{
+							System.out.print("El usuario esta dentro del radio");
 							personajeslogeados.add(p);
 						}
 					}
@@ -2237,6 +2238,35 @@ public class OperacionesBBDD implements BumayeInterface{
 
 		return s;
 	
+	}
+
+
+	@Override
+	public String devolvemosaIDGCM(String nombrePersonaje) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		String idGCM= null;
+		try{
+			transaction = session.beginTransaction();
+			Query query = session.createQuery("select idGCM from UsrPersonaje where nombre= :nombre");
+			query.setParameter("nombre",nombrePersonaje);
+			idGCM = (String)query.uniqueResult();	
+
+			if (idGCM!= null) {
+				
+				transaction.commit();
+			}
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return idGCM;
 	}
 
 }
