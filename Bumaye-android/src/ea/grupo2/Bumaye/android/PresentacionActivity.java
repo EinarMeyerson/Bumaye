@@ -98,7 +98,13 @@ public class PresentacionActivity extends Activity{
 					Log.d("Login",result.toString());
 					if (result.getNombre() != "")
 					{
-						Logeado(result);
+						if (result.getIduser() == 0) {
+							Toast.makeText(getApplicationContext(),
+									"Server not active", Toast.LENGTH_LONG).show();
+							finish();
+						} else {
+							Logeado(result);
+						}
 					}
 					else{				
 						wronglogin();

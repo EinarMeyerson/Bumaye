@@ -86,10 +86,6 @@
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name=".ListaActivity"
-            android:screenOrientation="landscape" >
-        </activity>
-        <activity
             android:name=".InventarioActivity"
             android:screenOrientation="landscape" >
         </activity>

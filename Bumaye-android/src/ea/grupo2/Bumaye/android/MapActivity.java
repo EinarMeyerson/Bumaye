@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
@@ -22,7 +24,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,31 +38,35 @@ import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.android.api.MapAPI;
 
-public class MapActivity extends FragmentActivity{
+public class MapActivity extends FragmentActivity {
 	private final static String TAG = MapActivity.class.getName();
 	private ListView navList;
-    private DrawerLayout mDrawerLayout;
+	private DrawerLayout mDrawerLayout;
 	private MapAPI api;
 	String url;
 	PopupWindow popUp;
 	String serverAddress;
 	String serverPort;
-    private GoogleMap map;
-	PersonajeVO personaje =null;
+	private GoogleMap map;
+	PersonajeVO personaje = null;
 	List<PersonajeVO> personajes = new ArrayList<PersonajeVO>();
 	List<CofreVO> cofres = new ArrayList<CofreVO>();
-	
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);		
+	private ProgressDialog pdm;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_map);
+
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
 		api = new MapAPI();
-        map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+		map = ((SupportMapFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.map)).getMap();
 
-		 getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
-	     getActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-		
+		getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.TRANSPARENT));
+
 		AssetManager assetManager = getAssets();
 		Properties config = new Properties();
 		try {
@@ -74,23 +79,25 @@ public class MapActivity extends FragmentActivity{
 			finish();
 		}
 		url = "http://" + serverAddress + ":" + serverPort
-				+ "/Bumaye-api/user/lista/"+personaje.getIduser();
+				+ "/Bumaye-api/user/lista/" + personaje.getIduser();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-		// Load an array of options names       
-		String[] names = getResources().getStringArray(
-				R.array.nav_options);
-		if (personaje.getNombre()!=null)
-			names[0] = Html.fromHtml("<b>"+personaje.getNombre()+"</b>").toString();
+		// Load an array of options names
+		String[] names = getResources().getStringArray(R.array.nav_options);
+		if (personaje.getNombre() != null)
+			names[0] = Html.fromHtml("<b>" + personaje.getNombre() + "</b>")
+					.toString();
 		this.navList = (ListView) findViewById(R.id.left_drawer);
 		// Set previous array as adapter of the list
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, names);
 		navList.setAdapter(adapter);
 		navList.setOnItemClickListener(new DrawerItemClickListener());
-    	(new LoadListTask()).execute(url);		
-    }  
-	private class LoadListTask extends AsyncTask<String, Void, List<PersonajeVO>> {
+		(new LoadListTask()).execute(url);
+	}
+
+	private class LoadListTask extends
+			AsyncTask<String, Void, List<PersonajeVO>> {
 		private ProgressDialog pd;
 
 		@Override
@@ -100,15 +107,15 @@ public class MapActivity extends FragmentActivity{
 		}
 
 		@Override
-		protected void onPostExecute(List<PersonajeVO> result) {						
+		protected void onPostExecute(List<PersonajeVO> result) {
 			personajes = result;
-	    	Log.e(TAG, "Lista de personajes tamaño: " +personajes.size());
-	    	Log.e(TAG, "RECORDAR CAMBIAR URL PARA LISTA COFRES!!");
-	    	// CAMBIAR URL
-	    	
-	    	url = "http://" + serverAddress + ":" + serverPort
+			Log.e(TAG, "Lista de personajes tamaño: " + personajes.size());
+			Log.e(TAG, "RECORDAR CAMBIAR URL PARA LISTA COFRES!!");
+			// CAMBIAR URL
+
+			url = "http://" + serverAddress + ":" + serverPort
 					+ "/Bumaye-api/user/listacofres";
-	    	(new LoadList2Task()).execute(url);		
+			(new LoadList2Task()).execute(url);
 			if (pd != null) {
 				pd.dismiss();
 			}
@@ -135,10 +142,10 @@ public class MapActivity extends FragmentActivity{
 		}
 
 		@Override
-		protected void onPostExecute(List<CofreVO> result) {						
+		protected void onPostExecute(List<CofreVO> result) {
 			cofres = result;
-	    	Log.e(TAG, "Lista de cofres tamaño: " +cofres.size());
-	    	opMapa();
+			Log.e(TAG, "Lista de cofres tamaño: " + cofres.size());
+			opMapa();
 			if (pd != null) {
 				pd.dismiss();
 			}
@@ -154,95 +161,127 @@ public class MapActivity extends FragmentActivity{
 		}
 
 	}
-    private void opMapa(){
-        map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-//        
-//    	MapFragment mapFragment = (MapFragment) getFragmentManager()
-//			    .findFragmentById(R.id.map);
-//			mapFragment.getMapAsync(this);
-        Log.e(TAG, "Dentro del mapa");
 
-    	for (int i=0;  i < personajes.size() ; i++){
-	    	PersonajeVO pers = personajes.get(i);	    	
-    		map.addMarker(new MarkerOptions()
-            .position(new LatLng(pers.getLatitud(), pers.getLongitud()))
-            .snippet("Luchar!")
-            .title(pers.getNombre()+" - \nAtaque: "+pers.getAtaque()+"\nDefensa: "+pers.getDefensa())
-            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-    		
-		}    
-    	for (int i=0;  i < cofres.size() ; i++){
-	    	CofreVO cof = cofres.get(i);	    		    	
-    		map.addMarker(new MarkerOptions()
-            .position(new LatLng(cof.getLatitud(), cof.getLongitud()))
-            .title("Cofre nº: "+cof.getIdcofre())
-            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-    		
-		}    
-    	map.setOnInfoWindowClickListener(new OnInfoWindowClickListener()
-    	{
-    	    @Override public void onInfoWindowClick(Marker arg0) {
-    	        final String title = arg0.getTitle();
-    	        Toast.makeText(MapActivity.this, "A luchar contra: "+title,
-    	                Toast.LENGTH_LONG).show();
-    	    }
-    	}); 
-    	
-    	 map.setMyLocationEnabled(true);
-    	   
-    	    // EN ESTE PUNTO HAREMOS QUE EL MAPA TE SIGA SIEMPRE ASI SOLO 
-    	    // SE ATACAN A LOS QUE ESTAN CERCA
-    	    map.setOnMyLocationChangeListener(myLocationChangeListener);
-    	
-    	    // COMENTAR SI QUEREIS MOVER EL MAPA DENTRO DE LA APP!!!
-    	    map.getUiSettings().setAllGesturesEnabled(true);
-    	    }
+	private void opMapa() {
+		map = ((SupportMapFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.map)).getMap();
+		//
+		// MapFragment mapFragment = (MapFragment) getFragmentManager()
+		// .findFragmentById(R.id.map);
+		// mapFragment.getMapAsync(this);
+		Log.e(TAG, "Dentro del mapa");
 
-    private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
-        @Override
-        public void onMyLocationChange(Location location) {
-            LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
-           // Marker mMarker = map.addMarker(new MarkerOptions().position(loc));
-            if(map != null){
-            	map	.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 04.0f));
-            }
-        }
-    };
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+		for (int i = 0; i < personajes.size(); i++) {
+			PersonajeVO pers = personajes.get(i);
+			map.addMarker(new MarkerOptions()
+					.position(new LatLng(pers.getLatitud(), pers.getLongitud()))
+					.snippet("Luchar!")
+					.title(pers.getNombre() + " - \nAtaque: "
+							+ pers.getAtaque() + "\nDefensa: "
+							+ pers.getDefensa())
+					.icon(BitmapDescriptorFactory
+							.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+
+		}
+		for (int i = 0; i < cofres.size(); i++) {
+			CofreVO cof = cofres.get(i);
+			map.addMarker(new MarkerOptions()
+					.position(new LatLng(cof.getLatitud(), cof.getLongitud()))
+					.title("Cofre nº: " + cof.getIdcofre())
+					.icon(BitmapDescriptorFactory
+							.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+
+		}
+		map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+			@Override
+			public void onInfoWindowClick(Marker arg0) {
+				final String title = arg0.getTitle();
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						MapActivity.this);
+
+				pdm = new ProgressDialog(MapActivity.this);
+				pdm.setTitle("Esperando oponente...");
+				pdm.setCancelable(true);
+				pdm.setIndeterminate(true);
+				pdm.show();
+				builder.setMessage("Quieres Luchar?").setTitle(title);
+				builder.setPositiveButton(R.string.ok,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								// User clicked OK button
+								dialog.dismiss();
+								pdm.show();
+							}
+						});
+				builder.setNegativeButton(R.string.cancel,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								// User cancelled the dialog
+								dialog.dismiss();
+							}
+						});
+				AlertDialog dialog = builder.create();
+
+			}
+		});
+
+		map.setMyLocationEnabled(true);
+
+		// EN ESTE PUNTO HAREMOS QUE EL MAPA TE SIGA SIEMPRE ASI SOLO
+		// SE ATACAN A LOS QUE ESTAN CERCA
+		map.setOnMyLocationChangeListener(myLocationChangeListener);
+
+		// COMENTAR SI QUEREIS MOVER EL MAPA DENTRO DE LA APP!!!
+		map.getUiSettings().setAllGesturesEnabled(true);
+	}
+
+	private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
+		@Override
+		public void onMyLocationChange(Location location) {
+			LatLng loc = new LatLng(location.getLatitude(),
+					location.getLongitude());
+			// Marker mMarker = map.addMarker(new
+			// MarkerOptions().position(loc));
+			if (map != null) {
+				map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 04.0f));
+			}
+		}
+	};
+
+	private class DrawerItemClickListener implements
+			ListView.OnItemClickListener {
 
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
 			mDrawerLayout.closeDrawer(navList);
 			navClic(position);
 		}
 	}
-	private void navClic(int pos){
-		switch(pos) {
-		case 0: 
+
+	private void navClic(int pos) {
+		switch (pos) {
+		case 0:
 			Intent intent = new Intent(this, PerfilActivity.class);
 			intent.putExtra("personaje", personaje);
 			startActivity(intent);
 			finish();
 			break;
 		case 1:
-//			Intent intent = new Intent(this, MapActivity.class);
-//			intent.putExtra("personaje", personaje);
-//			startActivity(intent);
-//			finish();
+			// Intent intent = new Intent(this, MapActivity.class);
+			// intent.putExtra("personaje", personaje);
+			// startActivity(intent);
+			// finish();
 			break;
-		case 2: 
+		case 2:
 			Intent intenttt = new Intent(this, InventarioActivity.class);
 			intenttt.putExtra("personaje", personaje);
 			startActivity(intenttt);
 			finish();
 			break;
-		default: 
+		default:
 			break;
 		}
 	}
-	
-	
-	
-    
+
 }
-    
