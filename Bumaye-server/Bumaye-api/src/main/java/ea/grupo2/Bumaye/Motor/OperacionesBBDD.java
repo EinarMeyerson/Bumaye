@@ -1,13 +1,9 @@
 package ea.grupo2.Bumaye.Motor;
 
-import java.io.Console;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
-import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -20,7 +16,6 @@ import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.ListBatallasVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
-import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
@@ -52,6 +47,14 @@ public class OperacionesBBDD implements BumayeInterface{
 		//        m.iniciarBatallaVO(listaPersonajesVO);
 		//        m.getBatallaVO(1);
 
+		/* COFRES  */
+		//(idcofre, latitud, longitud)
+
+		m.addCofre(new Cofre (2.23456,41.1234));
+		m.addCofre(new Cofre (1.23456,40.1234));
+		m.addCofre(new Cofre (1.21456,41.124));
+
+		
 		/* OBJETOS  */
 		//(nombre objeto, tipo, rareza, combo1, combo2, %exito)
 
@@ -74,10 +77,10 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.addObjeto(new Objeto ("barra_bronce", "barra", 50, "min_bronce", "herreria",70));
 		m.addObjeto(new Objeto ("barra_oro", "barra", 60, "min_oro", "herreria",60));
 		m.addObjeto(new Objeto ("barra_drag", "barra", 70, "min_drag", "herreria",50));
-		
-		
+
+
 		m.addObjeto(new Objeto ("calavera", "??????", 70, "piedra", "calavera",70));
-		
+
 		//16 max_runa_cristal_agua
 		m.addObjeto(new Objeto ("pedrusco", "basico", 20, null, null,100));
 		m.addObjeto(new Objeto ("piedra", "basico", 10, null, null,100));
@@ -85,26 +88,26 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.addObjeto(new Objeto ("runa_rayo", "runa", 30, "pedrusco", "trueno",70));
 		m.addObjeto(new Objeto ("runa_hoja", "runa", 30, "pedrusco", "hierba",70));
 		m.addObjeto(new Objeto ("runa_nieve", "runa", 30, "pedrusco", "nieve",70));
-		
+
 		m.addObjeto(new Objeto ("cristal", "basico", 60, null, null,100));
-		
+
 		m.addObjeto(new Objeto ("runa_cristal_agua", "runa", 70, "cristal", "runa_agua",60));
 		m.addObjeto(new Objeto ("runa_cristal_hoja", "runa", 70, "cristal", "runa_hoja",60));
 		m.addObjeto(new Objeto ("runa_cristal_nieve", "runa", 70, "cristal", "runa_nievel",60));
 		m.addObjeto(new Objeto ("runa_cristal_rayo", "runa", 70, "cristal", "runa_rayo",60));
-		
+
 		m.addObjeto(new Objeto ("diamante", "basico", 80, null, null,100));
-		
+
 		m.addObjeto(new Objeto ("max_runa_cristal_agua", "runa", 90, "diamante", "runa_cristal_agua",50));
 		m.addObjeto(new Objeto ("max_runa_cristal_hoja", "runa", 90, "diamante", "runa_cristal_hoja",50));
 		m.addObjeto(new Objeto ("max_runa_cristal_nieve", "runa", 90, "diamante", "runa_cristal_nieve",50));
 		m.addObjeto(new Objeto ("max_runa_cristal_rayo", "runa", 90, "diamante", "runa_cristal_rayo",50));
-		
+
 		m.addObjeto(new Objeto ("herreria", "herramienta", 100, null, null,90));
-		
-		
+
+
 		//33 la ultima
-		
+
 
 		System.out.print("Objetos añadidos a la base de datos");
 
@@ -188,65 +191,62 @@ public class OperacionesBBDD implements BumayeInterface{
 		System.out.print("Jugadores añadidos");
 
 		/* AÑADIR OBJETOS A PERSONAJES */
-		      m.añadirObjetoInventarioVerificado(2, 1);
-		      m.añadirObjetoInventarioVerificado(3, 1);
-		      m.añadirObjetoInventarioVerificado(2, 1);
-		      m.añadirObjetoInventarioVerificado(3, 1);
-		      m.añadirObjetoInventarioVerificado(6, 1);
-		      m.añadirObjetoInventarioVerificado(7, 1);
-		      m.añadirObjetoInventarioVerificado(9, 1);
-		      m.añadirObjetoInventarioVerificado(10, 1);
-		      m.añadirObjetoInventarioVerificado(11, 1);
-		      m.añadirObjetoInventarioVerificado(13, 1);
-//		      m.añadirObjetos(16, 1);
-		      System.out.print("Objetos añadias a jugador1");
-		      
+		m.añadirObjetoInventarioVerificado(2, 1);
+		m.añadirObjetoInventarioVerificado(3, 1);
+		m.añadirObjetoInventarioVerificado(2, 1);
+		m.añadirObjetoInventarioVerificado(3, 1);
+		m.añadirObjetoInventarioVerificado(6, 1);
+		m.añadirObjetoInventarioVerificado(7, 1);
+		m.añadirObjetoInventarioVerificado(9, 1);
+		m.añadirObjetoInventarioVerificado(10, 1);
+		m.añadirObjetoInventarioVerificado(11, 1);
+		m.añadirObjetoInventarioVerificado(13, 1);
+		//		      m.añadirObjetos(16, 1);
+		System.out.print("Objetos añadias a jugador1");
 
-		      m.añadirObjetoInventarioVerificado(2, 2);
-		      m.añadirObjetoInventarioVerificado(3, 2);
-		      m.añadirObjetoInventarioVerificado(6, 2);
-		      m.añadirObjetoInventarioVerificado(7, 2);
-		      m.añadirObjetoInventarioVerificado(9, 2);
-		      m.añadirObjetoInventarioVerificado(10, 2);
-		      m.añadirObjetoInventarioVerificado(11, 2);
-		      m.añadirObjetoInventarioVerificado(13, 2);
-//		      m.añadirObjetos(16, 2);
-		      System.out.print("Objetos añadias a jugador2");
-		      
-		      m.añadirObjetoInventarioVerificado(1, 3);
-		      m.añadirObjetoInventarioVerificado(1, 3);
-		      m.añadirObjetoInventarioVerificado(1, 3);
-		      m.añadirObjetoInventarioVerificado(1, 3);
-		      m.añadirObjetoInventarioVerificado(4, 3);
-		      m.añadirObjetoInventarioVerificado(4, 3);
-		      m.añadirObjetoInventarioVerificado(4, 3);
-		      m.añadirObjetoInventarioVerificado(4, 3);
-		      m.añadirObjetoInventarioVerificado(7, 3);
-		      m.añadirObjetoInventarioVerificado(7, 3);
-		      m.añadirObjetoInventarioVerificado(12, 3);
-		      m.añadirObjetoInventarioVerificado(12, 3);
-		      m.añadirObjetoInventarioVerificado(12, 3);
-		      m.añadirObjetoInventarioVerificado(12, 3);
-		      m.añadirObjetoInventarioVerificado(12, 3);
-		      m.añadirObjetoInventarioVerificado(12, 3);
-		      m.añadirObjetoInventarioVerificado(12, 3);
-		      m.añadirObjetoInventarioVerificado(15, 3);
-		      m.añadirObjetoInventarioVerificado(15, 3);
-		      m.añadirObjetoInventarioVerificado(15, 3);
-		      m.añadirObjetoInventarioVerificado(15, 3);
-		      m.añadirObjetoInventarioVerificado(15, 3);
-		      m.añadirObjetoInventarioVerificado(15, 3);
-		      m.añadirObjetoInventarioVerificado(15, 3);
-		      m.añadirObjetoInventarioVerificado(20, 3);
-		      m.añadirObjetoInventarioVerificado(30, 3);
-		      m.añadirObjetoInventarioVerificado(31, 3);
-		      m.añadirObjetoInventarioVerificado(32, 3);
-		      m.añadirObjetoInventarioVerificado(33, 3);
-		      m.añadirObjetoInventarioVerificado(33, 3);
-		      m.añadirObjetoInventarioVerificado(33, 3);
-		      m.añadirObjetoInventarioVerificado(33, 3);
 
-		      System.out.print("Objetos añadias a jugador3");
+		m.añadirObjetoInventarioVerificado(2, 2);
+		m.añadirObjetoInventarioVerificado(3, 2);
+		m.añadirObjetoInventarioVerificado(6, 2);
+		m.añadirObjetoInventarioVerificado(7, 2);
+		m.añadirObjetoInventarioVerificado(9, 2);
+		m.añadirObjetoInventarioVerificado(10, 2);
+		m.añadirObjetoInventarioVerificado(11, 2);
+		m.añadirObjetoInventarioVerificado(13, 2);
+		//		      m.añadirObjetos(16, 2);
+		System.out.print("Objetos añadias a jugador2");
+
+		m.añadirObjetoInventarioVerificado(1, 3);
+		m.añadirObjetoInventarioVerificado(1, 3);
+		m.añadirObjetoInventarioVerificado(1, 3);
+		m.añadirObjetoInventarioVerificado(1, 3);
+		m.añadirObjetoInventarioVerificado(4, 3);
+		m.añadirObjetoInventarioVerificado(4, 3);
+		m.añadirObjetoInventarioVerificado(4, 3);
+		m.añadirObjetoInventarioVerificado(4, 3);
+		m.añadirObjetoInventarioVerificado(7, 3);
+		m.añadirObjetoInventarioVerificado(7, 3);
+		m.añadirObjetoInventarioVerificado(12, 3);
+		m.añadirObjetoInventarioVerificado(12, 3);
+		m.añadirObjetoInventarioVerificado(12, 3);
+		m.añadirObjetoInventarioVerificado(12, 3);
+		m.añadirObjetoInventarioVerificado(12, 3);
+		m.añadirObjetoInventarioVerificado(12, 3);
+		m.añadirObjetoInventarioVerificado(12, 3);
+		m.añadirObjetoInventarioVerificado(15, 3);
+		m.añadirObjetoInventarioVerificado(15, 3);
+		m.añadirObjetoInventarioVerificado(15, 3);
+		m.añadirObjetoInventarioVerificado(15, 3);
+		m.añadirObjetoInventarioVerificado(15, 3);
+		m.añadirObjetoInventarioVerificado(15, 3);
+		m.añadirObjetoInventarioVerificado(15, 3);
+		m.añadirObjetoInventarioVerificado(20, 3);
+		m.añadirObjetoInventarioVerificado(30, 3);
+		m.añadirObjetoInventarioVerificado(31, 3);
+		m.añadirObjetoInventarioVerificado(32, 3);
+		m.añadirObjetoInventarioVerificado(33, 3);
+
+		System.out.print("Objetos añadias a jugador3");
 
 
 		/* AÑADIR ARMADURAS A PERSONAJES */
@@ -278,56 +278,74 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.añadirArmasArmaduras(19, 3);
 		m.añadirArmasArmaduras(21, 3);
 		System.out.print("Armaduras añadias a jugador3");
-		
-		
+
+
 		/* EQUIPAR ARMADURAS A PERSONAJES */
 		m.añadirArmasArmadurasEquipada(1, 1);
+		m.updateAtributosEquipada_UserArmasArmaduras(1, 1);
 		m.añadirArmasArmadurasEquipada(2, 1);
+		m.updateAtributosEquipada_UserArmasArmaduras(2, 1);
 		m.añadirArmasArmadurasEquipada(3, 1);
+		m.updateAtributosEquipada_UserArmasArmaduras(3, 1);
 		m.añadirArmasArmadurasEquipada(4, 1);
+		m.updateAtributosEquipada_UserArmasArmaduras(4, 1);
 		m.añadirArmasArmadurasEquipada(5, 1);
+		m.updateAtributosEquipada_UserArmasArmaduras(5, 1);
 		m.añadirArmasArmadurasEquipada(6, 1);
+		m.updateAtributosEquipada_UserArmasArmaduras(6, 1);
 		System.out.print("Equipado el jugador1");
 
 		m.añadirArmasArmadurasEquipada(14, 2);
+		m.updateAtributosEquipada_UserArmasArmaduras(14, 2);
 		m.añadirArmasArmadurasEquipada(9, 2);
+		m.updateAtributosEquipada_UserArmasArmaduras(9, 2);
 		m.añadirArmasArmadurasEquipada(10, 2);
+		m.updateAtributosEquipada_UserArmasArmaduras(10, 2);
 		m.añadirArmasArmadurasEquipada(11, 2);
+		m.updateAtributosEquipada_UserArmasArmaduras(11, 2);
 		m.añadirArmasArmadurasEquipada(12, 2);
+		m.updateAtributosEquipada_UserArmasArmaduras(12, 2);
 		m.añadirArmasArmadurasEquipada(13, 2);
+		m.updateAtributosEquipada_UserArmasArmaduras(13, 2);
 		System.out.print("Equipado el jugador2");
 
 		m.añadirArmasArmadurasEquipada(20, 3);
+		m.updateAtributosEquipada_UserArmasArmaduras(20, 3);
 		m.añadirArmasArmadurasEquipada(16, 3);
+		m.updateAtributosEquipada_UserArmasArmaduras(16, 3);
 		m.añadirArmasArmadurasEquipada(17, 3);
+		m.updateAtributosEquipada_UserArmasArmaduras(17, 3);
 		m.añadirArmasArmadurasEquipada(18, 3);
+		m.updateAtributosEquipada_UserArmasArmaduras(18, 3);
 		m.añadirArmasArmadurasEquipada(19, 3);
+		m.updateAtributosEquipada_UserArmasArmaduras(19, 3);
 		m.añadirArmasArmadurasEquipada(21, 3);
+		m.updateAtributosEquipada_UserArmasArmaduras(21, 3);
 		System.out.print("Equipado el jugador3");
 
 	}
-	
-	
+
+
 	@Override
 	public double distance(double lat1, double lat2, double lon1, double lon2) {
 
-	    final int R = 6371; // Radius of the earth
+		final int R = 6371; // Radius of the earth
 
-	    Double latDistance = deg2rad(lat2 - lat1);
-	    Double lonDistance = deg2rad(lon2 - lon1);
-	    Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-	            + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2))
-	            * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-	    Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-	    double distance = R * c * 1000; // convert to meters
-	    System.out.print(distance);
+		Double latDistance = deg2rad(lat2 - lat1);
+		Double lonDistance = deg2rad(lon2 - lon1);
+		Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+				+ Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2))
+				* Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+		Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		double distance = R * c * 1000; // convert to meters
+		System.out.print(distance);
 
-	    return distance;
+		return distance;
 	}
 
 	@Override
 	public double deg2rad(double deg) {
-	    return (deg * Math.PI / 180.0);
+		return (deg * Math.PI / 180.0);
 	}
 
 	@Override
@@ -586,30 +604,6 @@ public class OperacionesBBDD implements BumayeInterface{
 			usrper.addArmasArmaduras(armaarmadura);
 			//por defecto al añadir una armadura a un usuario la dejamos desequipada
 			desequiparArmasArmadurasEquipada(armaarmadura.getIdArmasArmaduras(),usrper.getIduser());
-			
-			
-			//          updateAtributos(armaarmadura, iduser);
-			try{
-				Query query = session.createQuery("update UsrPersonaje set ataque= :uataque" +", defensa= :udefensa" +"  where iduser= :id");
-				query.setParameter("id",iduser);
-				query.setParameter("uataque", usrper.getAtaque()+armaarmadura.getAtaque());
-				query.setParameter("udefensa", usrper.getDefensa()+armaarmadura.getDefensa());
-				int result = query.executeUpdate();
-				if (result >0 ) {
-					//              transaction.commit();
-					System.out.print("Update realizado");
-				}
-			}
-			catch(HibernateException e)
-			{
-				e.printStackTrace();
-			}
-			finally {
-				System.out.print("finally");
-			}
-
-
-			session.saveOrUpdate(usrper);
 
 			if (usrper != null) {
 				transaction.commit();
@@ -647,25 +641,25 @@ public class OperacionesBBDD implements BumayeInterface{
 				personajelog = new PersonajeVO(u.getIduser(),u.getIdGCM(), u.getNombre(), u.getVida(), u.getDefensa(), u.getAtaque(), u.getLatitud(), u.getLongitud());
 				for (ArmasArmaduras arm: u.getArmasarmaduras()) {
 					//Sacar armaduras y ataques y pasarselos al personaje
-					
+
 					//miramos si la armadura esta equipada o desequipada
 					int equipamiento= verificarArmaArmaduraEquipada(arm.getIdArmasArmaduras(),u.getIduser());
-					
-						ArmaArmaduraVO armunica= new ArmaArmaduraVO(arm.getIdArmasArmaduras(), arm.getNombre(), arm.getTipo(), arm.getDefensa(), equipamiento ,arm.getAtaque());
-						//sacar ataques
-						List<Ataques> ataques = arm.getAtaques();
-						for (Ataques atac: ataques) {
-							AtaqueVO ataquevo = new AtaqueVO(atac.getIdAtaque(), atac.getNombre(), atac.getAtributoAfectado(), atac.getFactorDaño(), atac.getPorcentajeAcierto(), atac.getJugadorAfectado(), atac.getVecesUso());
-							System.out.print("***********Lista de ataques: " + ataquevo.getNombreataque());
-							armunica.addAtaques(ataquevo);
-						}
-						armaduraspersonaje.add(armunica);
-					
-					
+
+					ArmaArmaduraVO armunica= new ArmaArmaduraVO(arm.getIdArmasArmaduras(), arm.getNombre(), arm.getTipo(), arm.getDefensa(), equipamiento ,arm.getAtaque());
+					//sacar ataques
+					List<Ataques> ataques = arm.getAtaques();
+					for (Ataques atac: ataques) {
+						AtaqueVO ataquevo = new AtaqueVO(atac.getIdAtaque(), atac.getNombre(), atac.getAtributoAfectado(), atac.getFactorDaño(), atac.getPorcentajeAcierto(), atac.getJugadorAfectado(), atac.getVecesUso());
+						System.out.print("***********Lista de ataques: " + ataquevo.getNombreataque());
+						armunica.addAtaques(ataquevo);
+					}
+					armaduraspersonaje.add(armunica);
+
+
 				}
 				personajelog.setArmasarmaduras(armaduraspersonaje);
-				
-				
+
+
 				//Añadimos los objetos al personaje VO
 				for (Objeto objeto: u.getInventario()) {
 					Query query2 = session.createQuery("from ObjetoCantidad where idUser= :iduser and idobjeto= :idobjeto");
@@ -673,7 +667,7 @@ public class OperacionesBBDD implements BumayeInterface{
 					query2.setParameter("iduser", personajelog.getIduser());            
 					ObjetoCantidad objetocantidad = (ObjetoCantidad) query2.uniqueResult();
 					ObjetoCantidadVO objcan= new ObjetoCantidadVO(objeto.getIdobjeto(), objeto.getNombre(), objeto.getRareza(), objeto.getTipo(), objeto.getCombo1(), objeto.getCombo2(), objeto.getExito(), objetocantidad.getCantidad());
-					
+
 					listobjetos.add(objcan);
 				}
 				personajelog.setInventario(listobjetos);				
@@ -930,7 +924,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			else
 			{
 				transaction.commit();
-				addUsrPersonaje(new UsrPersonaje(userregistrado.getEmail(),userregistrado.getIdGCM(), userregistrado.getPass(), userregistrado.getUsername(),100,10,10, userregistrado.getLatitud(),userregistrado.getLongitud()));
+				addUsrPersonaje(new UsrPersonaje(userregistrado.getIdGCM(),userregistrado.getEmail(), userregistrado.getPass(), userregistrado.getUsername(),100,10,10, userregistrado.getLatitud(),userregistrado.getLongitud()));
 
 				//Volvemos a realizar la query para solicitar el id del usuario recien creado
 				Query queri = session.createQuery("from UsrPersonaje as u where u.nombre='" + userregistrado.getUsername() + "'");
@@ -1070,7 +1064,8 @@ public class OperacionesBBDD implements BumayeInterface{
 					{
 
 						System.out.print("Lista de usuarios: " + userlogeado.getIduser() + "\n");
-						PersonajeLogeadoVO p = new PersonajeLogeadoVO(userlogeado.getIduser(), userlogeado.getNombre(), userlogeado.getVida(), userlogeado.getDefensa(), userlogeado.getAtaque());
+						PersonajeLogeadoVO p = new PersonajeLogeadoVO(userlogeado.getIduser(), userlogeado.getNombre(), userlogeado.getVida(), userlogeado.getDefensa(), userlogeado.getAtaque(), userlogeado.getLatitud(),userlogeado.getLongitud());
+						System.out.print("Latitud: " + p.getLat() + "\n");
 						personajeslogeados.add(p);
 					}
 
@@ -1102,9 +1097,9 @@ public class OperacionesBBDD implements BumayeInterface{
 			if (u != null) {               
 				for (Cofre cof: u) {
 
-						CofreVO p = new CofreVO(cof.getIdcofre(),cof.getLongitud(),cof.getLatitud());
-						cofres.add(p);
-					
+					CofreVO p = new CofreVO(cof.getIdcofre(),cof.getLongitud(),cof.getLatitud());
+					cofres.add(p);
+
 				}
 				transaction.commit();
 			}
@@ -1174,8 +1169,8 @@ public class OperacionesBBDD implements BumayeInterface{
 			if (usrper != null) {
 				objeto = (Objeto)session.load(Objeto.class, idobjeto);
 				usrper.addInventario(objeto);
-				
-				
+
+
 				Query query = session.createQuery("from ObjetoCantidad where idUser= :iduser and idobjeto= :idobjeto");
 				query.setParameter("idobjeto",idobjeto);
 				query.setParameter("iduser", iduser);            
@@ -1198,8 +1193,8 @@ public class OperacionesBBDD implements BumayeInterface{
 					session.save(objetocantidad2);
 
 				}
-				
-				
+
+
 				transaction.commit();
 				s="Objeto acceptado";
 			}
@@ -1243,7 +1238,7 @@ public class OperacionesBBDD implements BumayeInterface{
 							obj.getObjeto().getRareza(), obj.getObjeto().getTipo(), 
 							obj.getObjeto().getCombo1(), obj.getObjeto().getCombo2(), 
 							obj.getObjeto().getExito(), objetocantidad.getCantidad()));
-					
+
 				}
 				////
 
@@ -1287,9 +1282,9 @@ public class OperacionesBBDD implements BumayeInterface{
 					throw new NoExisteEsaCombinacionException();
 
 				}
-	
+
 			}
-	
+
 			catch(HibernateException e)
 			{
 				transaction.rollback();
@@ -1298,7 +1293,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			finally {
 				session.close();
 			}
-	
+
 			return objvo;
 
 		}
@@ -1317,7 +1312,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			return true;
 		}
 		else{
-			
+
 			System.out.print("no lo tiene");
 			return false;
 		}
@@ -1340,8 +1335,8 @@ public class OperacionesBBDD implements BumayeInterface{
 			if (cofre != null) {
 				objeto = (Objeto)session.load(Objeto.class, idobjeto);
 				cofre.addlistaobjetos(objeto);;
-				
-				
+
+
 				Query query = session.createQuery("from ObjetoCofreCantidad where idCofre= :idcofre and idobjeto= :idobjeto");
 				query.setParameter("idobjeto",idobjeto);
 				query.setParameter("idcofre", idCofre);            
@@ -1404,7 +1399,7 @@ public class OperacionesBBDD implements BumayeInterface{
 					ObjetocofreVOfin.add(new ObjetoCofreCantidadVO(objcofre.getIdobjetocofrecantidad(), 
 							objetocofrecantidad.getCantidad(), objcofre.getObjeto().getIdobjeto(), 
 							objcofre.getCofre().getIdcofre()));
-					
+
 				}
 				////
 
@@ -1533,7 +1528,7 @@ public class OperacionesBBDD implements BumayeInterface{
 
 			if (objetocofrecantidad.getCantidad() <cantidad){
 				s= false;
-				
+
 			}
 			else{
 				s= true;
@@ -1557,7 +1552,7 @@ public class OperacionesBBDD implements BumayeInterface{
 		}
 		else{
 			throw new NoTienesEspacioEnInventarioException();
-	
+
 		}
 	}
 
@@ -1606,12 +1601,12 @@ public class OperacionesBBDD implements BumayeInterface{
 			query2.setParameter("idUser",idUser);
 			query2.setParameter("idobjeto",idObjeto);
 			ObjetoCantidad objetoCantidad = (ObjetoCantidad)query2.uniqueResult();
-			
+
 			if (inventario.size() <20 || objetoCantidad !=null) {
 				s= true;
 				transaction.commit();
 			}
-			
+
 		}
 
 		catch(HibernateException e)
@@ -1638,9 +1633,9 @@ public class OperacionesBBDD implements BumayeInterface{
 			transaction = session.beginTransaction();   
 			usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
 			if (usrper != null) {
-				
+
 				armaarmadura = (ArmasArmaduras)session.load(ArmasArmaduras.class, idarmaarmadura);
-				
+
 				Query query = session.createQuery("from ArmaArmaduraEquipada where idUser= :iduser and idArmasArmaduras= :idArmasArmaduras");
 				query.setParameter("idArmasArmaduras",idarmaarmadura);
 				query.setParameter("iduser", iduser);            
@@ -1654,20 +1649,20 @@ public class OperacionesBBDD implements BumayeInterface{
 					if (query2.executeUpdate() >0 ) {
 						s="Armadura equipada\n";
 					}
-			}
+				}
 
-			else{
-				ArmaArmaduraEquipada equipada2 = new ArmaArmaduraEquipada();
-				equipada2.setEquipada(1);
-				equipada2.setArmasArmaduras(armaarmadura);;
-				equipada2.setUsrPersonaje(usrper);;
-				session.save(equipada2);
-				s="Armadura equipada\n";
+				else{
+					ArmaArmaduraEquipada equipada2 = new ArmaArmaduraEquipada();
+					equipada2.setEquipada(1);
+					equipada2.setArmasArmaduras(armaarmadura);;
+					equipada2.setUsrPersonaje(usrper);;
+					session.save(equipada2);
+					s="Armadura equipada\n";
 
-			}
-				
+				}
+
 				transaction.commit();
-				
+
 			}
 
 		}
@@ -1679,6 +1674,8 @@ public class OperacionesBBDD implements BumayeInterface{
 		finally {
 			session.close();
 		}
+
+		
 		System.out.println(s);
 		return s;
 	}
@@ -1698,9 +1695,9 @@ public class OperacionesBBDD implements BumayeInterface{
 			transaction = session.beginTransaction();   
 			usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
 			if (usrper != null) {
-				
+
 				armaarmadura = (ArmasArmaduras)session.load(ArmasArmaduras.class, idarmaarmadura);
-				
+
 				Query query = session.createQuery("from ArmaArmaduraEquipada where idUser= :iduser and idArmasArmaduras= :idArmasArmaduras");
 				query.setParameter("idArmasArmaduras",idarmaarmadura);
 				query.setParameter("iduser", iduser);            
@@ -1713,21 +1710,22 @@ public class OperacionesBBDD implements BumayeInterface{
 					query2.setParameter("iduser", iduser);            
 					if (query2.executeUpdate() >0 ) {
 						s="Armadura desequipada\n";
+						
 					}
-			}
+				}
 
-			else{
-				ArmaArmaduraEquipada equipada2 = new ArmaArmaduraEquipada();
-				equipada2.setEquipada(0);
-				equipada2.setArmasArmaduras(armaarmadura);;
-				equipada2.setUsrPersonaje(usrper);;
-				session.save(equipada2);
-				s="Armadura desequipada\n";
+				else{
+					ArmaArmaduraEquipada equipada2 = new ArmaArmaduraEquipada();
+					equipada2.setEquipada(0);
+					equipada2.setArmasArmaduras(armaarmadura);;
+					equipada2.setUsrPersonaje(usrper);;
+					session.save(equipada2);
+					s="Armadura desequipada\n";
 
-			}
-				
+				}
+
 				transaction.commit();
-				
+
 			}
 
 		}
@@ -1739,6 +1737,8 @@ public class OperacionesBBDD implements BumayeInterface{
 		finally {
 			session.close();
 		}
+
+
 		System.out.println(s);
 		return s;
 	}
@@ -1757,7 +1757,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			transaction = session.beginTransaction();   
 			usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
 			if (usrper != null) {
-				
+
 				Query query = session.createQuery("from ArmaArmaduraEquipada where idUser= :iduser and idArmasArmaduras= :idArmasArmaduras");
 				query.setParameter("idArmasArmaduras",idarmaarmadura);
 				query.setParameter("iduser", iduser);            
@@ -1767,21 +1767,21 @@ public class OperacionesBBDD implements BumayeInterface{
 					if (equipada.getEquipada()==1)
 					{
 						equipadaarmadura=1;
-						
+
 					}
 					else
 					{
 						equipadaarmadura=0;
 					}
-			}
+				}
 
-			else{
-				equipadaarmadura=0;
+				else{
+					equipadaarmadura=0;
 
-			}
-				
+				}
+
 				transaction.commit();
-				
+
 			}
 
 		}
@@ -1820,7 +1820,7 @@ public class OperacionesBBDD implements BumayeInterface{
 					query2.setParameter("iduser", u.getIduser());            
 					ArmaArmaduraEquipada armequipadisima = (ArmaArmaduraEquipada) query2.uniqueResult();
 					ArmaArmaduraVOfin.add(new ArmaArmaduraVO(armequip.getArmasArmaduras().getIdArmasArmaduras(), armequip.getArmasArmaduras().getNombre(), armequip.getArmasArmaduras().getTipo(), armequip.getArmasArmaduras().getDefensa(),armequipadisima.getEquipada() ,armequipadisima.getArmasArmaduras().getAtaque()));
-					
+
 				}
 				////
 
@@ -1858,25 +1858,25 @@ public class OperacionesBBDD implements BumayeInterface{
 				personajevo = new PersonajeVO(u.getIduser(),u.getIdGCM(), u.getNombre(), u.getVida(), u.getDefensa(), u.getAtaque(), u.getLatitud(), u.getLongitud());
 				for (ArmasArmaduras arm: u.getArmasarmaduras()) {
 					//Sacar armaduras y ataques y pasarselos al personaje
-					
+
 					//miramos si la armadura esta equipada o desequipada
 					int equipamiento= verificarArmaArmaduraEquipada(arm.getIdArmasArmaduras(),u.getIduser());
-					
-						ArmaArmaduraVO armunica= new ArmaArmaduraVO(arm.getIdArmasArmaduras(), arm.getNombre(), arm.getTipo(), arm.getDefensa(), equipamiento ,arm.getAtaque());
-						//sacar ataques
-						List<Ataques> ataques = arm.getAtaques();
-						for (Ataques atac: ataques) {
-							AtaqueVO ataquevo = new AtaqueVO(atac.getIdAtaque(), atac.getNombre(), atac.getAtributoAfectado(), atac.getFactorDaño(), atac.getPorcentajeAcierto(), atac.getJugadorAfectado(), atac.getVecesUso());
-							System.out.print("***********Lista de ataques: " + ataquevo.getNombreataque());
-							armunica.addAtaques(ataquevo);
-						}
-						armaduraspersonaje.add(armunica);
-					
-					
+
+					ArmaArmaduraVO armunica= new ArmaArmaduraVO(arm.getIdArmasArmaduras(), arm.getNombre(), arm.getTipo(), arm.getDefensa(), equipamiento ,arm.getAtaque());
+					//sacar ataques
+					List<Ataques> ataques = arm.getAtaques();
+					for (Ataques atac: ataques) {
+						AtaqueVO ataquevo = new AtaqueVO(atac.getIdAtaque(), atac.getNombre(), atac.getAtributoAfectado(), atac.getFactorDaño(), atac.getPorcentajeAcierto(), atac.getJugadorAfectado(), atac.getVecesUso());
+						System.out.print("***********Lista de ataques: " + ataquevo.getNombreataque());
+						armunica.addAtaques(ataquevo);
+					}
+					armaduraspersonaje.add(armunica);
+
+
 				}
 				personajevo.setArmasarmaduras(armaduraspersonaje);
-				
-				
+
+
 				//Añadimos los objetos al personaje VO
 				for (Objeto objeto: u.getInventario()) {
 					Query query2 = session.createQuery("from ObjetoCantidad where idUser= :iduser and idobjeto= :idobjeto");
@@ -1884,7 +1884,7 @@ public class OperacionesBBDD implements BumayeInterface{
 					query2.setParameter("iduser", personajevo.getIduser());            
 					ObjetoCantidad objetocantidad = (ObjetoCantidad) query2.uniqueResult();
 					ObjetoCantidadVO objcan= new ObjetoCantidadVO(objeto.getIdobjeto(), objeto.getNombre(), objeto.getRareza(), objeto.getTipo(), objeto.getCombo1(), objeto.getCombo2(), objeto.getExito(), objetocantidad.getCantidad());
-					
+
 					listobjetos.add(objcan);
 				}
 				personajevo.setInventario(listobjetos);				
@@ -1900,28 +1900,28 @@ public class OperacionesBBDD implements BumayeInterface{
 		}
 		return personajevo;
 	}
-	
+
 
 	@Override
 	public ObjetoCantidadVO combinacionFinal(int iduser, String objeto1, String objeto2)
 			throws Exception {
-		
-			ObjetoCantidadVO objetocombo = combinacion(iduser, objeto1, objeto2);
-			int cantidad1 = getObjeto(objeto1, iduser).getCantidad();
-			int cantidad2 = getObjeto(objeto2, iduser).getCantidad();
 
-			if ((VerificarCapacidadInventario(iduser,objetocombo.getIdobjeto())==true) || (cantidad1 ==1 && cantidad2 ==1)){
-				eliminarObjetosInventario(iduser, getObjeto(objeto1, iduser).getIdobjeto());
-				eliminarObjetosInventario(iduser, getObjeto(objeto2, iduser).getIdobjeto());
-				limpiezaObjetosInventario();
-				añadirObjetos(objetocombo.getIdobjeto(), iduser);	
-				return objetocombo;
-			}
-			else{
-				throw new NoTienesEspacioEnInventarioException();
+		ObjetoCantidadVO objetocombo = combinacion(iduser, objeto1, objeto2);
+		int cantidad1 = getObjeto(objeto1, iduser).getCantidad();
+		int cantidad2 = getObjeto(objeto2, iduser).getCantidad();
 
-			}			
-	
+		if ((VerificarCapacidadInventario(iduser,objetocombo.getIdobjeto())==true) || (cantidad1 ==1 && cantidad2 ==1)){
+			eliminarObjetosInventario(iduser, getObjeto(objeto1, iduser).getIdobjeto());
+			eliminarObjetosInventario(iduser, getObjeto(objeto2, iduser).getIdobjeto());
+			limpiezaObjetosInventario();
+			añadirObjetos(objetocombo.getIdobjeto(), iduser);	
+			return objetocombo;
+		}
+		else{
+			throw new NoTienesEspacioEnInventarioException();
+
+		}			
+
 	}
 
 	@Override
@@ -2002,7 +2002,7 @@ public class OperacionesBBDD implements BumayeInterface{
 		return "Limpieza inventarios realizada";
 
 	}
-	
+
 	@Override
 	public ObjetoCantidadVO getObjeto(String objeto, int idUser) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -2039,7 +2039,7 @@ public class OperacionesBBDD implements BumayeInterface{
 
 	@Override
 	public boolean VerificarDistanciaCofre(int iduser, int idcofre) {
-		
+
 		PersonajeVO pers = getPersonaje(iduser);
 		CofreVO cofre = getCofre(idcofre);
 		boolean verif=false;
@@ -2083,17 +2083,119 @@ public class OperacionesBBDD implements BumayeInterface{
 
 
 	@Override
+	public void updateAtributosEquipada_UserArmasArmaduras(int idarmaarmadura, int iduser) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		UsrPersonaje usrper = null;
+		ArmasArmaduras armaarmadura = null;
+		try{
+			transaction = session.beginTransaction();   
+			usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
+			armaarmadura = (ArmasArmaduras)session.load(ArmasArmaduras.class, idarmaarmadura);			
+
+			//          updateAtributos(armaarmadura, iduser);
+			try{
+				Query query = session.createQuery("update UsrPersonaje set ataque= :uataque" +", defensa= :udefensa" +"  where iduser= :id");
+				query.setParameter("id",iduser);
+				query.setParameter("uataque", usrper.getAtaque()+armaarmadura.getAtaque());
+				query.setParameter("udefensa", usrper.getDefensa()+armaarmadura.getDefensa());
+				int result = query.executeUpdate();
+				if (result >0 ) {
+					//              transaction.commit();
+					System.out.print("Update realizado , ataque (+" + armaarmadura.getAtaque()+ ") , defensa(+"+armaarmadura.getDefensa()+")\n" );
+				}
+			}
+			catch(HibernateException e)
+			{
+				e.printStackTrace();
+			}
+			finally {
+				System.out.print("finally\n");
+			}
+
+
+			session.saveOrUpdate(usrper);
+
+			if (usrper != null) {
+				transaction.commit();
+			}
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+	}
+
+
+	@Override
+	public void updateAtributosDesequipada_UserArmasArmaduras(int idarmaarmadura, int iduser) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		UsrPersonaje usrper = null;
+		ArmasArmaduras armaarmadura = null;
+		try{
+			transaction = session.beginTransaction();   
+			usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
+			armaarmadura = (ArmasArmaduras)session.load(ArmasArmaduras.class, idarmaarmadura);			
+
+			//          updateAtributos(armaarmadura, iduser);
+			try{
+				Query query = session.createQuery("update UsrPersonaje set ataque= :uataque" +", defensa= :udefensa" +"  where iduser= :id");
+				query.setParameter("id",iduser);
+				query.setParameter("uataque", usrper.getAtaque()-armaarmadura.getAtaque());
+				query.setParameter("udefensa", usrper.getDefensa()-armaarmadura.getDefensa());
+				int result = query.executeUpdate();
+				if (result >0 ) {
+					//              transaction.commit();
+					System.out.print("Update realizado , ataque (-" + armaarmadura.getAtaque()+ ") , defensa(-"+armaarmadura.getDefensa()+")\n" );
+				}
+			}
+			catch(HibernateException e)
+			{
+				e.printStackTrace();
+			}
+			finally {
+				System.out.print("finally\n");
+			}
+
+
+			session.saveOrUpdate(usrper);
+
+			if (usrper != null) {
+				transaction.commit();
+			}
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+	}
+
+
+	@Override
 	public String CambiarPosicionUser(int iduser, double latitud,
 			double longitud) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		String s="update posicion rechazado";
 		try{
-			transaction = session.beginTransaction();   
-			Query query = session.createQuery("update UsrPersonaje set latitud= :latitud and longitud= :longitud where iduser= :id");
+			transaction = session.beginTransaction(); 
+			System.out.print("Ubicacion de user "+iduser+", latitud: "+latitud+" longitud: "+longitud);
+
+			Query query = session.createQuery("update UsrPersonaje set latitud= :latitud, longitud= :longitud where iduser= :id");
 			query.setParameter("id",iduser);
-			query.setParameter("longitud", longitud);  
-			query.setParameter("latitud", latitud);            
+			query.setParameter("latitud", latitud);   
+			query.setParameter("longitud", longitud);           
 
 			int result = query.executeUpdate();
 			if (result >0 ) {

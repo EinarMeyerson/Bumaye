@@ -83,6 +83,8 @@ public interface BumayeInterface {
     public String desequiparArmasArmadurasEquipada(int idarmaarmadura, int iduser);
     public int verificarArmaArmaduraEquipada(int idarmaarmadura, int iduser);
     public List<ArmaArmaduraVO> listaArmasArmadurasUsr(int iduser);
+    public void updateAtributosEquipada_UserArmasArmaduras(int idarmaarmadura, int iduser);
+    public void updateAtributosDesequipada_UserArmasArmaduras(int idarmaarmadura, int iduser);
  
     //funciones interface usuario/personaje
     public String addUsrPersonaje(UsrPersonaje usrpersonaje);

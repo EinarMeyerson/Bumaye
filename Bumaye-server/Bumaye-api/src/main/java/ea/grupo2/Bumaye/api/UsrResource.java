@@ -10,7 +10,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.CombinacionVO;
 import ea.grupo2.Bumaye.ClasesVO.EquipamientoVO;
@@ -18,12 +17,11 @@ import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.ClasesVO.PuntoVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.Motor.BumayeInterface;
-import ea.grupo2.Bumaye.Motor.NoEsTuTurnoException;
 import ea.grupo2.Bumaye.Motor.NoExisteEsaCombinacionException;
 import ea.grupo2.Bumaye.Motor.NoHayTantosObjetosException;
-import ea.grupo2.Bumaye.Motor.NoTienesEseAtaqueException;
 import ea.grupo2.Bumaye.Motor.NoTienesEseObjetoException;
 import ea.grupo2.Bumaye.Motor.NoTienesEspacioEnInventarioException;
 import ea.grupo2.Bumaye.Motor.OperacionesBBDD;
@@ -67,6 +65,15 @@ public class UsrResource {
 
 		return logeados;
 	}
+	@Path("/listacofres")
+	@GET
+	@Produces(MediaType.API_OBJETOS)
+	public List<CofreVO> listaCofres () {
+		BumayeInterface  m = new OperacionesBBDD();
+		List<CofreVO> cofres = m.listCofres();
+
+		return cofres;
+	}
 
 	@Path("/listaobjetos/{idusuario}")
 	@GET
@@ -92,8 +99,8 @@ public class UsrResource {
 	@Path("/combinacion")
 	@POST
 	@Consumes(MediaType.API_COMBINACION)
-	@Produces(MediaType.API_OBJETOS)
-	public ObjetoCantidadVO combinacionObjeto (CombinacionVO objeto)throws Exception  {
+	@Produces(MediaType.API_PERSONAJE)
+	public PersonajeVO combinacionObjeto (CombinacionVO objeto)throws Exception  {
 		BumayeInterface  m = new OperacionesBBDD();
 		ObjetoCantidadVO nuevobjeto=null;
 
@@ -103,9 +110,9 @@ public class UsrResource {
 		catch(NoTienesEseObjetoException | NoExisteEsaCombinacionException e){
 			throw e;
 		}
+		PersonajeVO personaje = m.getPersonajeCompleto(objeto.getIduser());
 
-
-		return nuevobjeto;
+		return personaje;
 	}
 
 	@Path("/{iduser}/añadirobjeto/{idobjeto}")
@@ -149,11 +156,14 @@ public class UsrResource {
 		System.out.print("Desequipar arma de id: " +equipo.getIdesequipada());
 		System.out.print("Equipar arma de id: " +equipo.getIdarmequipada());
 		String equipado= m.añadirArmasArmadurasEquipada(equipo.getIdarmequipada(), equipo.getIduser());
+		m.updateAtributosEquipada_UserArmasArmaduras(equipo.getIdarmequipada(), equipo.getIduser());
 		
+		//en caso de que halla algo ya equipado lo desequipamos
 		if (equipo.getIdesequipada()!=0)
 		{
 
 		String desequipado= m.desequiparArmasArmadurasEquipada(equipo.getIdesequipada(),equipo.getIduser());
+		m.updateAtributosDesequipada_UserArmasArmaduras(equipo.getIdesequipada(), equipo.getIduser());
 		}
 
 		PersonajeVO personaje = m.getPersonajeCompleto(equipo.getIduser());
@@ -170,16 +180,18 @@ public class UsrResource {
 		System.out.print("Desequipar arma de id: " +equipo.getIdesequipada());
 
 		String desequipado= m.desequiparArmasArmadurasEquipada(equipo.getIdesequipada(),equipo.getIduser());
-
+		m.updateAtributosDesequipada_UserArmasArmaduras(equipo.getIdesequipada(), equipo.getIduser());
+		
 		PersonajeVO personaje = m.getPersonajeCompleto(equipo.getIduser());
 		return personaje;
 	}
 	
 	@Path("/posicionnueva/{iduser}/{latitud}/{longitud}")
 	@PUT
-	public String CambioPosicion(@PathParam("iduser") int iduser, @PathParam("latitud") int latitud, @PathParam("longitud") int longitud) {
+	public String CambioPosicion(@PathParam("iduser") int iduser,@PathParam("latitud") double latitud,@PathParam("longitud") double longitud) {
 		BumayeInterface  m = new OperacionesBBDD();
-		
+//		double latitud = punt.getLatitud();
+//		double longitud = punt.getLongitud();
 		String s = m.CambiarPosicionUser(iduser, latitud, longitud);
 
 		return s;

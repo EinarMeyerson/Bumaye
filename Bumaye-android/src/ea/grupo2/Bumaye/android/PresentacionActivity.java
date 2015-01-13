@@ -88,16 +88,23 @@ public class PresentacionActivity extends Activity{
 			private class LoginUsrTask extends AsyncTask<String, Void, PersonajeVO> {
 				@Override
 				protected PersonajeVO doInBackground(String... params) {
-					PersonajeVO person  = new PersonajeVO();
-					person = api.loginUsr(params[0],params[1],params[2]);					
+					PersonajeVO person  = null;
+					person = api.loginUsr(params[0],params[1],params[2]);
+					
 					return person;
 				}
 				@Override
-				protected void onPostExecute(PersonajeVO result) {
+				protected void onPostExecute(PersonajeVO result) {											
 					Log.d("Login",result.toString());
 					if (result.getNombre() != "")
 					{
-						Logeado(result);
+						if (result.getIduser() == 0) {
+							Toast.makeText(getApplicationContext(),
+									"Server not active", Toast.LENGTH_LONG).show();
+							finish();
+						} else {
+							Logeado(result);
+						}
 					}
 					else{				
 						wronglogin();
@@ -109,8 +116,7 @@ public class PresentacionActivity extends Activity{
 			}
 			private void Logeado(PersonajeVO person){
 				Intent intent = new Intent(this, PerfilActivity.class);
-				intent.putExtra("url", url);
-				Log.d("PERSONAJE","Armaduras " + person.getArmasarmaduras());
+				intent.putExtra("url", url);				
 				intent.putExtra("personaje", person);
 				startActivity(intent);
 				finish();

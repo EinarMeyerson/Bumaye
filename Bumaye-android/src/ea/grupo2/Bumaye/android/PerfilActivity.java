@@ -42,7 +42,12 @@ public class PerfilActivity extends Activity {
 		url = (String) getIntent().getExtras().get("url");
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        
+        if (personaje.getIduser()==0)
+		{
+			Toast.makeText(getApplicationContext(), "Server not active",
+					   Toast.LENGTH_LONG).show();
+			finish();
+		}
         getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
         getActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -314,16 +319,16 @@ public class PerfilActivity extends Activity {
 			startActivity(intent);
 			finish();
 			break;
-		case 2: 
-			Intent intentt = new Intent(this, ListaActivity.class);
-			intentt.putExtra("personaje", personaje);
-			startActivity(intentt);
-			finish();
-			break;
-		case 3: 
+		case 2:
 			Intent intenttt = new Intent(this, InventarioActivity.class);
 			intenttt.putExtra("personaje", personaje);
 			startActivity(intenttt);
+			finish();
+			break;
+		case 3:
+			Intent intent_batalla = new Intent(this, BatallaActivity.class);
+			intent_batalla.putExtra("personaje", personaje);
+			startActivity(intent_batalla);
 			finish();
 			break;
 		default: 

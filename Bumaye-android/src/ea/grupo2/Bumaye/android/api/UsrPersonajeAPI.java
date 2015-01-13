@@ -14,6 +14,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -23,9 +24,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import ea.grupo2.Bumaye.ClasesVO.CombinacionVO;
 import ea.grupo2.Bumaye.ClasesVO.EquipamientoVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.ClasesVO.PuntoVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 
 // METODOS LLAMADOS POR LAS DISTINTAS ACTIVITY
@@ -117,7 +120,7 @@ public class UsrPersonajeAPI {
 	}
 	
 // MIRAR QUE DEVUELVE LA API CUANDO HACES LA API (ESTARIA BIEN NO DEVOLVER NADA)
-	public PersonajeVO registUsr(String texto, String pass, String mail,String idGCM, String url) {		
+	public PersonajeVO registUsr(String texto, String pass, String mail,String idGCM,String lat, String lng, String url) {		
 		Log.d(TAG, "Register() en API");
 		Log.d(TAG, url);
 		PersonajeVO person = null;
@@ -126,6 +129,8 @@ public class UsrPersonajeAPI {
 		dev.setPass(pass);
 		dev.setEmail(mail);
 		dev.setIdGCM(idGCM);
+		dev.setLatitud(Double.parseDouble(lat));
+		dev.setLongitud(Double.parseDouble(lng));
         Gson gson = new GsonBuilder().create();
         
 		HttpClient httpClient = new DefaultHttpClient();
@@ -161,47 +166,68 @@ public class UsrPersonajeAPI {
 		return person;
 		
 	}
-	
-	public ObjetoCantidadVO combinacionObjetos (String combo1, String combo2, String url) {		
-		Log.d(TAG, "combinacionObjetos()");
-		ObjetoCantidadVO person = new ObjetoCantidadVO();
-//		UsuarioVO dev = new UsuarioVO();
-//		dev.setUsername(texto);
-//		dev.setPass(pass);
-//        Gson gson = new GsonBuilder().create();
-//        
-//		HttpClient httpClient = new DefaultHttpClient();
-//		httpClient = WebServiceUtils.getHttpClient();
-//		
-//		HttpPost post = new HttpPost(url);
-//		HttpResponse response;
-//		StringEntity params;
-//		
-//		try {
-//			params = new StringEntity(gson.toJson(dev));
-//	        post.addHeader("content-type", MediaType.API_USER);
-//	        post.setEntity(params);
-//			response = httpClient.execute(post);
-//			HttpEntity entity = response.getEntity();
-//			Reader reader = new InputStreamReader(entity.getContent());
-//			person = gson.fromJson(reader, PersonajeVO.class);
-//		} catch (UnsupportedEncodingException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}catch (ClientProtocolException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (NullPointerException e){
-//			Log.d(TAG, "No logeado");
-//			person = new PersonajeVO();
-//			person.setNombre("");
-//		}
-//		
-		return person;
+	public void locateUsr(String url) {		
+		Log.d(TAG, "Ubicacion() en API");
+//		PuntoVO punt = new PuntoVO();
+		HttpClient httpClient = new DefaultHttpClient();
+		httpClient = WebServiceUtils.getHttpClient();
+		HttpPut put = new HttpPut(url);
 		
+		try {
+	       // put.addHeader("content-type", MediaType.API_PUNTO);
+			httpClient.execute(put);
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 	
+		
+	}
+	public PersonajeVO combinacionObjetos (int iduser, String combo1, String combo2, String url) {		
+		Log.d(TAG, "Combinacion()");
+		PersonajeVO person = new PersonajeVO();
+		CombinacionVO combinacion = new CombinacionVO();
+		combinacion.setCombo1(combo1);
+		combinacion.setCombo2(combo2);
+		combinacion.setIduser(iduser);
+        Gson gson = new GsonBuilder().create();
+        
+		HttpClient httpClient = new DefaultHttpClient();
+		httpClient = WebServiceUtils.getHttpClient();
+		
+		HttpPost post = new HttpPost(url);
+		HttpResponse response;
+		StringEntity params;
+		
+		try {
+			params = new StringEntity(gson.toJson(combinacion));
+	        post.addHeader("content-type", MediaType.API_COMBINACION);
+	        post.setEntity(params);
+			response = httpClient.execute(post);
+			HttpEntity entity = response.getEntity();
+			Reader reader = new InputStreamReader(entity.getContent());
+			person = gson.fromJson(reader, PersonajeVO.class);
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NullPointerException e){
+			Log.d(TAG, "No combinado");
+			person = new PersonajeVO();
+			person.setNombre("");
+		}
+		
+		return person;
 	}
 	
 	public PersonajeVO equiparUser (int iduser,int idarmequipada, int idesequipada,  String url) {		
@@ -291,5 +317,8 @@ public class UsrPersonajeAPI {
 		return person;
 		
 	}
+	
+	
+	
 
 }
