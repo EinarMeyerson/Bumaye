@@ -41,15 +41,15 @@ public class PerfilActivity extends Activity {
 
 		url = (String) getIntent().getExtras().get("url");
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (personaje.getIduser()==0)
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		if (personaje.getIduser()==0)
 		{
 			Toast.makeText(getApplicationContext(), "Server not active",
-					   Toast.LENGTH_LONG).show();
+					Toast.LENGTH_LONG).show();
 			finish();
 		}
-        getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
-        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 		// Load an array of options names   
 		String[] names = getResources().getStringArray(
@@ -65,9 +65,9 @@ public class PerfilActivity extends Activity {
 
 		ataque = (TextView) findViewById(R.id.ataque);
 		defensa = (TextView) findViewById(R.id.defensa);
-		
+
 		//se define la tabla de ataques
-		 table_layout = (TableLayout) findViewById(R.id.tableataques);
+		table_layout = (TableLayout) findViewById(R.id.tableataques);
 
 		//se inicializan las imagenes para cargar las armaduras
 		cascoimagen = (ImageView)findViewById(R.id.casco);
@@ -83,7 +83,7 @@ public class PerfilActivity extends Activity {
 
 		ataque.setText("\nAtaque: "+personaje.getAtaque());
 		defensa.setText("Defensa: "+personaje.getDefensa());
-		
+
 		//inicializamos la primera fial de la tabla
 		lista_atributos[0]="Nombre";
 		lista_atributos[1]="Daño";
@@ -92,77 +92,71 @@ public class PerfilActivity extends Activity {
 		lista_atributos[4]="Cantidad";
 		lista_atributos[5]="Afectado";
 		BuildTable(lista_atributos);
-		
+
 		//inicializar la primera fial de la tabla
 
 		for (ArmaArmaduraVO arm: personaje.getArmasarmaduras()) {
-			
-			
+
+
 			//solo la pinta si esta equipada
 			if (arm.getEquipada()==1){
-			
-			for (AtaqueVO atac: arm.getAtaques()) {
 
-				String afectado;
-				if (atac.getJugadorafectado() == 1)
+				for (AtaqueVO atac: arm.getAtaques()) {
+
+					String afectado;
+					if (atac.getJugadorafectado() == 1)
+					{
+						afectado = "Enemigo";
+					}
+					else 
+					{	
+						afectado = personaje.getNombre();
+					}
+					//Añadir filas a la tabla
+					//ataques.setText(ataques.getText()+ atac.getNombreataque()+": Daño "  + atac.getFactor() + ", acierto "+ atac.getAcierto() + "%, Atributo " + atac.getAtributoafectado() + ", Veces de uso: " + atac.getVecesuso() + ", Afecta a " + afectado + "\n");
+
+					lista_atributos[0]=atac.getNombreataque();
+					lista_atributos[1]=Float.toString(atac.getFactor());
+					lista_atributos[2]=Float.toString(atac.getAcierto());
+					lista_atributos[3]=atac.getAtributoafectado();
+					lista_atributos[4]=Float.toString(atac.getVecesuso());
+					lista_atributos[5]=afectado;
+					BuildTable(lista_atributos);
+				}
+
+				Uri uri = Uri.parse("android.resource://ea.grupo2.Bumaye.android/drawable/"+arm.getNombre());
+
+
+				if (arm.getTipo().equals("arma"))
 				{
-					afectado = "Enemigo";
+					armaimagen.setImageURI(uri);
+
+				}else if(arm.getTipo().equals("casco"))
+				{
+					cascoimagen.setImageURI(uri);
+
+				}else if(arm.getTipo().equals("guantes"))
+				{
+					guantesimagen.setImageURI(uri);
+
+				}else if(arm.getTipo().equals("coraza"))
+				{
+					corazaimagen.setImageURI(uri);
+
+				}else if(arm.getTipo().equals("perneras"))
+				{
+					piernasimagen.setImageURI(uri);
+
+				}else if(arm.getTipo().equals("botas"))
+				{
+					//botas
+					botasimagen.setImageURI(uri);
 				}
-				else 
-				{	
-					afectado = personaje.getNombre();
-				}
-				//Añadir filas a la tabla
-				//ataques.setText(ataques.getText()+ atac.getNombreataque()+": Daño "  + atac.getFactor() + ", acierto "+ atac.getAcierto() + "%, Atributo " + atac.getAtributoafectado() + ", Veces de uso: " + atac.getVecesuso() + ", Afecta a " + afectado + "\n");
 
-				lista_atributos[0]=atac.getNombreataque();
-				lista_atributos[1]=Float.toString(atac.getFactor());
-				lista_atributos[2]=Float.toString(atac.getAcierto());
-				lista_atributos[3]=atac.getAtributoafectado();
-				lista_atributos[4]=Float.toString(atac.getVecesuso());
-				lista_atributos[5]=afectado;
-				BuildTable(lista_atributos);
-			}
-
-			Uri uri = Uri.parse("android.resource://ea.grupo2.Bumaye.android/drawable/"+arm.getNombre());
-
-
-			if (arm.getTipo().equals("arma"))
-			{
-				armaimagen.setImageURI(uri);
-
-			}else if(arm.getTipo().equals("casco"))
-			{
-				cascoimagen.setImageURI(uri);
-
-			}else if(arm.getTipo().equals("guantes"))
-			{
-				guantesimagen.setImageURI(uri);
-
-			}else if(arm.getTipo().equals("coraza"))
-			{
-				corazaimagen.setImageURI(uri);
-
-			}else if(arm.getTipo().equals("perneras"))
-			{
-				piernasimagen.setImageURI(uri);
-
-			}else if(arm.getTipo().equals("botas"))
-			{
-				//botas
-				botasimagen.setImageURI(uri);
-			}
-			
 			}
 
 
 		}
-		//    	ataque.setText(ataque.getText() + "cuerpo a cuerpo : + 10"+ "\n");
-		//    	defensa.setText(defensa.getText() + "cuerpo a cuerpo : + 10"+ "\n");
-		//    	ataque.setText(ataque.getText() + "-----------------------"+ "\n");
-		//    	defensa.setText(defensa.getText() + "-----------------------"+ "\n");
-		//		ataque.setText(ataque.getText() +"Total: "+ personaje.getAtaque()+ "\n");
-		//    	defensa.setText(defensa.getText() +"Total: "+ personaje.getDefensa()+ "\n");
 	}
 
 	public void clickImagen(View view){
@@ -172,20 +166,20 @@ public class PerfilActivity extends Activity {
 			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
 			{
 				if (arm.getEquipada()==1){
-				AtaqueVO ataces = new AtaqueVO();
+					AtaqueVO ataces = new AtaqueVO();
 
-				for (AtaqueVO atac: arm.getAtaques()) {
+					for (AtaqueVO atac: arm.getAtaques()) {
 
-					ataces=atac;
-				}
-
-				if (arm.getTipo().equals("casco")){
-					if(ataces.getNombreataque()==null){
-						ataces.setNombreataque("sin ataque");
+						ataces=atac;
 					}
-					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
-				}
+
+					if (arm.getTipo().equals("casco")){
+						if(ataces.getNombreataque()==null){
+							ataces.setNombreataque("sin ataque");
+						}
+						String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
+						Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+					}
 				}
 			}
 		}
@@ -194,20 +188,20 @@ public class PerfilActivity extends Activity {
 			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
 			{
 				if (arm.getEquipada()==1){
-				AtaqueVO ataces = new AtaqueVO();
+					AtaqueVO ataces = new AtaqueVO();
 
-				for (AtaqueVO atac: arm.getAtaques()) {
+					for (AtaqueVO atac: arm.getAtaques()) {
 
-					ataces=atac;
-				}
-
-				if (arm.getTipo().equals("guantes")){
-					if(ataces.getNombreataque()==null){
-						ataces.setNombreataque("sin ataque");
+						ataces=atac;
 					}
-					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
-				}
+
+					if (arm.getTipo().equals("guantes")){
+						if(ataces.getNombreataque()==null){
+							ataces.setNombreataque("sin ataque");
+						}
+						String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
+						Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+					}
 				}
 			}
 		}
@@ -216,20 +210,20 @@ public class PerfilActivity extends Activity {
 			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
 			{
 				if (arm.getEquipada()==1){
-				AtaqueVO ataces = new AtaqueVO();
+					AtaqueVO ataces = new AtaqueVO();
 
-				for (AtaqueVO atac: arm.getAtaques()) {
+					for (AtaqueVO atac: arm.getAtaques()) {
 
-					ataces=atac;
-				}
-
-				if (arm.getTipo().equals("coraza")){
-					if(ataces.getNombreataque()==null){
-						ataces.setNombreataque("sin ataque");
+						ataces=atac;
 					}
-					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
-				}
+
+					if (arm.getTipo().equals("coraza")){
+						if(ataces.getNombreataque()==null){
+							ataces.setNombreataque("sin ataque");
+						}
+						String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
+						Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+					}
 				}
 			}
 		}
@@ -238,20 +232,20 @@ public class PerfilActivity extends Activity {
 			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
 			{
 				if (arm.getEquipada()==1){
-				AtaqueVO ataces = new AtaqueVO();
+					AtaqueVO ataces = new AtaqueVO();
 
-				for (AtaqueVO atac: arm.getAtaques()) {
+					for (AtaqueVO atac: arm.getAtaques()) {
 
-					ataces=atac;
-				}
-
-				if (arm.getTipo().equals("arma")){
-					if(ataces.getNombreataque()==null){
-						ataces.setNombreataque("sin ataque");
+						ataces=atac;
 					}
-					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
-				}
+
+					if (arm.getTipo().equals("arma")){
+						if(ataces.getNombreataque()==null){
+							ataces.setNombreataque("sin ataque");
+						}
+						String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
+						Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+					}
 				}
 			}
 		}
@@ -260,20 +254,20 @@ public class PerfilActivity extends Activity {
 			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
 			{
 				if (arm.getEquipada()==1){
-				AtaqueVO ataces = new AtaqueVO();
+					AtaqueVO ataces = new AtaqueVO();
 
-				for (AtaqueVO atac: arm.getAtaques()) {
+					for (AtaqueVO atac: arm.getAtaques()) {
 
-					ataces=atac;
-				}
-
-				if (arm.getTipo().equals("perneras")){
-					if(ataces.getNombreataque()==null){
-						ataces.setNombreataque("sin ataque");
+						ataces=atac;
 					}
-					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
-				}
+
+					if (arm.getTipo().equals("perneras")){
+						if(ataces.getNombreataque()==null){
+							ataces.setNombreataque("sin ataque");
+						}
+						String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
+						Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+					}
 				}
 			}
 		}
@@ -282,20 +276,20 @@ public class PerfilActivity extends Activity {
 			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
 			{
 				if (arm.getEquipada()==1){
-				AtaqueVO ataces = new AtaqueVO();
+					AtaqueVO ataces = new AtaqueVO();
 
-				for (AtaqueVO atac: arm.getAtaques()) {
+					for (AtaqueVO atac: arm.getAtaques()) {
 
-					ataces=atac;
-				}
-
-				if (arm.getTipo().equals("botas")){
-					if(ataces.getNombreataque()==null){
-						ataces.setNombreataque("sin ataque");
+						ataces=atac;
 					}
-					String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-					Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
-				}
+
+					if (arm.getTipo().equals("botas")){
+						if(ataces.getNombreataque()==null){
+							ataces.setNombreataque("sin ataque");
+						}
+						String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
+						Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+					}
 				}
 			}
 		}
@@ -335,21 +329,21 @@ public class PerfilActivity extends Activity {
 			break;
 		}
 	}
-	
-	
+
+
 	//funcion para crear nuevas entradas en la tabla de ataques
 	private void BuildTable(String[] atributos) {
-		   TableRow row = new TableRow(this);
-		   // crea seis columnas 
-		   for (int j = 0; j <= 5; j++) {
+		TableRow row = new TableRow(this);
+		// crea seis columnas 
+		for (int j = 0; j <= 5; j++) {
 
-		    TextView tv = new TextView(this);
-		    tv.setText(atributos[j]);
-		    tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-		    row.addView(tv);
+			TextView tv = new TextView(this);
+			tv.setText(atributos[j]);
+			tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+			row.addView(tv);
 
-		   }
-		   table_layout.addView(row);
-		 }
+		}
+		table_layout.addView(row);
+	}
 }
 
