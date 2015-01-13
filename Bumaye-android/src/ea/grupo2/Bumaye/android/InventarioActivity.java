@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Properties;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -290,9 +292,69 @@ public class InventarioActivity extends Activity {
 
 		}
 
+		if (boton.equals("Combinar"))
+		{
+			
+			final String [] items = getnomObjetos(personaje);
+			//creamos el dialog para elegir el objeto con que combianar
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+			builder.setTitle(nombreObjeto.getText().toString() + " combinar con: ")
+			.setCancelable(false)
+			.setIcon(null)
+			.setSingleChoiceItems(items,0, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialogInterface, int item) {
+					url = "http://" + serverAddress + ":" + serverPort
+							+ "/Bumaye-api/user/combinacion";
+					(new CombinarUsrTask()).execute(nombreObjeto.getText().toString(),items[item],url);
+					dialogInterface.dismiss();
+				}
+			});
+			
+			builder.create().show(); 
+		}
 
 	}
 
+	
+	
+	private class CombinarUsrTask extends AsyncTask<String, Void, PersonajeVO> {
+		private ProgressDialog pd;
+		@Override
+		protected PersonajeVO doInBackground(String... params) {
+			PersonajeVO person  = new PersonajeVO();
+			person = api.combinacionObjetos(personaje.getIduser(),params[0], params[1] ,params[2]);			
+			return person;
+		}
+
+		@Override
+		protected void onPostExecute(PersonajeVO result) {
+			if (pd != null) {
+				pd.dismiss();
+			}
+			if (result.getNombre()==null)
+			{
+				sinCombinacion();
+			}
+			else if (result.getNombre() != "")
+			{
+				Equipado(result);
+			}
+			else{				
+				wrongCombinacion();
+			}		
+		}
+
+		@Override
+		protected void onPreExecute() {
+			pd = new ProgressDialog(InventarioActivity.this);
+			pd.setTitle("Combinando...");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+			pd.show();
+		}
+	}
+	
 	private class EquiparUsrTask extends AsyncTask<String, Void, PersonajeVO> {
 		private ProgressDialog pd;
 		@Override
@@ -349,6 +411,7 @@ public class InventarioActivity extends Activity {
 				Equipado(result);
 			}
 			else{				
+				
 				wrongEquipado();
 			}		
 		}
@@ -374,6 +437,19 @@ public class InventarioActivity extends Activity {
 	private void wrongEquipado(){
 		Toast.makeText(getApplicationContext(), "Error al equiparse",
 				Toast.LENGTH_LONG).show();
+	}
+	private void wrongCombinacion(){
+		Toast.makeText(getApplicationContext(), "Error al combinar",
+				Toast.LENGTH_LONG).show();
+	}
+	private void sinCombinacion(){
+		Intent intent = new Intent(this, InventarioActivity.class);
+		intent.putExtra("url", url);
+		intent.putExtra("personaje", personaje);
+		Toast.makeText(getApplicationContext(), "Esa combinacion no existe",
+				Toast.LENGTH_LONG).show();
+		startActivity(intent);
+		finish();
 	}
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
