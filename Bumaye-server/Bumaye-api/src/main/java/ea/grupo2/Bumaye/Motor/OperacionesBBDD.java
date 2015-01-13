@@ -1069,6 +1069,7 @@ public class OperacionesBBDD implements BumayeInterface{
 
 						System.out.print("Lista de usuarios: " + userlogeado.getIduser() + "\n");
 						PersonajeLogeadoVO p = new PersonajeLogeadoVO(userlogeado.getIduser(), userlogeado.getNombre(), userlogeado.getVida(), userlogeado.getDefensa(), userlogeado.getAtaque(), userlogeado.getLatitud(),userlogeado.getLongitud());
+						System.out.print("Latitud: " + p.getLat() + "\n");
 						personajeslogeados.add(p);
 					}
 

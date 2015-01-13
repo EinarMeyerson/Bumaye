@@ -325,6 +325,12 @@ public class PerfilActivity extends Activity {
 			startActivity(intenttt);
 			finish();
 			break;
+		case 3:
+			Intent intent_batalla = new Intent(this, BatallaActivity.class);
+			intent_batalla.putExtra("personaje", personaje);
+			startActivity(intent_batalla);
+			finish();
+			break;
 		default: 
 			break;
 		}

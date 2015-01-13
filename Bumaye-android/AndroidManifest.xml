@@ -44,8 +44,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <service 
-            android:name=".LocationService" />
+        <service android:name=".LocationService" />
 
         <receiver
             android:name=".receiver.LocationBoot"
@@ -92,6 +91,10 @@
         </activity>
         <activity
             android:name=".InventarioActivity"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".BatallaActivity"
             android:screenOrientation="landscape" >
         </activity>
 

@@ -1,54 +1,80 @@
 package ea.grupo2.Bumaye.ClasesVO;
-
-import com.google.gson.annotations.SerializedName;
-
+ 
+import java.util.ArrayList;
+import java.util.HashMap;
+ 
 public class BatallaVO {
-	@SerializedName("idbatalla")
-	int idbatalla;
-	@SerializedName("ataquante")
-	PersonajeVO ataquante = null;
-	@SerializedName("defensor")
-	PersonajeVO defensor = null;
-	@SerializedName("turno")
-	int turno;
+     
+    int idbatalla;
+    int turno;
+    int NoJugadores;
+    ArrayList<PersonajeVO> listajugadores= new ArrayList<PersonajeVO>();
+    HashMap<Integer, PersonajeVO> mapPersonajeVO = new HashMap<Integer, PersonajeVO>();
+ 
+    public BatallaVO (){
+        }
+ 
+    public BatallaVO(int idbatalla, int turno, int noJugadores,
+            ArrayList<PersonajeVO> listajugadores) {
+        super();
+        this.idbatalla = idbatalla;
+        this.turno = turno;
+        this.NoJugadores = noJugadores;
+        this.listajugadores = listajugadores;
+        for (PersonajeVO p : listajugadores) mapPersonajeVO.put(p.getIduser(),p);
+ 
+    }
+ 
+ 
+ 
+    public int getIdbatalla() {
+        return idbatalla;
+    }
+ 
+    public void setIdbatalla(int idbatalla) {
+        this.idbatalla = idbatalla;
+    }
+ 
+    public int getTurno() {
+        return turno;
+    }
+ 
+    public void setTurno(int turno) {
+        this.turno = turno;
+    }
+ 
+    public ArrayList<PersonajeVO> getListajugadores() {
+        return listajugadores;
+    }
+ 
+    public void setListajugadores(ArrayList<PersonajeVO> listajugadores) {
+        this.listajugadores = listajugadores;
+    }
+ 
+    public int getNoJugadores() {
+        return NoJugadores;
+    }
+ 
+    public void setNoJugadores(int noJugadores) {
+        NoJugadores = noJugadores;
+    }
+	public void addPersonajeVO(PersonajeVO personajeVO) {
+		listajugadores.add(personajeVO);
+		mapPersonajeVO.put(personajeVO.getIduser(), personajeVO);
+	}
+    public PersonajeVO getPersonajeVO(int idPersonajeVO) {
+    	
+        PersonajeVO personajeVO = mapPersonajeVO.get(idPersonajeVO);
+        
+        return personajeVO;
+        
+    }
+    public int getPosicionPersonajeVO(int idPersonajeVO) {
 
-	   public BatallaVO (){
-		}
-
-	public BatallaVO(int idbatalla, PersonajeVO ataquante, PersonajeVO defensor , int turno) {
-		this.idbatalla = idbatalla;
-		this.ataquante = ataquante;
-		this.defensor =defensor;
-		this.turno=turno;
-	}
-	
-	public int getIdbatalla() {
-		return idbatalla;
-	}
-	public void setIdbatalla(int idbatalla) {
-		this.idbatalla = idbatalla;
-	}
-	public PersonajeVO getAtaquante() {
-		return ataquante;
-	}
-	public void setAtaquante(PersonajeVO ataquante) {
-		this.ataquante = ataquante;
-	}
-	public PersonajeVO getDefensor() {
-		return defensor;
-	}
-	public void setDefensor(PersonajeVO defensor) {
-		this.defensor = defensor;
-	}
-
-	public int getTurno() {
-		return turno;
-	}
-
-	public void setTurno(int turno) {
-		this.turno = turno;
-	}
-
-	
-	
+        PersonajeVO personajeVO = mapPersonajeVO.get(idPersonajeVO);
+        int posicion = listajugadores.indexOf(personajeVO);
+        System.out.print(""+posicion);
+        return posicion;
+    }
+     
 }
