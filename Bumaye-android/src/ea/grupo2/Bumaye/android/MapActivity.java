@@ -52,6 +52,7 @@ public class MapActivity extends FragmentActivity {
 	List<PersonajeVO> personajes = new ArrayList<PersonajeVO>();
 	List<CofreVO> cofres = new ArrayList<CofreVO>();
 	private ProgressDialog pdm;
+	private ProgressDialog pdc;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +125,7 @@ public class MapActivity extends FragmentActivity {
 		@Override
 		protected void onPreExecute() {
 			pd = new ProgressDialog(MapActivity.this);
-			pd.setTitle("Loading Players...");
+			pd.setTitle("Cargando oponentes...");
 			pd.setCancelable(false);
 			pd.setIndeterminate(true);
 			pd.show();
@@ -133,7 +134,6 @@ public class MapActivity extends FragmentActivity {
 	}
 
 	private class LoadList2Task extends AsyncTask<String, Void, List<CofreVO>> {
-		private ProgressDialog pd;
 
 		@Override
 		protected List<CofreVO> doInBackground(String... params) {
@@ -146,18 +146,15 @@ public class MapActivity extends FragmentActivity {
 			cofres = result;
 			Log.e(TAG, "Lista de cofres tamaño: " + cofres.size());
 			opMapa();
-			if (pd != null) {
-				pd.dismiss();
-			}
 		}
 
 		@Override
 		protected void onPreExecute() {
-			pd = new ProgressDialog(MapActivity.this);
-			pd.setTitle("Loading Items...");
-			pd.setCancelable(false);
-			pd.setIndeterminate(true);
-			pd.show();
+			pdc = new ProgressDialog(MapActivity.this);
+			pdc.setTitle("Cargando Cofres...");
+			pdc.setCancelable(false);
+			pdc.setIndeterminate(true);
+			pdc.show();
 		}
 
 	}
@@ -179,49 +176,71 @@ public class MapActivity extends FragmentActivity {
 					.title(pers.getNombre() + " - \nAtaque: "
 							+ pers.getAtaque() + "\nDefensa: "
 							+ pers.getDefensa())
-					.icon(BitmapDescriptorFactory
-							.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+					.icon(BitmapDescriptorFactory.fromResource(R.drawable.contrario_marker)));
 
 		}
 		for (int i = 0; i < cofres.size(); i++) {
 			CofreVO cof = cofres.get(i);
 			map.addMarker(new MarkerOptions()
 					.position(new LatLng(cof.getLatitud(), cof.getLongitud()))
-					.title("Cofre nº: " + cof.getIdcofre())
-					.icon(BitmapDescriptorFactory
-							.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+					.title("Cofre")
+					.icon(BitmapDescriptorFactory.fromResource(R.drawable.treasure_chest_marker)));
 
 		}
 		map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 			@Override
 			public void onInfoWindowClick(Marker arg0) {
 				final String title = arg0.getTitle();
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						MapActivity.this);
-
-				pdm = new ProgressDialog(MapActivity.this);
-				pdm.setTitle("Esperando oponente...");
-				pdm.setCancelable(true);
-				pdm.setIndeterminate(true);
-				pdm.show();
-				builder.setMessage("Quieres Luchar?").setTitle(title);
-				builder.setPositiveButton(R.string.ok,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								// User clicked OK button
-								dialog.dismiss();
-								pdm.show();
-							}
-						});
-				builder.setNegativeButton(R.string.cancel,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								// User cancelled the dialog
-								dialog.dismiss();
-							}
-						});
-				AlertDialog dialog = builder.create();
-
+				final String snip = arg0.getSnippet();		
+				if (title == "Cofre") {
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							MapActivity.this);
+					builder.setMessage("Recoger objetos").setTitle(title);
+					builder.setPositiveButton(R.string.ok,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									// User clicked OK button
+									dialog.dismiss();
+									
+								}
+							});
+					builder.setNegativeButton(R.string.cancel,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									// User cancelled the dialog
+									dialog.dismiss();
+								}
+							});
+					AlertDialog dialog = builder.create();
+				} else {
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							MapActivity.this);
+					builder.setMessage("Quieres Luchar?").setTitle(title);
+					builder.setPositiveButton(R.string.ok,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									// User clicked OK button
+									dialog.dismiss();
+									pdm = new ProgressDialog(MapActivity.this);
+									pdm.setTitle("Esperando oponente...");
+									pdm.setCancelable(true);
+									pdm.setIndeterminate(true);
+									pdm.show();
+								}
+							});
+					builder.setNegativeButton(R.string.cancel,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									// User cancelled the dialog
+									dialog.dismiss();
+								}
+							});
+					AlertDialog dialog = builder.create();
+				}
 			}
 		});
 
@@ -232,7 +251,7 @@ public class MapActivity extends FragmentActivity {
 		map.setOnMyLocationChangeListener(myLocationChangeListener);
 
 		// COMENTAR SI QUEREIS MOVER EL MAPA DENTRO DE LA APP!!!
-		map.getUiSettings().setAllGesturesEnabled(true);
+		map.getUiSettings().setAllGesturesEnabled(false);
 	}
 
 	private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
@@ -242,9 +261,13 @@ public class MapActivity extends FragmentActivity {
 					location.getLongitude());
 			// Marker mMarker = map.addMarker(new
 			// MarkerOptions().position(loc));
-			if (map != null) {
-				map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 04.0f));
+			if (pdc != null) {
+				pdc.dismiss();
 			}
+			if (map != null) {
+				map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 08.0f));
+			}
+
 		}
 	};
 

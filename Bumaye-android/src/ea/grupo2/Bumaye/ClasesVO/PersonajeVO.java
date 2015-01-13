@@ -23,9 +23,9 @@ public class PersonajeVO implements Serializable{
 	private List<ArmaArmaduraVO> armasarmaduras = new ArrayList<ArmaArmaduraVO>();
 	@SerializedName("inventario")
 	private List<ObjetoCantidadVO> inventario = new ArrayList<ObjetoCantidadVO>();
-	@SerializedName("longitud")
+	@SerializedName("lng")
 	private double longitud;
-	@SerializedName("latitud")
+	@SerializedName("lat")
 	private double latitud;
 	
    public PersonajeVO (){
