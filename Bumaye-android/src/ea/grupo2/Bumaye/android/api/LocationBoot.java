@@ -11,6 +11,6 @@ public class LocationBoot extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
      Intent myIntent = new Intent(context, LocationService.class);
-     context.startService(myIntent);
+		context.startService(myIntent);
     }
 }
