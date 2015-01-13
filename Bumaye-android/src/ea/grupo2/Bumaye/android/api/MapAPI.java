@@ -64,6 +64,21 @@ public class MapAPI {
 		 }
 		 return data;
 	}
-	
+	public String getIdGcm(String url) {
+		 HttpClient httpClient = new DefaultHttpClient();	
+		 String obj = null;
+		 Gson gson = new Gson();		 
+		 httpClient = WebServiceUtils.getHttpClient();
+		 try {
+		 HttpResponse response = httpClient.execute(new HttpGet(url));
+		 HttpEntity entity = response.getEntity();
+		 Reader reader = new InputStreamReader(entity.getContent());
+		 
+		 obj = gson.fromJson(reader, String.class);
+		 } catch (Exception e) {
+		 Log.i("json array","While getting server response server generate error. ");
+		 }
+		 return obj;
+	}
 
 }
