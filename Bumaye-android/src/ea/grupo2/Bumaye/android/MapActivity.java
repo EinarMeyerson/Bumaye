@@ -215,6 +215,7 @@ public class MapActivity extends FragmentActivity {
 								}
 							});
 					AlertDialog dialog = builder.create();
+					dialog.show();
 				} else {
 					AlertDialog.Builder builder = new AlertDialog.Builder(
 							MapActivity.this);
@@ -241,6 +242,7 @@ public class MapActivity extends FragmentActivity {
 								}
 							});
 					AlertDialog dialog = builder.create();
+					dialog.show();
 				}
 			}
 		});
