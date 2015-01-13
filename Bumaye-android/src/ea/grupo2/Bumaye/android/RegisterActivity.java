@@ -182,7 +182,7 @@ public class RegisterActivity extends Activity {
 			editor.putString("iduser", Long.toString(person.getIduser()));
 			editor.commit();
 			Intent myIntent = new Intent(this, LocationService.class);
-			this.startService(myIntent);
+			startService(myIntent);
 			Intent intent = new Intent(this, PerfilActivity.class);
 			intent.putExtra("url", url);
 			intent.putExtra("personaje", person);
