@@ -230,13 +230,7 @@ public class MapActivity extends FragmentActivity{
 //			startActivity(intent);
 //			finish();
 			break;
-		case 2: 
-			Intent intentt = new Intent(this, ListaActivity.class);
-			intentt.putExtra("personaje", personaje);
-			startActivity(intentt);
-			finish();
-			break;
-		case 3: 
+		case 2: 			 
 			Intent intenttt = new Intent(this, InventarioActivity.class);
 			intenttt.putExtra("personaje", personaje);
 			startActivity(intenttt);

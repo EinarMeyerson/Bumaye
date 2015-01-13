@@ -398,18 +398,6 @@ public class InventarioActivity extends Activity {
 			startActivity(intentt);
 			finish();
 			break;
-		case 2: 
-			Intent intenttt = new Intent(this, ListaActivity.class);
-			intenttt.putExtra("personaje", personaje);
-			startActivity(intenttt);
-			finish();
-			break;
-		case 3: 
-			Intent intentttt = new Intent(this, InventarioActivity.class);
-			intentttt.putExtra("personaje", personaje);
-			startActivity(intentttt);
-			finish();
-			break;
 		default: 
 			break;
 		}
