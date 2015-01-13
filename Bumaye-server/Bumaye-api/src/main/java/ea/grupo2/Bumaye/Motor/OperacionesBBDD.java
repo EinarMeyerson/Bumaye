@@ -821,8 +821,6 @@ public class OperacionesBBDD implements BumayeInterface{
 
 	@Override
 	public String addbatallafinBBDD(Batalla batalla) {
-		// TODO Auto-generated method stub
-
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		try{
@@ -914,7 +912,6 @@ public class OperacionesBBDD implements BumayeInterface{
 
 	@Override
 	public PersonajeVO RegistroUser(UsuarioVO userregistrado) {
-		// TODO Auto-generated method stub
 		//Comprobamos que el nombre del usuario no esta ya cogido
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -1058,7 +1055,6 @@ public class OperacionesBBDD implements BumayeInterface{
 
 	@Override
 	public List<PersonajeLogeadoVO> listPersonajes(int idUsersolicita) {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		List<PersonajeLogeadoVO> personajeslogeados = new ArrayList<PersonajeLogeadoVO>();
@@ -1095,7 +1091,6 @@ public class OperacionesBBDD implements BumayeInterface{
 	}
 	@Override
 	public List<CofreVO> listCofres() {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		List<CofreVO> cofres = new ArrayList<CofreVO>();
@@ -1143,7 +1138,6 @@ public class OperacionesBBDD implements BumayeInterface{
 
 	@Override
 	public String addObjeto(Objeto objeto) {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		try{
@@ -1168,7 +1162,6 @@ public class OperacionesBBDD implements BumayeInterface{
 
 	@Override
 	public String añadirObjetos(int idobjeto, int iduser) {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		String s="Objeto rechazado";
@@ -1334,7 +1327,6 @@ public class OperacionesBBDD implements BumayeInterface{
 
 	@Override
 	public String añadirObjetosCofre(int idobjeto, int idCofre) {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		String s="Objetocofre rechazado";
@@ -1436,7 +1428,6 @@ public class OperacionesBBDD implements BumayeInterface{
 
 	@Override
 	public String addCofre(Cofre cofre) {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		try{
@@ -1697,7 +1688,6 @@ public class OperacionesBBDD implements BumayeInterface{
 	@Override
 	public String desequiparArmasArmadurasEquipada(int idarmaarmadura,
 			int iduser) {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		String s="fallo al desequipar armadura";
@@ -1757,7 +1747,6 @@ public class OperacionesBBDD implements BumayeInterface{
 
 	@Override
 	public int verificarArmaArmaduraEquipada(int idarmaarmadura, int iduser) {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		String s="fallo al verificar armadura";
@@ -1812,7 +1801,6 @@ public class OperacionesBBDD implements BumayeInterface{
 
 	@Override
 	public List<ArmaArmaduraVO> listaArmasArmadurasUsr(int iduser) {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		UsrPersonaje u = new UsrPersonaje();
@@ -1856,7 +1844,6 @@ public class OperacionesBBDD implements BumayeInterface{
 
 	@Override
 	public PersonajeVO getPersonajeCompleto(int idPersonaje) {
-		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		UsrPersonaje u = new UsrPersonaje();
