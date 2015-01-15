@@ -69,6 +69,7 @@ public class BatallaResource {
 		return batallaVO;
 	}
 	//CAMBIARLAAAAAAAAAAAAAA ES UNA CHAPUZA PARA HACER UNA PRUEBA
+
 	
 	@Path("/prueba/{iduser}")
 	@GET
@@ -87,6 +88,8 @@ public class BatallaResource {
 		
 	    return batallaVO;
 	}
+
+
 
 
 }

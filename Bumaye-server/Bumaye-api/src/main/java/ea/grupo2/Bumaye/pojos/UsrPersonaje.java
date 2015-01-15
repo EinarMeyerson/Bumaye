@@ -5,6 +5,8 @@ import java.util.List;
 
 
 
+
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
  
 @Entity
 public class UsrPersonaje {
@@ -62,6 +65,7 @@ public class UsrPersonaje {
     
     @OneToMany(mappedBy="usrPersonaje", fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
 	private List<ArmaArmaduraEquipada> armaarmaduraequipada;
+   
     
     public UsrPersonaje (){
     }

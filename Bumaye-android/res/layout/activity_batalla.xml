@@ -45,29 +45,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="23dp"
-                        android:layout_marginTop="20dp" />
+                        android:layout_marginTop="10dp" />
 
                     <ProgressBar
                         android:id="@+id/progressBar_vida"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="150dp"
+                        android:layout_height="20dp"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginLeft="23dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:indeterminate="false"
                         android:max="100"
-                        android:minHeight="15dp"
-                        android:minWidth="500dp"
-                        android:progress="100" />
+                        android:maxHeight="20dp"
+                        android:minHeight="20dp" />
 
                     <TextView
                         android:id="@+id/persojane_ataque"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="23dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="0dp"
                         android:text="Ataque" />
 
                     <TextView
@@ -75,7 +74,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="23dp"
-                        android:layout_marginTop="10dp"
                         android:text="Defensa" />
                 </LinearLayout>
 
@@ -85,6 +83,14 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/persojane_ataques"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ataques"
+                        android:gravity="center"
+                        android:textSize="10dp" />
 
                     <LinearLayout
                         android:id="@+id/relativeguantescorazaarma"
@@ -100,8 +106,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:clickable="true"
-                            android:onClick="clickAtaque"
-                            android:paddingRight="20dp" />
+                            android:onClick="clickAtaque" />
 
                         <ImageView
                             android:id="@+id/ataque_2"
@@ -110,7 +115,8 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:clickable="true"
-                            android:onClick="clickAtaque" />
+                            android:onClick="clickAtaque"
+                            android:paddingRight="40dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -127,8 +133,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:clickable="true"
-                            android:onClick="clickAtaque"
-                            android:paddingRight="20dp" />
+                            android:onClick="clickAtaque" />
 
                         <ImageView
                             android:id="@+id/ataque_4"
@@ -137,7 +142,8 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:clickable="true"
-                            android:onClick="clickAtaque" />
+                            android:onClick="clickAtaque"
+                            android:paddingRight="40dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -154,8 +160,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:clickable="true"
-                            android:onClick="clickAtaque"
-                            android:paddingRight="20dp" />
+                            android:onClick="clickAtaque" />
 
                         <ImageView
                             android:id="@+id/ataque_6"
@@ -164,7 +169,8 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:clickable="true"
-                            android:onClick="clickAtaque"/>
+                            android:onClick="clickAtaque"
+                            android:paddingRight="40dp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -174,6 +180,20 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical" >
+                    
+                     <TextView
+                        android:id="@+id/persojane_objetos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Objetos"
+                        android:textSize="10dp" />
+
+                    <ListView
+                        android:id="@+id/listObjetos_personaje"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" >
+                    </ListView>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
