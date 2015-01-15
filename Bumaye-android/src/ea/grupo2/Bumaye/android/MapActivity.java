@@ -37,6 +37,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.android.api.MapAPI;
 
@@ -53,11 +55,10 @@ public class MapActivity extends FragmentActivity {
 	PersonajeVO personaje = null;
 	List<PersonajeVO> personajes = new ArrayList<PersonajeVO>();
 	List<CofreVO> cofres = new ArrayList<CofreVO>();
+	List<ObjetoCofreCantidadVO> objetos = new ArrayList<ObjetoCofreCantidadVO>();
 	private ProgressDialog pdm;
-	private ProgressDialog pdc;
-	static final String SENDER_ID = "334767796097";
-	 GoogleCloudMessaging gcm;
-	 AtomicInteger msgId = new AtomicInteger();
+	int i = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,7 +68,6 @@ public class MapActivity extends FragmentActivity {
 		api = new MapAPI();
 		map = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
-        gcm = GoogleCloudMessaging.getInstance(this);
 		getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
 		getActionBar().setBackgroundDrawable(
 				new ColorDrawable(Color.TRANSPARENT));
@@ -103,7 +103,6 @@ public class MapActivity extends FragmentActivity {
 
 	private class LoadListTask extends
 			AsyncTask<String, Void, List<PersonajeVO>> {
-		private ProgressDialog pd;
 
 		@Override
 		protected List<PersonajeVO> doInBackground(String... params) {
@@ -115,24 +114,16 @@ public class MapActivity extends FragmentActivity {
 		protected void onPostExecute(List<PersonajeVO> result) {
 			personajes = result;
 			Log.e(TAG, "Lista de personajes tamaño: " + personajes.size());
-			Log.e(TAG, "RECORDAR CAMBIAR URL PARA LISTA COFRES!!");
 			// CAMBIAR URL
 
 			url = "http://" + serverAddress + ":" + serverPort
 					+ "/Bumaye-api/user/listacofres";
 			(new LoadList2Task()).execute(url);
-			if (pd != null) {
-				pd.dismiss();
-			}
 		}
 
 		@Override
 		protected void onPreExecute() {
-			pd = new ProgressDialog(MapActivity.this);
-			pd.setTitle("Cargando oponentes...");
-			pd.setCancelable(false);
-			pd.setIndeterminate(true);
-			pd.show();
+
 		}
 
 	}
@@ -154,11 +145,7 @@ public class MapActivity extends FragmentActivity {
 
 		@Override
 		protected void onPreExecute() {
-			pdc = new ProgressDialog(MapActivity.this);
-			pdc.setTitle("Cargando Cofres...");
-			pdc.setCancelable(false);
-			pdc.setIndeterminate(true);
-			pdc.show();
+
 		}
 
 	}
@@ -171,19 +158,7 @@ public class MapActivity extends FragmentActivity {
 		// .findFragmentById(R.id.map);
 		// mapFragment.getMapAsync(this);
 		Log.e(TAG, "Dentro del mapa");
-
-		for (int i = 0; i < personajes.size(); i++) {
-			PersonajeVO pers = personajes.get(i);
-			map.addMarker(new MarkerOptions()
-					.position(new LatLng(pers.getLatitud(), pers.getLongitud()))
-					.snippet("Luchar!")
-					.title(pers.getNombre() + " - \nAtaque: "
-							+ pers.getAtaque() + "\nDefensa: "
-							+ pers.getDefensa())
-					.icon(BitmapDescriptorFactory
-							.fromResource(R.drawable.contrario_marker)));
-
-		}
+		map.clear();
 		for (int i = 0; i < cofres.size(); i++) {
 			CofreVO cof = cofres.get(i);
 			map.addMarker(new MarkerOptions()
@@ -194,11 +169,24 @@ public class MapActivity extends FragmentActivity {
 							.fromResource(R.drawable.treasure_chest_marker)));
 
 		}
+		for (int i = 0; i < personajes.size(); i++) {
+			PersonajeVO pers = personajes.get(i);
+			map.addMarker(new MarkerOptions()
+					.position(new LatLng(pers.getLatitud(), pers.getLongitud()))
+					.snippet(
+							"Ataque: " + pers.getAtaque() + ", Defensa: "
+									+ pers.getDefensa() + ", Luchar?")
+					.title(pers.getNombre())
+					.icon(BitmapDescriptorFactory
+							.fromResource(R.drawable.contrario_marker)));
+
+		}
 		map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 			@Override
 			public void onInfoWindowClick(Marker arg0) {
 				final String title = arg0.getTitle();
-				Dial(title);
+				String identif = arg0.getId();
+				Dial(title, identif);
 			}
 		});
 
@@ -209,63 +197,86 @@ public class MapActivity extends FragmentActivity {
 		map.setOnMyLocationChangeListener(myLocationChangeListener);
 
 		// COMENTAR SI QUEREIS MOVER EL MAPA DENTRO DE LA APP!!!
-		map.getUiSettings().setAllGesturesEnabled(true);
+		map.getUiSettings().setAllGesturesEnabled(false);
+		map.getUiSettings().setMyLocationButtonEnabled(false);
+		map.getUiSettings().setMapToolbarEnabled(false);;
 	}
 
-	private void Dial(final String title) {
-		if (title.equals("Cofre")){
-		new AlertDialog.Builder(this)
-				.setMessage("Recoger?")
-				.setTitle(title)
-				.setPositiveButton(android.R.string.yes,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								// User clicked OK button
-								dialog.dismiss();
-								
-							}
-						})
-				.setNegativeButton(R.string.cancel,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								// User cancelled the dialog
-								dialog.dismiss();
-							}
-						}).show();
-		}
-		else{
+	private void Dial(final String title, String identif) {
+		if (title.equals("Cofre")) {
+			url = "http://" + serverAddress + ":" + serverPort
+					+ "/Bumaye-api/user/listaobjetoscofre/" + identif;
+			(new LoadCofreItemTask()).execute(url);
+
+		} else {
 			new AlertDialog.Builder(this)
-			.setMessage("Quieres Luchar?")
-			.setTitle(title)
-			.setPositiveButton(android.R.string.yes,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int which) {
-							// User clicked OK button
-							dialog.dismiss();
-							pdm = new ProgressDialog(MapActivity.this);
-							pdm.setTitle("Esperando oponente...");
-							pdm.setCancelable(true);
-							pdm.setIndeterminate(true);
-							pdm.show();
-							esperarLucha(title);
-						}
-					})
-			.setNegativeButton(R.string.cancel,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-							// User cancelled the dialog
-							dialog.dismiss();
-						}
-					}).show();
+					.setMessage("Quieres Luchar?")
+					.setTitle(title)
+					.setPositiveButton(android.R.string.yes,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// User clicked OK button
+									dialog.dismiss();
+									pdm = new ProgressDialog(MapActivity.this);
+									pdm.setTitle("Esperando oponente...");
+									pdm.setCancelable(true);
+									pdm.setIndeterminate(true);
+									pdm.show();
+									esperarLucha(title);
+								}
+							})
+					.setNegativeButton(R.string.cancel,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									// User cancelled the dialog
+									dialog.dismiss();
+								}
+							}).show();
 		}
 	}
-	private void esperarLucha(String nom){
-		url = "http://" + serverAddress + ":" + serverPort
-				+ "/Bumaye-api/user/idGCM/"+nom;
-		(new LoadIdGcmTask()).execute(url);
+
+	private void Dial2(List<ObjetoCofreCantidadVO> objeto) {
+		final CharSequence[] items = objeto.toArray(new CharSequence[objeto
+				.size()]);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Cofre");
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+			}
+		}).show();
+
 	}
+
+	private void esperarLucha(String nom) {
+		url = "http://" + serverAddress + ":" + serverPort
+				+ "/Bumaye-api/user/idGCM/" + nom;
+	}
+
+	private class LoadCofreItemTask extends
+			AsyncTask<String, Void, List<ObjetoCofreCantidadVO>> {
+
+		@Override
+		protected List<ObjetoCofreCantidadVO> doInBackground(String... params) {
+			List<ObjetoCofreCantidadVO> notas = api.getObjetos(params[0]);
+			return notas;
+		}
+
+		@Override
+		protected void onPostExecute(List<ObjetoCofreCantidadVO> result) {
+			objetos = result;
+			Log.e(TAG, "Lista de objetos tamaño: " + cofres.size());
+			Dial2(objetos);
+		}
+
+		@Override
+		protected void onPreExecute() {
+
+		}
+
+	}
+
 	private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
 		@Override
 		public void onMyLocationChange(Location location) {
@@ -273,13 +284,21 @@ public class MapActivity extends FragmentActivity {
 					location.getLongitude());
 			// Marker mMarker = map.addMarker(new
 			// MarkerOptions().position(loc));
-			if (pdc != null) {
-				pdc.dismiss();
-			}
+
 			if (map != null) {
 				map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 09.0f));
 			}
-
+			
+			if (i<6)
+			{
+				i = i+1;				
+			}
+			else{
+				i = 0;
+				url = "http://" + serverAddress + ":" + serverPort
+						+ "/Bumaye-api/user/lista/" + personaje.getIduser();
+				(new LoadListTask()).execute(url);
+			}
 		}
 	};
 
@@ -318,49 +337,4 @@ public class MapActivity extends FragmentActivity {
 			break;
 		}
 	}
-	private class LoadIdGcmTask extends AsyncTask<String, Void, String> {
-
-		@Override
-		protected String doInBackground(String... params) {
-			String notas = api.getIdGcm(params[0]);
-			return notas;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			(new SendGcmTask()).execute(result);
-			opMapa();
-		}
-
-		@Override
-		protected void onPreExecute() {
-			
-		}
-
-	}
-	private class SendGcmTask extends AsyncTask<String, Void, String> {
-
-		@Override
-		protected String doInBackground(String... params) {
-			// TODO Auto-generated method stub
-			 String msg = "";
-             try {
-                 Bundle data = new Bundle();
-                     data.putString("mensajeid", personaje.getIdGCM());
-                     data.putString("my_action",
-                             "com.google.android.gcm.demo.app.ECHO_NOW");
-                     String id = Integer.toString(msgId.incrementAndGet());
-                     gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
-                     msg = "Sent message";
-             } catch (IOException ex) {
-                 msg = "Error :" + ex.getMessage();
-             }
-             return msg;
-		}
-		@Override
-        protected void onPostExecute(String msg) {
-            
-        }
-         
-     }
 }
