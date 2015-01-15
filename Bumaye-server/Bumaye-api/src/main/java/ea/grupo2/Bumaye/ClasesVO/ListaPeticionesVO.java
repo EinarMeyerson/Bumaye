@@ -41,7 +41,7 @@ public class ListaPeticionesVO {
 	public void addPeticionVO(PeticionBatallaVO peticion) {
 		listapeticiones.add(peticion);
 		mapPeticionAtacanteVO.put(peticion.getIdatacante(), peticion);
-		mapPeticionDefensorVO.put(peticion.getIdatacante(), peticion);
+		mapPeticionDefensorVO.put(peticion.getIddefensor(), peticion);
 	}
 
 	public int getcount(){
