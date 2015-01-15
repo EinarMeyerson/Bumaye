@@ -52,25 +52,44 @@ public class BatallaResource {
 		return batallaVO;
 	}
 
+	@Path("/{idbatalla}/user/{idPersonaje}/objeto/{nombreObjeto}")
+	@GET
+	@Produces(MediaType.API_BATALLA)
+	public BatallaVO oBatalla (@PathParam("idbatalla") int idbatalla,@PathParam("idPersonaje") int idPersonaje, @PathParam("nombreObjeto") String nombreObjeto) throws Exception {
+		BumayeInterface  m = new OperacionesBBDD();
+
+		BatallaVO batallaVO = null;
+		try{
+			batallaVO = m.ResultadoUtilizarObjetoVO(nombreObjeto, idbatalla, idPersonaje);
+		}
+		catch(NoEsTuTurnoException | NoTienesEseObjetoException e){
+			throw e;
+		}
+
+		return batallaVO;
+	}
 	//CAMBIARLAAAAAAAAAAAAAA ES UNA CHAPUZA PARA HACER UNA PRUEBA
 
+	
 	@Path("/prueba/{iduser}")
 	@GET
 	@Produces(MediaType.API_BATALLA)
 	public BatallaVO iniciarBatalla (@PathParam("iduser") int iduser) {
 		BumayeInterface  m = new OperacionesBBDD();
-
+		
 		ArrayList<PersonajeVO> listaPersonajesVO = new ArrayList<PersonajeVO>();
 		PersonajeVO u1 = m.getPersonaje(iduser);
-		listaPersonajesVO.add(u1);
-
-		PersonajeVO u2 = m.getPersonaje(1);
-		listaPersonajesVO.add(u2);
-
+        listaPersonajesVO.add(u1);
+ 
+        PersonajeVO u2 = m.getPersonaje(1);
+        listaPersonajesVO.add(u2);
+		
 		BatallaVO batallaVO = m.iniciarBatallaVO(listaPersonajesVO);
-
-		return batallaVO;
+		
+	    return batallaVO;
 	}
+
+
 
 
 }

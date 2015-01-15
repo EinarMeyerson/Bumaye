@@ -14,8 +14,9 @@ import java.util.List;
 
 
 
-import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 
+
+import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
@@ -94,6 +95,7 @@ public interface BumayeInterface {
     public PersonajeVO RegistroUser(UsuarioVO userregistrado);
     public boolean VerificarCapacidadInventario(int idUser, int idObjeto);
     public String CambiarPosicionUser(int iduser, double latitud, double longitud);
+    public String devolvemosaIDGCM(String nombrePersonaje);
     
   //Lista de jugadores logeados basic info
     public List<PersonajeLogeadoVO> listPersonajes(int idUsersolicita);     
@@ -126,5 +128,8 @@ public interface BumayeInterface {
     public BatallaVO RealizarAtaque(int idbatallaVO, int idataque, int mod, int mod2);
     public boolean VerificarAtaque(int idataque, int idPersonajeVO) throws Exception;
 
+    public BatallaVO UtilizarObjeto(int idbatallaVO, String nombreObj, int mod);
+    public BatallaVO ResultadoUtilizarObjetoVO(String nombreObj, int idbatallaVO, int idPersonajeVO) throws Exception;
+    public int EfectuarObjeto(int idobjeto);
     //FUNCIONES DE SIMULACION
 }
