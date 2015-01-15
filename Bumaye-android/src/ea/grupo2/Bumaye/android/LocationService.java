@@ -46,6 +46,7 @@ public class LocationService extends Service implements LocationListener{
 		iduser = prefs.getString("iduser", "");		
 		
     	lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    	//lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DIST, this);
     	lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DIST, this);
     }
 

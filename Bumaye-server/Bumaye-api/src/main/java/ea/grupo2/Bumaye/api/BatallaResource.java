@@ -69,24 +69,48 @@ public class BatallaResource {
 		return batallaVO;
 	}
 	//CAMBIARLAAAAAAAAAAAAAA ES UNA CHAPUZA PARA HACER UNA PRUEBA
-	
+
+
 	@Path("/prueba/{iduser}")
 	@GET
 	@Produces(MediaType.API_BATALLA)
 	public BatallaVO iniciarBatalla (@PathParam("iduser") int iduser) {
 		BumayeInterface  m = new OperacionesBBDD();
-		
+
 		ArrayList<PersonajeVO> listaPersonajesVO = new ArrayList<PersonajeVO>();
 		PersonajeVO u1 = m.getPersonaje(iduser);
-        listaPersonajesVO.add(u1);
- 
-        PersonajeVO u2 = m.getPersonaje(1);
-        listaPersonajesVO.add(u2);
-		
+		listaPersonajesVO.add(u1);
+
+		PersonajeVO u2 = m.getPersonaje(1);
+		listaPersonajesVO.add(u2);
+
 		BatallaVO batallaVO = m.iniciarBatallaVO(listaPersonajesVO);
-		
-	    return batallaVO;
+
+		return batallaVO;
 	}
+
+	@Path("/peticion/{idAtacante}/{nombredefensor}")
+	@POST
+	public String peticionBatalla (@PathParam("idAtacante") int idAtacante, @PathParam("nombredefensor") String nombredefensor) {
+		BumayeInterface  m = new OperacionesBBDD();
+		//PersonajeVO personaje = m.getPersonajeCompleto(idAtacante);
+		int iddefensor = m.devolvemosaIDuser(nombredefensor);
+		String solicitud = m.crearPeticion(idAtacante, iddefensor);
+		System.out.print(solicitud);
+		return "Peticion realizada";
+	}
+
+	@Path("/aceptar/{iddefensor}")
+	@GET
+	@Produces(MediaType.API_BATALLA)
+	public BatallaVO aceptarBatalla (@PathParam("iddefensor") int iddefensor) {
+		BumayeInterface  m = new OperacionesBBDD();
+		//PersonajeVO personaje = m.getPersonajeCompleto(idAtacante);
+		BatallaVO batallaVO = m.aceptarPeticion(iddefensor);
+		return batallaVO;
+	}
+
+
 
 
 }

@@ -339,7 +339,7 @@ public class PerfilActivity extends Activity {
 
 			TextView tv = new TextView(this);
 			tv.setText(atributos[j]);
-			tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+			tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
 			row.addView(tv);
 
 		}

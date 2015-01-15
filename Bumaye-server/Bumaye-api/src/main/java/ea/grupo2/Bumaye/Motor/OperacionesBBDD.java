@@ -15,11 +15,13 @@ import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.ListBatallasVO;
 import ea.grupo2.Bumaye.ClasesVO.MercadoVO;
+import ea.grupo2.Bumaye.ClasesVO.ListaPeticionesVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.ClasesVO.PeticionBatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.hibernate.HibernateUtil;
 import ea.grupo2.Bumaye.pojos.ArmaArmaduraEquipada;
@@ -36,6 +38,7 @@ import ea.grupo2.Bumaye.pojos.UsrPersonaje;
 public class OperacionesBBDD implements BumayeInterface{    
 
 	ListBatallasVO listbatallas = ListBatallasVO.getInstance();
+	ListaPeticionesVO listpeticiones = ListaPeticionesVO.getInstance();
 
 	public static void main(String[] args) throws Exception {
 		BumayeInterface  m = new OperacionesBBDD();
@@ -57,7 +60,7 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.addCofre(new Cofre (1.23456,40.1234));
 		m.addCofre(new Cofre (1.21456,41.124));
 
-		
+
 		/* OBJETOS  */
 		//(nombre objeto, tipo, rareza, combo1, combo2, %exito)
 
@@ -120,13 +123,13 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.añadirObjetosCofre(7, 2);
 		m.añadirObjetosCofre(7, 2);
 		m.añadirObjetosCofre(8, 2);
-		
+
 		m.añadirObjetosCofre(9, 3);
 		m.añadirObjetosCofre(10, 3);
 		m.añadirObjetosCofre(10, 3);
 		m.añadirObjetosCofre(11, 3);
 		m.añadirObjetosCofre(12, 3);
-		
+
 		//33 la ultima
 
 
@@ -708,7 +711,6 @@ public class OperacionesBBDD implements BumayeInterface{
 		finally {
 			session.close();
 		}
-		System.out.println("Usuario logeado");
 		return personajelog;
 	}
 
@@ -920,11 +922,8 @@ public class OperacionesBBDD implements BumayeInterface{
 	@Override
 	public BatallaVO iniciarBatallaVO(ArrayList<PersonajeVO> listaPersonajesVO) {
 
-
 		BatallaVO batallaVO= (new BatallaVO(listbatallas.getcount()+1, 0, listaPersonajesVO.size(), listaPersonajesVO));
-
 		listbatallas.addBatallaVO(batallaVO);
-
 		return batallaVO;
 	}
 
@@ -971,7 +970,7 @@ public class OperacionesBBDD implements BumayeInterface{
 
 					//Creamos la Clase PersonajeVO para mandarle al usuario todos sus atributos
 
-					UsuarioVO nuevousuariologeado = new UsuarioVO(p.getNombre(),p.getIdGCM(),p.getPassword(), userregistrado.getEmail(), userregistrado.getLatitud(),userregistrado.getLongitud(),userregistrado.getLaPasta());
+					UsuarioVO nuevousuariologeado = new UsuarioVO(p.getIdGCM(),p.getNombre(),p.getPassword(), userregistrado.getEmail(), userregistrado.getLatitud(),userregistrado.getLongitud(),userregistrado.getLaPasta());
 
 					personajeregistrado = LoginUser(nuevousuariologeado);
 
@@ -1090,11 +1089,11 @@ public class OperacionesBBDD implements BumayeInterface{
 
 					if (userlogeado.getIduser()!=idUsersolicita)
 					{
-						
+
 						System.out.print("Lista de usuarios: " + userlogeado.getIduser() + "\n");
 						PersonajeLogeadoVO p = new PersonajeLogeadoVO(userlogeado.getIduser(), userlogeado.getNombre(), userlogeado.getVida(), userlogeado.getDefensa(), userlogeado.getAtaque(), userlogeado.getLatitud(),userlogeado.getLongitud());
 						System.out.print("Latitud: " + p.getLat() + "\n");
-						if (distance(PersonajeSolicita.getLatitud(), p.getLat(), PersonajeSolicita.getLongitud(), p.getLng())<=1000)
+						if (distance(PersonajeSolicita.getLatitud(), p.getLat(), PersonajeSolicita.getLongitud(), p.getLng())<=100000000)
 						{
 							System.out.print("El usuario esta dentro del radio");
 							personajeslogeados.add(p);
@@ -1708,7 +1707,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			session.close();
 		}
 
-		
+
 		System.out.println(s);
 		return s;
 	}
@@ -1743,7 +1742,7 @@ public class OperacionesBBDD implements BumayeInterface{
 					query2.setParameter("iduser", iduser);            
 					if (query2.executeUpdate() >0 ) {
 						s="Armadura desequipada\n";
-						
+
 					}
 				}
 
@@ -2246,23 +2245,90 @@ public class OperacionesBBDD implements BumayeInterface{
 		}
 
 		return s;
-	
+
 	}
 
 
 	@Override
-	public String devolvemosaIDGCM(String nombrePersonaje) {
+	public String crearPeticion(int idatacante , int iddefensor) {
+		// TODO Auto-generated method stub
+		String solicitud="Solicitud enviada";
+		int verificar;
+		verificar= comprovacion_solo_una_atacante(idatacante);
+		if (verificar==1)
+		{
+
+			System.out.print("Creando peticion idatacante: " + idatacante+ " iddefensor: " + iddefensor);
+			PeticionBatallaVO peticion= (new PeticionBatallaVO(idatacante, iddefensor));
+			listpeticiones.addPeticionVO(peticion);
+		}
+		else
+		{
+			solicitud = "Estas pendiente de una batalla";
+		}
+		return solicitud;
+	}
+
+
+	@Override
+	public int comprovacion_solo_una_atacante(int idatacante) {
+		// TODO Auto-generated method stub
+		int verificacion=0;
+		PeticionBatallaVO peticion = listpeticiones.getPeticionAtacanteVO(idatacante); 
+		if (peticion==null)
+		{
+			System.out.print("El atacante no esta en ninguna batalla puede hacer una peticion\n");
+			verificacion=1;
+		}
+		return verificacion;
+	}
+
+
+	@Override
+	public PeticionBatallaVO comprovacion_peticion(int iddefensor) {
+		// TODO Auto-generated method stub
+		PeticionBatallaVO peticion = listpeticiones.getPeticionDefensorVO(iddefensor); 
+		return peticion;
+	}
+
+
+	@Override
+	public BatallaVO aceptarPeticion(int iddefensor) {
+		// TODO Auto-generated method stub
+		PeticionBatallaVO peticion;
+		BatallaVO batallaaceptada= new BatallaVO();
+		ArrayList<PersonajeVO> listaPersonajesVO = new ArrayList<PersonajeVO>();
+		peticion= comprovacion_peticion(iddefensor);
+		if (peticion!=null)
+		{
+			peticion.setAceptada("Si");
+			System.out.print("Aceptando peticion idatacante: " + peticion.getIddefensor()+ " iddefensor: " + peticion.getIdatacante());
+
+			listaPersonajesVO.add(getPersonaje(peticion.getIddefensor()));
+			listaPersonajesVO.add(getPersonaje(peticion.getIdatacante()));
+			batallaaceptada = iniciarBatallaVO(listaPersonajesVO);
+		}
+		else
+		{
+			System.out.print("No hay ninguna peticion para este usuario");
+		}
+
+		return batallaaceptada;
+	}
+
+	@Override
+	public int devolvemosaIDuser(String nombrePersonaje) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
-		String idGCM= null;
+		int iduser= 0;
 		try{
 			transaction = session.beginTransaction();
-			Query query = session.createQuery("select idGCM from UsrPersonaje where nombre= :nombre");
+			Query query = session.createQuery("select iduser from UsrPersonaje where nombre= :nombre");
 			query.setParameter("nombre",nombrePersonaje);
-			idGCM = (String)query.uniqueResult();	
+			iduser = (int)query.uniqueResult();	
 
-			if (idGCM!= null) {
-				
+			if (iduser!= 0) {
+
 				transaction.commit();
 			}
 
@@ -2275,9 +2341,9 @@ public class OperacionesBBDD implements BumayeInterface{
 		finally {
 			session.close();
 		}
-		return idGCM;
+		return iduser;
 	}
-	
+
 	@Override
 	public BatallaVO UtilizarObjeto(int idbatallaVO, String nombreObj, int mod) {
 
@@ -2313,7 +2379,7 @@ public class OperacionesBBDD implements BumayeInterface{
 
 		}
 
-	
+
 
 		return UbatallaVO;
 
@@ -2325,13 +2391,13 @@ public class OperacionesBBDD implements BumayeInterface{
 		BatallaVO batallaVO = getBatallaVO(idbatallaVO);
 		int mod = batallaVO.getTurno() % batallaVO.getListajugadores().size();
 		int posicionBatalla = batallaVO.getPosicionPersonajeVO(idPersonajeVO);
-		
+
 		int idUser = batallaVO.getListajugadores().get(mod).getIduser();
 		ObjetoCantidadVO objcanVO = getObjeto(nombreObj, idUser);
-		
+
 		if(VerificarTurno(idbatallaVO, posicionBatalla)==true){
 			System.out.print("entramos dentros if VerificarTurno \n");
-			
+
 			if(VerificarObjeto(nombreObj, idPersonajeVO)==true)
 			{
 				int i = EfectuarObjeto(objcanVO.getIdobjeto());

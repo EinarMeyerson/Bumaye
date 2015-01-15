@@ -18,6 +18,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 
 // METODOS LLAMADOS POR LAS DISTINTAS ACTIVITY
@@ -64,6 +66,24 @@ public class MapAPI {
 		 }
 		 return data;
 	}
-	
+
+	public List<ObjetoCofreCantidadVO> getObjetos(String url) {
+		Gson gson = new Gson();
+		HttpClient httpClient = new DefaultHttpClient();
+		 List<ObjetoCofreCantidadVO> data = new ArrayList<ObjetoCofreCantidadVO>();
+		 java.lang.reflect.Type arrayListType = new TypeToken<ArrayList<ObjetoCofreCantidadVO>>()
+		{}.getType();
+		 gson = new Gson();
+		 httpClient = WebServiceUtils.getHttpClient();
+		 try {
+		 HttpResponse response = httpClient.execute(new HttpGet(url));
+		 HttpEntity entity = response.getEntity();
+		 Reader reader = new InputStreamReader(entity.getContent());
+		 data = gson.fromJson(reader, arrayListType);
+		 } catch (Exception e) {
+		 Log.i("json array","While getting server response server generate error. ");
+		 }
+		 return data;
+	}
 
 }

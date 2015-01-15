@@ -196,13 +196,4 @@ public class UsrResource {
 
 		return s;
 	}
-	
-	@Path("/idGCM/{nombreUser}")
-	@GET
-	public String getidGCM (@PathParam("nombreUser") String nombreUser) {
-		BumayeInterface  m = new OperacionesBBDD();
-		String idgcm = m.devolvemosaIDGCM(nombreUser);
-
-		return idgcm;
-	}
 }

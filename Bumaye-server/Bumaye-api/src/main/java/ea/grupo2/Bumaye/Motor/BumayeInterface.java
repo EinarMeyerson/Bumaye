@@ -19,6 +19,8 @@ import java.util.List;
 
 
 
+
+
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
@@ -29,6 +31,7 @@ import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeLogeadoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.ClasesVO.PeticionBatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.pojos.ArmasArmaduras;
 import ea.grupo2.Bumaye.pojos.Ataques;
@@ -101,7 +104,7 @@ public interface BumayeInterface {
     public PersonajeVO RegistroUser(UsuarioVO userregistrado);
     public boolean VerificarCapacidadInventario(int idUser, int idObjeto);
     public String CambiarPosicionUser(int iduser, double latitud, double longitud);
-    public String devolvemosaIDGCM(String nombrePersonaje);
+    public int devolvemosaIDuser(String nombrePersonaje);
     
   //Lista de jugadores logeados basic info
     public List<PersonajeLogeadoVO> listPersonajes(int idUsersolicita);     
@@ -115,6 +118,11 @@ public interface BumayeInterface {
     public BatallaVO ResultadoAtaqueVO(int idataque, int idbatallaVO, int idPersonajeVO) throws Exception;
     public String añadirObjetoInventarioVerificado(int idobjeto, int iduser) throws Exception;
     
+    public String crearPeticion(int idatacante , int iddefensor);
+	public int comprovacion_solo_una_atacante(int idatacante);
+	public PeticionBatallaVO comprovacion_peticion(int iddefensor);
+	public BatallaVO aceptarPeticion(int iddefensor);
+
     //funcion de batalla
     public void PasaTurno(int idBatallaVO);
     public BatallaVO getBatallaVO(int idBatalla);
