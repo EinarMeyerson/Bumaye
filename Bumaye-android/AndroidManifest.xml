@@ -29,7 +29,7 @@
         android:icon="@drawable/bumayeicon"
         android:label="@string/app_name" >
         <receiver
-            android:name=".GcmBroadcastReceiver"
+            android:name="com.google.android.gcm.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -38,7 +38,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".GcmIntentService" />
+        <service android:name="ea.grupo2.Bumaye.android.GcmIntentService" />
 
         <meta-data
             android:name="com.google.android.gms.version"

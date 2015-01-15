@@ -1,6 +1,8 @@
 package ea.grupo2.Bumaye.android.api;
 
+import android.app.AlertDialog;
 import android.app.IntentService;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -8,6 +10,8 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+
+import ea.grupo2.Bumaye.android.R;
 
 public class GcmIntentService extends IntentService {
     public static final int NOTIFICATION_ID = 1;
@@ -59,7 +63,25 @@ public class GcmIntentService extends IntentService {
     // a GCM message.
     private void sendNotification(String msg) {
        
-       
+    	new AlertDialog.Builder(this)
+		.setMessage(msg)
+		.setTitle("Mensaje GCM")
+		.setPositiveButton(android.R.string.yes,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,
+							int which) {
+						// User clicked OK button
+						dialog.dismiss();
+						
+					}
+				})
+		.setNegativeButton(R.string.cancel,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						// User cancelled the dialog
+						dialog.dismiss();
+					}
+				}).show();
 
       
     }

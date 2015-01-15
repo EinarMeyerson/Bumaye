@@ -55,7 +55,7 @@ public class MapActivity extends FragmentActivity {
 	List<CofreVO> cofres = new ArrayList<CofreVO>();
 	private ProgressDialog pdm;
 	private ProgressDialog pdc;
-	String SENDER_ID;
+	static final String SENDER_ID = "334767796097";
 	 GoogleCloudMessaging gcm;
 	 AtomicInteger msgId = new AtomicInteger();
 	@Override
@@ -67,7 +67,6 @@ public class MapActivity extends FragmentActivity {
 		api = new MapAPI();
 		map = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
-		SENDER_ID = personaje.getIdGCM();
         gcm = GoogleCloudMessaging.getInstance(this);
 		getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
 		getActionBar().setBackgroundDrawable(
@@ -278,7 +277,7 @@ public class MapActivity extends FragmentActivity {
 				pdc.dismiss();
 			}
 			if (map != null) {
-				map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 04.0f));
+				map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 09.0f));
 			}
 
 		}
@@ -347,7 +346,7 @@ public class MapActivity extends FragmentActivity {
 			 String msg = "";
              try {
                  Bundle data = new Bundle();
-                     data.putString("mensajelucha", "lucha");
+                     data.putString("mensajeid", personaje.getIdGCM());
                      data.putString("my_action",
                              "com.google.android.gcm.demo.app.ECHO_NOW");
                      String id = Integer.toString(msgId.incrementAndGet());
