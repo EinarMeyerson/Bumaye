@@ -107,6 +107,13 @@ public interface BumayeInterface {
     public BatallaVO ResultadoAtaqueVO(int idataque, int idbatallaVO, int idPersonajeVO) throws Exception;
     public String añadirObjetoInventarioVerificado(int idobjeto, int iduser) throws Exception;
     
+    //funciones para la peticion de la batalla
+    public String crearPeticion (int idatacante, int iddefensor);
+    public BatallaVO aceptarPeticion (int iddefensor);
+    public int comprovacion_solo_una_atacante (int idatacante);
+    public int comprovacion_solo_una_defensor (int iddefensor);
+    
+    
     //funcion de batalla
     public void PasaTurno(int idBatallaVO);
     public BatallaVO getBatallaVO(int idBatalla);

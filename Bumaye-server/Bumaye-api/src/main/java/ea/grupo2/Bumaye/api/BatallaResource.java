@@ -53,24 +53,24 @@ public class BatallaResource {
 	}
 
 	//CAMBIARLAAAAAAAAAAAAAA ES UNA CHAPUZA PARA HACER UNA PRUEBA
-			
-			@Path("/prueba/{iduser}")
-			@GET
-			@Produces(MediaType.API_BATALLA)
-			public BatallaVO iniciarBatalla (@PathParam("iduser") int iduser) {
-				BumayeInterface  m = new OperacionesBBDD();
-				
-				ArrayList<PersonajeVO> listaPersonajesVO = new ArrayList<PersonajeVO>();
-				PersonajeVO u1 = m.getPersonaje(iduser);
-		        listaPersonajesVO.add(u1);
-		 
-		        PersonajeVO u2 = m.getPersonaje(1);
-		        listaPersonajesVO.add(u2);
-				
-				BatallaVO batallaVO = m.iniciarBatallaVO(listaPersonajesVO);
-				
-			    return batallaVO;
-			}
+
+	@Path("/prueba/{iduser}")
+	@GET
+	@Produces(MediaType.API_BATALLA)
+	public BatallaVO iniciarBatalla (@PathParam("iduser") int iduser) {
+		BumayeInterface  m = new OperacionesBBDD();
+
+		ArrayList<PersonajeVO> listaPersonajesVO = new ArrayList<PersonajeVO>();
+		PersonajeVO u1 = m.getPersonaje(iduser);
+		listaPersonajesVO.add(u1);
+
+		PersonajeVO u2 = m.getPersonaje(1);
+		listaPersonajesVO.add(u2);
+
+		BatallaVO batallaVO = m.iniciarBatallaVO(listaPersonajesVO);
+
+		return batallaVO;
+	}
 
 
 }

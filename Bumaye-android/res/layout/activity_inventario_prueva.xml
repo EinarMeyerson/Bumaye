@@ -39,14 +39,13 @@
                 android:layout_gravity="right"
                 android:layout_weight="1"
                 android:orientation="vertical" >
-                
 
                 <LinearLayout
                     android:id="@+id/layout1"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
-                    android:orientation="horizontal" >
+                    android:orientation="vertical" >
 
                     <ImageView
                         android:id="@+id/imagens_objeto_especifica"
@@ -60,7 +59,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:paddingRight="100dp" />
+                        android:paddingLeft="10dp"
+                        android:textSize="15dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -74,31 +74,36 @@
                         android:id="@+id/rareza"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="100dp" />
+                        android:paddingLeft="80dp"
+                        android:textSize="10dp" />
 
                     <TextView
                         android:id="@+id/exito"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="100dp" />
+                        android:paddingLeft="80dp"
+                        android:textSize="10dp" />
 
                     <TextView
                         android:id="@+id/combo1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="100dp" />
+                        android:paddingLeft="80dp"
+                        android:textSize="10dp" />
 
                     <TextView
                         android:id="@+id/combo2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="100dp" />
+                        android:paddingLeft="80dp"
+                        android:textSize="10dp" />
 
                     <TextView
                         android:id="@+id/tipo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="100dp" />
+                        android:paddingLeft="80dp"
+                        android:textSize="10dp" />
                 </LinearLayout>
 
                 <LinearLayout

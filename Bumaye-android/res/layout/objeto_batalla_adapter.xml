@@ -3,13 +3,13 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:clickable="true" 
-    android:onClick="clickObjeto">
+    android:onClick="clickObjeto_batalla">
 
     <ImageView
         android:id="@+id/imagen_objeto"
         android:layout_gravity="center"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:src="@drawable/ic_launcher" />
 
     <TextView
@@ -17,14 +17,14 @@
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="10dp"
         android:text="TextView" />
      <TextView
         android:id="@+id/cantidad_objeto"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10dp"
+        android:textSize="8dp"
         android:text="TextView" />
 
 </LinearLayout>
