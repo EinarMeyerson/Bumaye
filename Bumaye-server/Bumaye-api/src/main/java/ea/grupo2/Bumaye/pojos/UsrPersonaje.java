@@ -41,6 +41,8 @@ public class UsrPersonaje {
 	private double longitud;
 	@Column(name="latitud")
 	private double latitud;
+	@Column(name="laPasta")
+	private int laPasta;
      
     @ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "UsrPersonaje_Batallas", joinColumns = { 
@@ -69,7 +71,7 @@ public class UsrPersonaje {
 
     public UsrPersonaje(String idGCM, String username,
 			String password, String nombre, float vida, float defensa,
-			float ataque, double latitud, double longitud) {
+			float ataque, double latitud, double longitud, int laPasta) {
 		super();
 		this.idGCM = idGCM;
 		this.username = username;
@@ -80,6 +82,7 @@ public class UsrPersonaje {
 		this.ataque = ataque;
 		this.longitud = longitud;
 		this.latitud = latitud;
+		this.laPasta = laPasta;
 	}
 
 	public int getIduser() {
@@ -233,6 +236,16 @@ public class UsrPersonaje {
 
 	public void setLatitud(double latitud) {
 		this.latitud = latitud;
+	}
+
+
+	public int getLaPasta() {
+		return laPasta;
+	}
+
+
+	public void setLaPasta(int laPasta) {
+		this.laPasta = laPasta;
 	}
 
 }

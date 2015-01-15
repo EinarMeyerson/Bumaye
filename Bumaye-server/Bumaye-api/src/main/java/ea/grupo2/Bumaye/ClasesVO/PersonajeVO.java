@@ -15,6 +15,7 @@ public class PersonajeVO {
 	private float ataque;
 	private double longitud;
 	private double latitud;
+	private int laPasta;
 	private List<ArmaArmaduraVO> armasarmaduras;
 	private List<AtaqueVO> ataques;
 	private List<ObjetoCantidadVO> inventario;
@@ -28,7 +29,7 @@ public class PersonajeVO {
 	}
 
 	public PersonajeVO(int iduser, String idGCM, String nombre, float vida,
-			float defensa, float ataque, double latitud,  double longitud) {
+			float defensa, float ataque, double latitud,  double longitud, int laPasta) {
 		super();
 		this.iduser = iduser;
 		this.idGCM = idGCM;
@@ -38,11 +39,12 @@ public class PersonajeVO {
 		this.ataque = ataque;
 		this.longitud = longitud;
 		this.latitud = latitud;
+		this.laPasta = laPasta;
 	}
 
 	public PersonajeVO getPersonajeVO()
 	{
-		PersonajeVO personaje = new PersonajeVO(this.iduser, this.idGCM, this.nombre, this.vida, this.defensa, this.ataque, this.latitud, this.longitud);
+		PersonajeVO personaje = new PersonajeVO(this.iduser, this.idGCM, this.nombre, this.vida, this.defensa, this.ataque, this.latitud, this.longitud, this.laPasta);
 		return personaje;
 	}
 
@@ -206,6 +208,14 @@ public class PersonajeVO {
 
 	public void setLatitud(double latitud) {
 		this.latitud = latitud;
+	}
+
+	public int getLaPasta() {
+		return laPasta;
+	}
+
+	public void setLaPasta(int laPasta) {
+		this.laPasta = laPasta;
 	}
 
 }

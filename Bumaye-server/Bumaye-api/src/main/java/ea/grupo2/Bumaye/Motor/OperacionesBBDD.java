@@ -14,6 +14,7 @@ import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.ListBatallasVO;
+import ea.grupo2.Bumaye.ClasesVO.MercadoVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
@@ -26,6 +27,7 @@ import ea.grupo2.Bumaye.pojos.ArmasArmaduras;
 import ea.grupo2.Bumaye.pojos.Ataques;
 import ea.grupo2.Bumaye.pojos.Batalla;
 import ea.grupo2.Bumaye.pojos.Cofre;
+import ea.grupo2.Bumaye.pojos.Mercado;
 import ea.grupo2.Bumaye.pojos.Objeto;
 import ea.grupo2.Bumaye.pojos.ObjetoCantidad;
 import ea.grupo2.Bumaye.pojos.ObjetoCofreCantidad;
@@ -204,9 +206,9 @@ public class OperacionesBBDD implements BumayeInterface{
 
 
 		//      /* PERSONAJES */
-		m.addUsrPersonaje(new UsrPersonaje(null,"albert@hotmail.com","spot","Spot",100,10,10,41.215016, 1.727201));
-		m.addUsrPersonaje(new UsrPersonaje(null,"eianr@hotmail.com","1234","Elcolmo",100,10,10,41.376700, 2.114187));
-		m.addUsrPersonaje(new UsrPersonaje(null,"juan@hotmail.com","1234","Ilcapone",100,10,10, 42.571684, -0.547046));
+		m.addUsrPersonaje(new UsrPersonaje(null,"albert@hotmail.com","spot","Spot",100,10,10,41.215016, 1.727201,1000));
+		m.addUsrPersonaje(new UsrPersonaje(null,"eianr@hotmail.com","1234","Elcolmo",100,10,10,41.376700, 2.114187,1000));
+		m.addUsrPersonaje(new UsrPersonaje(null,"juan@hotmail.com","1234","Ilcapone",100,10,10, 42.571684, -0.547046,1000));
 		System.out.print("Jugadores añadidos");
 
 		/* AÑADIR OBJETOS A PERSONAJES */
@@ -341,6 +343,11 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.añadirArmasArmadurasEquipada(21, 3);
 		m.updateAtributosEquipada_UserArmasArmaduras(21, 3);
 		System.out.print("Equipado el jugador3");
+		
+		//new Mercado(cantidad, precioUnidad, personaje, objeto)
+		m.addEntradaMercado(1, 2, 2, 100);
+		m.addEntradaMercado(1, 6, 1, 200);
+		m.addEntradaMercado(3, 4, 1, 2500);
 
 	}
 
@@ -657,7 +664,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			//UsrPersonaje us  = (UsrPersonaje)session.load(UsrPersonaje.class, userlog.getUsername());
 			if (u != null) {
 				transaction.commit();
-				personajelog = new PersonajeVO(u.getIduser(),u.getIdGCM(), u.getNombre(), u.getVida(), u.getDefensa(), u.getAtaque(), u.getLatitud(), u.getLongitud());
+				personajelog = new PersonajeVO(u.getIduser(),u.getIdGCM(), u.getNombre(), u.getVida(), u.getDefensa(), u.getAtaque(), u.getLatitud(), u.getLongitud(), u.getLaPasta());
 				for (ArmasArmaduras arm: u.getArmasarmaduras()) {
 					//Sacar armaduras y ataques y pasarselos al personaje
 
@@ -871,7 +878,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			personaje = (UsrPersonaje)session.load(UsrPersonaje.class, idPersonaje);
 			if (personaje!= null) {
 
-				personajevo = new PersonajeVO(personaje.getIduser(),personaje.getIdGCM(), personaje.getNombre(), personaje.getVida(), personaje.getDefensa(), personaje.getAtaque(), personaje.getLatitud(), personaje.getLongitud());
+				personajevo = new PersonajeVO(personaje.getIduser(),personaje.getIdGCM(), personaje.getNombre(), personaje.getVida(), personaje.getDefensa(), personaje.getAtaque(), personaje.getLatitud(), personaje.getLongitud(), personaje.getLaPasta());
 				transaction.commit();
 
 			}
@@ -943,7 +950,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			else
 			{
 				transaction.commit();
-				addUsrPersonaje(new UsrPersonaje(userregistrado.getIdGCM(),userregistrado.getEmail(), userregistrado.getPass(), userregistrado.getUsername(),100,10,10, userregistrado.getLatitud(),userregistrado.getLongitud()));
+				addUsrPersonaje(new UsrPersonaje(userregistrado.getIdGCM(),userregistrado.getEmail(), userregistrado.getPass(), userregistrado.getUsername(),100,10,10, userregistrado.getLatitud(),userregistrado.getLongitud(), 1000));
 
 				//Volvemos a realizar la query para solicitar el id del usuario recien creado
 				Query queri = session.createQuery("from UsrPersonaje as u where u.nombre='" + userregistrado.getUsername() + "'");
@@ -964,7 +971,7 @@ public class OperacionesBBDD implements BumayeInterface{
 
 					//Creamos la Clase PersonajeVO para mandarle al usuario todos sus atributos
 
-					UsuarioVO nuevousuariologeado = new UsuarioVO(p.getNombre(),p.getIdGCM(),p.getPassword(), userregistrado.getEmail(), userregistrado.getLatitud(),userregistrado.getLongitud());
+					UsuarioVO nuevousuariologeado = new UsuarioVO(p.getNombre(),p.getIdGCM(),p.getPassword(), userregistrado.getEmail(), userregistrado.getLatitud(),userregistrado.getLongitud(),userregistrado.getLaPasta());
 
 					personajeregistrado = LoginUser(nuevousuariologeado);
 
@@ -1379,6 +1386,7 @@ public class OperacionesBBDD implements BumayeInterface{
 				else{
 					ObjetoCofreCantidad objetocofrecantidad2 = new ObjetoCofreCantidad();
 					objetocofrecantidad2.setCantidad(1);
+					objetocofrecantidad2.setNombreObjeto(objeto.getNombre());
 					objetocofrecantidad2.setObjeto(objeto);
 					objetocofrecantidad2.setCofre(cofre);
 					session.save(objetocofrecantidad2);
@@ -1423,7 +1431,7 @@ public class OperacionesBBDD implements BumayeInterface{
 					ObjetoCofreCantidad objetocofrecantidad = (ObjetoCofreCantidad) query2.uniqueResult();
 					ObjetocofreVOfin.add(new ObjetoCofreCantidadVO(objcofre.getIdobjetocofrecantidad(), 
 							objetocofrecantidad.getCantidad(), objcofre.getObjeto().getIdobjeto(), 
-							objcofre.getCofre().getIdcofre()));
+							objcofre.getCofre().getIdcofre(), objcofre.getObjeto().getNombre()));
 
 				}
 				////
@@ -1880,7 +1888,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			u = (UsrPersonaje)session.load(UsrPersonaje.class, idPersonaje);
 			if (u != null) {
 				transaction.commit();
-				personajevo = new PersonajeVO(u.getIduser(),u.getIdGCM(), u.getNombre(), u.getVida(), u.getDefensa(), u.getAtaque(), u.getLatitud(), u.getLongitud());
+				personajevo = new PersonajeVO(u.getIduser(),u.getIdGCM(), u.getNombre(), u.getVida(), u.getDefensa(), u.getAtaque(), u.getLatitud(), u.getLongitud(), u.getLaPasta());
 				for (ArmasArmaduras arm: u.getArmasarmaduras()) {
 					//Sacar armaduras y ataques y pasarselos al personaje
 
@@ -2372,9 +2380,6 @@ public class OperacionesBBDD implements BumayeInterface{
 				System.out.println("El ataque no se va a realizar po culpa de la probabilidad");
 
 			}
-
-
-
 		}
 		catch(HibernateException e)
 		{
@@ -2385,5 +2390,306 @@ public class OperacionesBBDD implements BumayeInterface{
 			session.close();
 		}
 		return i;
+	}
+
+
+	@Override
+	public String addEntradaMercado(int idUser, int idObjeto, int cantidad,
+			int precioUnidad) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		String s="entrada mercado rechazado";
+		UsrPersonaje usr = null;
+		Objeto obj = null;
+		try{
+			transaction = session.beginTransaction();   
+			usr = (UsrPersonaje)session.load(UsrPersonaje.class, idUser);
+			obj = (Objeto)session.load(Objeto.class, idObjeto);
+			
+			ObjetoCantidadVO objCantidadVO= getObjeto(obj.getNombre(), idUser);
+			if(objCantidadVO != null){
+				if (objCantidadVO.getCantidad()>=cantidad){
+					
+					Mercado mercado = new Mercado();
+					mercado.setCantidad(cantidad);
+					mercado.setObjeto(obj);
+					mercado.setPrecioUnidad(precioUnidad);
+					mercado.setPersonaje(usr);
+					session.save(mercado);
+		
+					if (usr != null || obj != null) {
+						for(int i=0;i<cantidad;i++){
+							eliminarObjetosInventario(idUser, idObjeto);
+						}
+						limpiezaObjetosInventario();
+						transaction.commit();
+						s="entrada mercado acceptado";
+					}
+				}
+				else{
+					throw new NoTienesTantaCantidadDeEseObjetoException();
+				}
+			}
+			else{
+				throw new NoTienesEseObjetoException();
+			}
+			
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+			
+		}
+		finally {
+			session.close();
+		}
+		System.out.println(s);
+		return s;
+	}
+	
+	@Override
+	public MercadoVO getMercadoVO(int idEntradaMercado) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		Mercado mercado = new Mercado();
+		MercadoVO mercadoVO= null;
+		try{
+			transaction = session.beginTransaction();
+			mercado = (Mercado)session.load(Mercado.class, idEntradaMercado);
+			if (mercado!= null) {
+
+				mercadoVO = new MercadoVO(mercado.getIdEntradaMercado(), mercado.getCantidad(), mercado.getPrecioUnidad(), mercado.getPersonaje().getIduser(), mercado.getObjeto().getIdobjeto());
+				transaction.commit();
+
+			}
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+			throw new NoExisteEsaEntradaException();
+
+		}
+		finally {
+			session.close();
+		}
+		return mercadoVO;
+	}
+
+	@Override
+	public String compraObjetoMercado(int idEntradaMercado, int cantidad, int idUserCompador)throws Exception {
+		
+		MercadoVO mercadoVO = getMercadoVO(idEntradaMercado);
+		int TotalPrecioCompra = mercadoVO.getPrecioUnidad() * cantidad;
+		String s;
+		if(VerificarCantidadCompra(idEntradaMercado, cantidad)==true){
+			if (VerificarCompra(TotalPrecioCompra, idUserCompador)==true){
+				if(VerificarCapacidadInventario(idUserCompador, mercadoVO.getIdobjeto())==true){	
+					s= compraObjetoUser(idEntradaMercado, cantidad, idUserCompador);
+					for(int i=0; i<cantidad; i++)
+					{
+						añadirObjetoInventarioVerificado(mercadoVO.getIdobjeto(), idUserCompador);
+					}
+					limpiezaEntradaMercado();
+				}
+				else{
+					throw new NoTienesEspacioEnInventarioException();
+				}
+			}
+			else{
+				throw new NoEstasSuficientementeCercaException();
+			}
+		}
+		else{
+			throw new NoHayTantosObjetosException();
+		}
+
+		return s;
+	}
+
+
+	@Override
+	public boolean VerificarCompra(int totalCompra, int idUser)
+			throws Exception {
+		boolean verif = false;
+		PersonajeVO perso = getPersonaje(idUser);
+		if (perso.getLaPasta()>=totalCompra){
+			verif = true;
+			
+		}
+		else{
+			throw new NoHayTantaPastaEnTusBolsillosException();
+
+		}
+		return verif;
+		
+	}
+
+
+	@Override
+	public String compraObjetoUser(int idEntradaMercado, int cantidad,
+			int idUserCompador) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		String s="No has podido comprar los objetos";
+		UsrPersonaje usrper = null;
+		Mercado mercado = null;
+		Objeto objeto = null;
+
+		try{
+			transaction = session.beginTransaction();   
+			usrper = (UsrPersonaje)session.load(UsrPersonaje.class, idUserCompador);
+			if (usrper != null) {
+				mercado = (Mercado)session.load(Mercado.class, idEntradaMercado);
+
+				Query query = session.createQuery("update Mercado set cantidad= :cantidad where idEntradaMercado= :idEntradaMercado");
+				query.setParameter("idEntradaMercado",idEntradaMercado);
+				query.setParameter("cantidad",mercado.getCantidad()-cantidad);
+
+				if (query.executeUpdate() >0) {
+
+					Query query2 = session.createQuery("update UsrPersonaje set laPasta= :laPasta where iduser= :iduser");
+					query2.setParameter("laPasta",usrper.getLaPasta()-mercado.getPrecioUnidad()*cantidad);
+					query2.setParameter("iduser",idUserCompador);
+					if (query2.executeUpdate() >0 ) {
+
+					}
+					Query query3 = session.createQuery("update UsrPersonaje set laPasta= :laPasta where iduser= :iduser");
+					query3.setParameter("laPasta",mercado.getPersonaje().getLaPasta()+mercado.getPrecioUnidad()*cantidad);
+					query3.setParameter("iduser",mercado.getPersonaje().getIduser());
+					if (query3.executeUpdate() >0 ) {
+
+					}
+				}	
+				transaction.commit();
+				s="Has podido comprar los objetos";
+			}
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		System.out.println(s);
+		return s;
+	}
+
+	@Override
+	public boolean VerificarCantidadCompra(int idEntradaMercado, int cantidad) throws Exception{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Mercado mercado = null;
+		boolean s = false;
+		try{
+			Query query = session.createQuery("from Mercado where idEntradaMercado= :idEntradaMercado");
+			query.setParameter("idEntradaMercado",idEntradaMercado);
+			mercado = (Mercado) query.uniqueResult();
+
+			if (mercado.getCantidad() <cantidad){
+				s= false;
+			}
+			else{
+				s= true;
+			}
+		}
+		catch(HibernateException e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return s;
+	}
+
+
+	@Override
+	public String limpiezaEntradaMercado() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try{
+			transaction = session.beginTransaction();   
+			//          usrper = (UsrPersonaje)session.load(UsrPersonaje.class, iduser);
+			Query query = session.createQuery("delete from Mercado where cantidad= :cantidad");
+			query.setParameter("cantidad",0);
+			if (query.executeUpdate() >0 ) {
+				transaction.commit();
+			}
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return "Limpieza mercado realizada";
+	}
+
+
+	@Override
+	public ObjetoVO getObjeto(int idObjeto) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		Objeto obj = new Objeto();
+		ObjetoVO objVO= null;
+		try{
+			transaction = session.beginTransaction();
+			obj = (Objeto)session.load(Objeto.class, idObjeto);
+			if (obj!= null) {
+
+				objVO = new ObjetoVO(idObjeto, obj.getNombre(), obj.getRareza(), obj.getTipo(), obj.getCombo1(), obj.getCombo2(), obj.getExito());
+				transaction.commit();
+
+			}
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return objVO;
+	}
+
+
+	@Override
+	public List<MercadoVO> listaMercado() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		List<MercadoVO> entradasMercado = new ArrayList<MercadoVO>();
+		System.out.print("Usuario solicita entradas mercado\n" );
+
+		try{
+			transaction = session.beginTransaction();
+			List<Mercado> m = (List<Mercado>)session.createQuery("from Mercado").list();
+			if (m!= null) {               
+				for (Mercado merc: m) {
+
+					MercadoVO mVO = new MercadoVO(merc.getIdEntradaMercado(), merc.getCantidad(), merc.getPrecioUnidad(), merc.getPersonaje().getIduser(), merc.getObjeto().getIdobjeto());
+					entradasMercado.add(mVO);
+
+				}
+				transaction.commit();
+			}
+
+		}
+		catch(HibernateException e)
+		{
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return entradasMercado;
 	}
 }
