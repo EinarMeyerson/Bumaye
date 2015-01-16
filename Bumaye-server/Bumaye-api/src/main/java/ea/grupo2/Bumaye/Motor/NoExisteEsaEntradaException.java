@@ -6,10 +6,10 @@ import javax.ws.rs.core.Response;
 import ea.grupo2.Bumaye.api.MediaType;
 
 @SuppressWarnings("serial")
-public class NoHayTantosObjetosException extends WebApplicationException {
-	private final static String MESSAGE = "No hay esa cantidad de ese objeto";
+public class NoExisteEsaEntradaException extends WebApplicationException {
+	private final static String MESSAGE = "No existe esa entrada en el mercado";
 
-	public NoHayTantosObjetosException() {
+	public NoExisteEsaEntradaException() {
 		super(Response
 				.status(Response.Status.FORBIDDEN)
 				.entity(new BatallaError(Response.Status.FORBIDDEN

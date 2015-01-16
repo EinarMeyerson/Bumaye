@@ -22,10 +22,10 @@ public class ObjetoCantidad {
 	@JoinColumn(name="idobjeto")
 	private Objeto objeto;
 	
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="idUser")
 	private UsrPersonaje usrPersonaje;
-
 	
 	public ObjetoCantidad (){
     }

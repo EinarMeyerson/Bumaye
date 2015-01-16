@@ -18,6 +18,9 @@ public class ObjetoCofreCantidad {
 	@Column(name="cantidad")
 	private int cantidad;
 	
+	@Column(name="nombreObjeto")
+	private String nombreObjeto;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="idobjeto")
 	private Objeto objeto;
@@ -30,10 +33,11 @@ public class ObjetoCofreCantidad {
 	public ObjetoCofreCantidad (){
     }
 
-	public ObjetoCofreCantidad(int idobjetocofrecantidad, int cantidad) {
+	public ObjetoCofreCantidad(int idobjetocofrecantidad, int cantidad, String nombreObjeto) {
 		super();
 		this.idobjetocofrecantidad = idobjetocofrecantidad;
 		this.cantidad = cantidad;
+		this.nombreObjeto =nombreObjeto;
 	}
 
 	public int getCantidad() {
@@ -62,6 +66,14 @@ public class ObjetoCofreCantidad {
 
 	public void setCofre(Cofre cofre) {
 		this.cofre = cofre;
+	}
+
+	public String getNombreObjeto() {
+		return nombreObjeto;
+	}
+
+	public void setNombreObjeto(String nombreObjeto) {
+		this.nombreObjeto = nombreObjeto;
 	}
 
      

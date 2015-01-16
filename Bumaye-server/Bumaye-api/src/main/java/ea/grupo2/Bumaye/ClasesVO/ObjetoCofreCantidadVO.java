@@ -16,6 +16,7 @@ public class ObjetoCofreCantidadVO {
 	private int cantidad;
 	private int idobjeto;
 	private int idcofre;
+	private String nombreObjeto;
 
 	
 	public ObjetoCofreCantidadVO (){
@@ -23,7 +24,7 @@ public class ObjetoCofreCantidadVO {
 
 
 	public ObjetoCofreCantidadVO(int idobjetocofrecantidad, int cantidad,
-			int idobjeto, int idcofre) {
+			int idobjeto, int idcofre, String nombreObjeto) {
 		super();
 		this.idobjetocofrecantidad = idobjetocofrecantidad;
 		this.cantidad = cantidad;
@@ -69,6 +70,16 @@ public class ObjetoCofreCantidadVO {
 
 	public void setIdcofre(int idcofre) {
 		this.idcofre = idcofre;
+	}
+
+
+	public String getNombreObjeto() {
+		return nombreObjeto;
+	}
+
+
+	public void setNombreObjeto(String nombreObjeto) {
+		this.nombreObjeto = nombreObjeto;
 	}
      
 }

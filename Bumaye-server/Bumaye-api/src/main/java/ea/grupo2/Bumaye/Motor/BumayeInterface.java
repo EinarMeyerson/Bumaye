@@ -17,10 +17,15 @@ import java.util.List;
 
 
 
+
+
+
+
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
+import ea.grupo2.Bumaye.ClasesVO.MercadoVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
@@ -52,6 +57,8 @@ public interface BumayeInterface {
     public boolean VerificarObjeto(String objeto , int idPersonajeVO) throws Exception;
     public ObjetoCantidadVO combinacionFinal(int iduser, String objeto1, String objeto2) throws Exception;
     public ObjetoCantidadVO getObjeto(String objeto, int idUser);
+    public ObjetoVO getObjeto(int idObjeto);
+
     
 	//funciones de cofre
 	public String addCofre(Cofre cofre);
@@ -137,4 +144,15 @@ public interface BumayeInterface {
     public BatallaVO ResultadoUtilizarObjetoVO(String nombreObj, int idbatallaVO, int idPersonajeVO) throws Exception;
     public int EfectuarObjeto(int idobjeto);
     //FUNCIONES DE SIMULACION
+    
+    //MERCADO
+    public String addEntradaMercado(int idUser, int idObjeto, int cantidad, int precioUnidad);
+    public MercadoVO getMercadoVO(int idEntradaMercado);
+    public String compraObjetoMercado(int idEntradaMercado, int cantidad, int idUserCompador) throws Exception;
+    public String compraObjetoUser(int idEntradaMercado, int cantidad, int idUserCompador);
+    public boolean VerificarCompra(int totalCompra, int idUser) throws Exception;
+    public boolean VerificarCantidadCompra(int idEntradaMercado, int cantidad) throws Exception;
+    public String limpiezaEntradaMercado();
+    public List<MercadoVO> listaMercado();
+
 }

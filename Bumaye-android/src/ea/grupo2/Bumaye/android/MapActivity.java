@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -26,18 +25,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
-import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.android.api.BatallaAPI;
@@ -55,11 +54,15 @@ public class MapActivity extends FragmentActivity {
 	String serverPort;
 	private GoogleMap map;
 	PersonajeVO personaje = null;
+	ArrayList mSelectedItems = null;
 	List<PersonajeVO> personajes = new ArrayList<PersonajeVO>();
 	List<CofreVO> cofres = new ArrayList<CofreVO>();
 	List<ObjetoCofreCantidadVO> objetos = new ArrayList<ObjetoCofreCantidadVO>();
 	private ProgressDialog pdm;
+	private ProgressDialog pdt;
 	int i = 0;
+	final float ZOOM=9.0f;
+	Marker lastOpenned = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +104,11 @@ public class MapActivity extends FragmentActivity {
 				android.R.layout.simple_list_item_1, names);
 		navList.setAdapter(adapter);
 		navList.setOnItemClickListener(new DrawerItemClickListener());
+		pdt = new ProgressDialog(MapActivity.this);
+		pdt.setTitle("Cargando...");
+		pdt.setCancelable(false);
+		pdt.setIndeterminate(true);
+		pdt.show();
 		(new LoadListTask()).execute(url);
 	}
 
@@ -184,6 +192,32 @@ public class MapActivity extends FragmentActivity {
 							.fromResource(R.drawable.contrario_marker)));
 
 		}
+		
+		map.setOnMarkerClickListener(new OnMarkerClickListener() {
+		public boolean onMarkerClick(Marker marker) {
+		    // Check if there is an open info window
+		    if (lastOpenned != null) {
+		        // Close the info window
+		        lastOpenned.hideInfoWindow();
+
+		        // Is the marker the same marker that was already open
+		        if (lastOpenned.equals(marker)) {
+		            // Nullify the lastOpenned object
+		            lastOpenned = null;
+		            // Return so that the info window isn't openned again
+		            return true;
+		        } 
+		    }
+
+		    // Open the info window for the marker
+		    marker.showInfoWindow();
+		    // Re-assign the last openned such that we can close it later
+		    lastOpenned = marker;
+
+		    // Event was handled by our code do not launch default behaviour.
+		    return true;
+		}
+		});
 		map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 			@Override
 			public void onInfoWindowClick(Marker arg0) {
@@ -237,14 +271,45 @@ public class MapActivity extends FragmentActivity {
 	}
 
 	private void Dial2(List<ObjetoCofreCantidadVO> objeto) {
-		final CharSequence[] items = objeto.toArray(new CharSequence[objeto
-				.size()]);
+		ArrayList<String> items = new ArrayList<String>();
+		for (int i = 0; i < objeto.size(); i++) {
+			int o = (objeto.get(i).getIdobjeto());			
+		}
+		mSelectedItems = new ArrayList();
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Cofre");
-		builder.setItems(items, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int item) {
-			}
-		}).show();
+		builder.setTitle("Cofre")
+//		.setMultiChoiceItems(items, 0,
+//                new DialogInterface.OnMultiChoiceClickListener() {
+//         @Override
+//         public void onClick(DialogInterface dialog, int which,
+//                 boolean isChecked) {
+//             if (isChecked) {
+//                 // If the user checked the item, add it to the selected items
+//                 mSelectedItems.add(which);
+//             } else if (mSelectedItems.contains(which)) {
+//                 // Else, if the item is already in the array, remove it 
+//                 mSelectedItems.remove(Integer.valueOf(which));
+//             }
+//         }
+//     })
+// Set the action buttons
+     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+         @Override
+         public void onClick(DialogInterface dialog, int id) {
+             // User clicked OK, so save the mSelectedItems results somewhere
+             // or return them to the component that opened the dialog
+        	 dialog.dismiss();
+        	 
+        	 // FUNCION RECOGER!!!
+        	 
+         }
+     })
+     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+         @Override
+         public void onClick(DialogInterface dialog, int id) {
+        	 dialog.dismiss();
+         }
+     }).show();
 
 	}
 
@@ -316,9 +381,11 @@ public class MapActivity extends FragmentActivity {
 					location.getLongitude());
 			// Marker mMarker = map.addMarker(new
 			// MarkerOptions().position(loc));
-
+			if (pdt != null){
+				pdt.dismiss();
+			}
 			if (map != null) {
-				map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 09.0f));
+				map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM));
 			}
 			
 			if (i<6)

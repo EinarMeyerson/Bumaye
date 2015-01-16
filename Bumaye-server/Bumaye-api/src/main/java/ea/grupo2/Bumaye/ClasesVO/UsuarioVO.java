@@ -8,13 +8,14 @@ public class UsuarioVO {
 	private String email;
 	private double longitud;
 	private double latitud;
+	private int laPasta;
 	
 	public UsuarioVO (){
 	}
 
 	
 	public UsuarioVO(String idGCM, String username, String pass, String email,
-			double latitud, double longitud) {
+			double latitud, double longitud, int laPasta) {
 		super();
 		this.idGCM = idGCM;
 		this.username = username;
@@ -22,6 +23,7 @@ public class UsuarioVO {
 		this.email = email;
 		this.longitud = longitud;
 		this.latitud = latitud;
+		this.laPasta = laPasta;
 	}
 
 
@@ -68,5 +70,15 @@ public class UsuarioVO {
 
 	public void setLatitud(double latitud) {
 		this.latitud = latitud;
+	}
+
+
+	public int getLaPasta() {
+		return laPasta;
+	}
+
+
+	public void setLaPasta(int laPasta) {
+		this.laPasta = laPasta;
 	}
 }
