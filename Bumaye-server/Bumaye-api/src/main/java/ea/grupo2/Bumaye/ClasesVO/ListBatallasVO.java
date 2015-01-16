@@ -8,6 +8,7 @@ import ea.grupo2.Bumaye.pojos.Batalla;
 public class ListBatallasVO {
 	ArrayList<BatallaVO> listaBatallas=new ArrayList<BatallaVO>();
 	HashMap<Integer, BatallaVO> mapBatallaVO = new HashMap<Integer, BatallaVO>();
+	HashMap<Integer, BatallaVO> mapBatallaVO_ATACANTE = new HashMap<Integer, BatallaVO>();
 	private static ListBatallasVO instance = null;
 
 	protected ListBatallasVO(){
@@ -25,7 +26,11 @@ public class ListBatallasVO {
 		super();
 		this.listaBatallas = listaBatallas;
 		for (BatallaVO b : listaBatallas) mapBatallaVO.put(b.getIdbatalla(),b);
-
+		for (BatallaVO b : listaBatallas)
+		{
+			for (PersonajeVO p: b.getListajugadores()) mapBatallaVO_ATACANTE.put(p.getIduser(),b);
+			
+		}
 	}
 	
 	public ArrayList<BatallaVO> getListaBatallas() {
@@ -44,9 +49,16 @@ public class ListBatallasVO {
         return batallaVO;
     }
 	
+	public BatallaVO getBatallaVO_byIdAtacante(int idatacante) {
+        BatallaVO batallaVO = mapBatallaVO_ATACANTE.get(idatacante);
+//        return items.get(position).getId();
+        return batallaVO;
+    }
+	
 	public void addBatallaVO(BatallaVO batallaVO) {
 		listaBatallas.add(batallaVO);
 		mapBatallaVO.put(batallaVO.getIdbatalla(), batallaVO);
+		for (PersonajeVO p: batallaVO.getListajugadores()) mapBatallaVO_ATACANTE.put(p.getIduser(),batallaVO);
 	}
 	
 	public int getcount(){

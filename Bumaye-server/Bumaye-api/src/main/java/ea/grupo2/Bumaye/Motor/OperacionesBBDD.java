@@ -360,7 +360,6 @@ public class OperacionesBBDD implements BumayeInterface{
 				* Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
 		Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		double distance = R * c * 1000; // convert to meters
-		System.out.print(distance);
 
 		return distance;
 	}
@@ -1070,7 +1069,6 @@ public class OperacionesBBDD implements BumayeInterface{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		List<PersonajeLogeadoVO> personajeslogeados = new ArrayList<PersonajeLogeadoVO>();
-		System.out.print("Usuario con id: " + idUsersolicita + " solicita lista de jugadores\n" );
 
 		try{
 			transaction = session.beginTransaction();
@@ -1082,13 +1080,11 @@ public class OperacionesBBDD implements BumayeInterface{
 
 					if (userlogeado.getIduser()!=idUsersolicita)
 					{
-
-						System.out.print("Lista de usuarios: " + userlogeado.getIduser() + "\n");
 						PersonajeLogeadoVO p = new PersonajeLogeadoVO(userlogeado.getIduser(), userlogeado.getNombre(), userlogeado.getVida(), userlogeado.getDefensa(), userlogeado.getAtaque(), userlogeado.getLatitud(),userlogeado.getLongitud());
-						System.out.print("Latitud: " + p.getLat() + "\n");
+						
 						if (distance(PersonajeSolicita.getLatitud(), p.getLat(), PersonajeSolicita.getLongitud(), p.getLng())<=100000000)
 						{
-							System.out.print("El usuario esta dentro del radio");
+							
 							personajeslogeados.add(p);
 						}
 					}
@@ -1113,7 +1109,6 @@ public class OperacionesBBDD implements BumayeInterface{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		List<CofreVO> cofres = new ArrayList<CofreVO>();
-		System.out.print("Usuario solicita cofres\n" );
 
 		try{
 			transaction = session.beginTransaction();
@@ -2439,8 +2434,6 @@ public class OperacionesBBDD implements BumayeInterface{
 
 			}
 
-
-
 		}
 		catch(HibernateException e)
 		{
@@ -2451,5 +2444,43 @@ public class OperacionesBBDD implements BumayeInterface{
 			session.close();
 		}
 		return i;
+	}
+
+
+	@Override
+	public String verificar_aceptacion (int idatacante) {
+		// TODO Auto-generated method stub
+		PeticionBatallaVO peticion = listpeticiones.getPeticionAtacanteVO(idatacante); 
+		return peticion.getAceptada();
+	}
+
+
+	@Override
+	public BatallaVO aceptarPeticion_atacante(int atacante) {
+		// TODO Auto-generated method stub
+		PeticionBatallaVO peticion;
+		BatallaVO batallaaceptada= new BatallaVO();
+		ArrayList<PersonajeVO> listaPersonajesVO = new ArrayList<PersonajeVO>();
+		peticion= comprovacion_peticion_atacante(atacante);
+		if (peticion!=null)
+		{
+			System.out.print("Atacante tambien comienza la batalla");
+			System.out.print("Aceptando peticion idatacante: " + peticion.getIddefensor()+ " iddefensor: " + peticion.getIdatacante());
+			//sacar la batalla que ya esta inicializada
+			batallaaceptada= listbatallas.getBatallaVO_byIdAtacante(atacante);
+		}
+		else
+		{
+			System.out.print("No hay ninguna peticion para este usuario");
+		}
+
+		return batallaaceptada;
+	}
+
+
+	@Override
+	public PeticionBatallaVO comprovacion_peticion_atacante(int idatacante) {
+		PeticionBatallaVO peticion = listpeticiones.getPeticionAtacanteVO(idatacante); 
+		return peticion;
 	}
 }

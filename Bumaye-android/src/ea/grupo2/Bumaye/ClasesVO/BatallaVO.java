@@ -1,15 +1,21 @@
 package ea.grupo2.Bumaye.ClasesVO;
  
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.google.gson.annotations.SerializedName;
  
-public class BatallaVO {
-     
+public class BatallaVO implements Serializable {
+	@SerializedName("idbatalla")
     int idbatalla;
+	@SerializedName("turno")
     int turno;
+	@SerializedName("NoJugadores")
     int NoJugadores;
+	@SerializedName("listajugadores")
     ArrayList<PersonajeVO> listajugadores= new ArrayList<PersonajeVO>();
-    HashMap<Integer, PersonajeVO> mapPersonajeVO = new HashMap<Integer, PersonajeVO>();
+    HashMap<String, PersonajeVO> mapPersonajeVO = new HashMap<String, PersonajeVO>();
  
     public BatallaVO (){
         }
@@ -21,7 +27,7 @@ public class BatallaVO {
         this.turno = turno;
         this.NoJugadores = noJugadores;
         this.listajugadores = listajugadores;
-        for (PersonajeVO p : listajugadores) mapPersonajeVO.put(p.getIduser(),p);
+        for (PersonajeVO p : listajugadores) mapPersonajeVO.put(p.getNombre(),p);
  
     }
  
@@ -60,11 +66,11 @@ public class BatallaVO {
     }
 	public void addPersonajeVO(PersonajeVO personajeVO) {
 		listajugadores.add(personajeVO);
-		mapPersonajeVO.put(personajeVO.getIduser(), personajeVO);
+		mapPersonajeVO.put(personajeVO.getNombre(), personajeVO);
 	}
-    public PersonajeVO getPersonajeVO(int idPersonajeVO) {
+    public PersonajeVO getPersonajeVO(String nombrePersonajeVO) {
     	
-        PersonajeVO personajeVO = mapPersonajeVO.get(idPersonajeVO);
+        PersonajeVO personajeVO = mapPersonajeVO.get(nombrePersonajeVO);
         
         return personajeVO;
         
@@ -75,6 +81,19 @@ public class BatallaVO {
         int posicion = listajugadores.indexOf(personajeVO);
         System.out.print(""+posicion);
         return posicion;
+    }
+    
+    public PersonajeVO getEnemigo (String nombre)
+    {
+    	PersonajeVO enemigo= new PersonajeVO();
+    	for (PersonajeVO person: listajugadores)
+    	{
+    		if (person.getNombre()!=nombre)
+    		{
+    			enemigo=person;
+    		}
+    	}
+    	return enemigo;
     }
      
 }
