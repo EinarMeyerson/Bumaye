@@ -11,6 +11,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import android.util.Log;
 
@@ -18,7 +19,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
-import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 
@@ -84,6 +84,18 @@ public class MapAPI {
 		 Log.i("json array","While getting server response server generate error. ");
 		 }
 		 return data;
+	}
+	public String acceptObjetos(String url) {		
+		 HttpClient httpClient = new DefaultHttpClient();		
+		 String responseString = "";
+		 httpClient = WebServiceUtils.getHttpClient();
+		 try {
+		 HttpResponse response = httpClient.execute(new HttpGet(url));
+		 responseString = EntityUtils.toString(response.getEntity());
+		 } catch (Exception e) {
+		 Log.i("json array","While getting server response server generate error. ");
+		 }
+		 return responseString;
 	}
 
 }

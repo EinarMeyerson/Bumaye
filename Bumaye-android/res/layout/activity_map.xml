@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ea.grupo2.Bumaye.android.MapActivity" >
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@+id/map"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <!-- The navigation drawer -->
 
@@ -21,4 +23,30 @@
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp" />
+
+    <NumberPicker
+        android:id="@+id/np"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="100dip" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberPicker1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="98dp"
+        android:layout_toRightOf="@+id/numberPicker1"
+        android:text="Cancel" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button2"
+        android:layout_alignBottom="@+id/button2"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/numberPicker1"
+        android:text="Set" />
 </android.support.v4.widget.DrawerLayout>
