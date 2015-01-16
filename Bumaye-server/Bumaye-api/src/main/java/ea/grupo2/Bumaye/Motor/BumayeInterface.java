@@ -118,11 +118,16 @@ public interface BumayeInterface {
     public BatallaVO ResultadoAtaqueVO(int idataque, int idbatallaVO, int idPersonajeVO) throws Exception;
     public String añadirObjetoInventarioVerificado(int idobjeto, int iduser) throws Exception;
     
-    public String crearPeticion(int idatacante , int iddefensor);
-	public int comprovacion_solo_una_atacante(int idatacante);
-	public PeticionBatallaVO comprovacion_peticion(int iddefensor);
-	public BatallaVO aceptarPeticion(int iddefensor);
-
+    //funciones para la peticion de la batalla
+    public String crearPeticion (int idatacante, int iddefensor);
+    public BatallaVO aceptarPeticion (int iddefensor);
+    public int comprovacion_solo_una_atacante (int idatacante);
+    public PeticionBatallaVO comprovacion_peticion (int iddefensor);
+    public PeticionBatallaVO comprovacion_peticion_atacante (int idatacante);
+    public BatallaVO aceptarPeticion_atacante (int atacante);
+    public String verificar_aceptacion (int idatacante);
+    
+    
     //funcion de batalla
     public void PasaTurno(int idBatallaVO);
     public BatallaVO getBatallaVO(int idBatalla);

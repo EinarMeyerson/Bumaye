@@ -39,6 +39,7 @@ import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.android.api.BatallaAPI;
 import ea.grupo2.Bumaye.android.api.MapAPI;
 
 public class MapActivity extends FragmentActivity {
@@ -46,6 +47,7 @@ public class MapActivity extends FragmentActivity {
 	private ListView navList;
 	private DrawerLayout mDrawerLayout;
 	private MapAPI api;
+	private BatallaAPI batalla;
 	String url;
 	PopupWindow popUp;
 	String serverAddress;
@@ -69,6 +71,7 @@ public class MapActivity extends FragmentActivity {
 
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
 		api = new MapAPI();
+		batalla = new BatallaAPI();
 		map = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
 		getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
@@ -252,11 +255,7 @@ public class MapActivity extends FragmentActivity {
 										int which) {
 									// User clicked OK button
 									dialog.dismiss();
-									pdm = new ProgressDialog(MapActivity.this);
-									pdm.setTitle("Esperando oponente...");
-									pdm.setCancelable(true);
-									pdm.setIndeterminate(true);
-									pdm.show();
+									Log.d("Click","Rival: "+title);
 									esperarLucha(title);
 								}
 							})
@@ -316,7 +315,40 @@ public class MapActivity extends FragmentActivity {
 
 	private void esperarLucha(String nom) {
 		url = "http://" + serverAddress + ":" + serverPort
-				+ "/Bumaye-api/user/idGCM/" + nom;
+				+ "/Bumaye-api/batalla/peticion/"+personaje.getIduser()+"/" + nom;
+		Log.d("Esperando Lucha","URL: "+url);
+		(new esperarLuchaTask()).execute(url);
+	}
+	
+	private class esperarLuchaTask extends AsyncTask<String, Void, String> {
+		private ProgressDialog pd;
+		@Override
+		protected String doInBackground(String... params) {
+			batalla.peticionBatalla(params[0]);			
+			return "Peticion realizada";
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (result != "")
+			{
+				Log.d("Resultado peticion",result);
+				//mandar constantemente gets para mirar si ha aceptado la solicitud
+				//durante "x" tiempo
+//				if (pd != null) {
+//					pd.dismiss();
+//				}
+			}
+		}
+
+		@Override
+		protected void onPreExecute() {
+			pd = new ProgressDialog(MapActivity.this);
+			pd.setTitle("Esperando al contrincante");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+			pd.show();
+		}
 	}
 
 	private class LoadCofreItemTask extends

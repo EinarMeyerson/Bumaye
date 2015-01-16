@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -90,11 +91,12 @@ public class BatallaResource {
 	}
 
 	@Path("/peticion/{idAtacante}/{nombredefensor}")
-	@POST
+	@PUT
 	public String peticionBatalla (@PathParam("idAtacante") int idAtacante, @PathParam("nombredefensor") String nombredefensor) {
 		BumayeInterface  m = new OperacionesBBDD();
 		//PersonajeVO personaje = m.getPersonajeCompleto(idAtacante);
 		int iddefensor = m.devolvemosaIDuser(nombredefensor);
+		System.out.print("$$$  Iddefensor encontrado: " + iddefensor);
 		String solicitud = m.crearPeticion(idAtacante, iddefensor);
 		System.out.print(solicitud);
 		return "Peticion realizada";
@@ -105,11 +107,28 @@ public class BatallaResource {
 	@Produces(MediaType.API_BATALLA)
 	public BatallaVO aceptarBatalla (@PathParam("iddefensor") int iddefensor) {
 		BumayeInterface  m = new OperacionesBBDD();
-		//PersonajeVO personaje = m.getPersonajeCompleto(idAtacante);
+		System.out.print("$$ Defensor acepta la batalla : " +iddefensor);
 		BatallaVO batallaVO = m.aceptarPeticion(iddefensor);
 		return batallaVO;
 	}
+	
+	@Path("/verificar/{idAtacante}")
+	@PUT
+	public String verificacionAceptada (@PathParam("idAtacante") int idAtacante) {
+		BumayeInterface  m = new OperacionesBBDD();
+		String verificacion = m.verificar_aceptacion(idAtacante);
+		return verificacion;
+	}
 
+	@Path("/aceptarAtacante/{idatacante}")
+	@GET
+	@Produces(MediaType.API_BATALLA)
+	public BatallaVO aceptarBatalla_atacante (@PathParam("idatacante") int idatacante) {
+		BumayeInterface  m = new OperacionesBBDD();
+		System.out.print("$$ Atacante inicia la batalla : " +idatacante);
+		BatallaVO batallaVO = m.aceptarPeticion_atacante(idatacante);
+		return batallaVO;
+	}
 
 
 

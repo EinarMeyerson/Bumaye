@@ -30,10 +30,11 @@ public class BatallaActivity extends Activity {
 	PersonajeVO personaje, enemigo;
 	String strAtaq,strArma;
 	TextView nombre_personaje, ataque_personaje, defensa_personaje;
+	TextView nombre_enemigo, enemigo_ataque, enemigo_defensa;
 	ImageView ataque_1, ataque_2, ataque_3, ataque_4, ataque_5, ataque_6;
 	ListView lv;
-	private ProgressBar progressBar;
-	 int progressStatus = 0;
+	private ProgressBar progressBar, enemigo_progressBar_vida;
+	int progressStatus = 0;
 
 
 	@Override
@@ -42,13 +43,15 @@ public class BatallaActivity extends Activity {
 		setContentView(R.layout.activity_batalla);
 
 		url = (String) getIntent().getExtras().get("url");
-		//		batalla=(BatallaVO) getIntent().getExtras().get("batalla");
-		//		if (batalla.getIdbatalla()==0)
-		//		{
-		//			Toast.makeText(getApplicationContext(), "Server not active",
-		//					   Toast.LENGTH_LONG).show();
-		//			finish();
-		//		}
+		
+		batalla=(BatallaVO) getIntent().getExtras().get("batalla");
+		if (batalla.getIdbatalla()==0)
+		{
+			Toast.makeText(getApplicationContext(), "Server not active",
+					Toast.LENGTH_LONG).show();
+			finish();
+		}
+		
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
 		if (personaje.getIduser()==0)
 		{
@@ -57,13 +60,16 @@ public class BatallaActivity extends Activity {
 			finish();
 		}
 		getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
+		
+		nombre_enemigo= (TextView) findViewById(R.id.enemigo_nombre);
+		enemigo_ataque = (TextView) findViewById(R.id.enemigo_ataque);
+		enemigo_defensa = (TextView) findViewById(R.id.enemigo_defensa);
+		enemigo_progressBar_vida = (ProgressBar) findViewById(R.id.enemigo_progressBar_vida);
 
 		nombre_personaje = (TextView) findViewById(R.id.personaje_nombre);
-		nombre_personaje.setText(personaje.getNombre());
 		ataque_personaje = (TextView) findViewById(R.id.persojane_ataque);
 		defensa_personaje = (TextView) findViewById(R.id.persojane_defensa);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar_vida);
-		progressBar.setProgress(50);
 
 		ataque_1 = (ImageView)findViewById(R.id.ataque_1);
 		ataque_2 = (ImageView)findViewById(R.id.ataque_2);
@@ -77,21 +83,33 @@ public class BatallaActivity extends Activity {
 		int [] cantidad_Objetos = getcantidadObjetos(personaje);
 		lv.setAdapter(new CustomAdapterBatalla(this, nombre_Objetos, cantidad_Objetos));
 
-		refrescarAtributos(personaje);
+		refrescarAtributosPersonaje(personaje);
+		
+		enemigo = batalla.getEnemigo(personaje.getNombre());
+		refrescarAtributosEnemigo(enemigo);
 		cargarAtaques();
-		
-		
+
+
+	}
+
+	public void refrescarAtributosEnemigo (PersonajeVO per)
+	{
+		nombre_enemigo.setText(per.getNombre());
+		enemigo_ataque.setText("Ataque  "+ Float.toString(per.getAtaque()));
+		enemigo_defensa.setText("Defensa  "+Float.toString(per.getDefensa()));
+		enemigo_progressBar_vida.setProgress((int)per.getVida());
+
 	}
 
 
-
-	public void refrescarAtributos (PersonajeVO per)
+	public void refrescarAtributosPersonaje (PersonajeVO per)
 	{
 		progressBar.setProgress((int)per.getVida());
+		nombre_personaje.setText(per.getNombre());
 		ataque_personaje.setText("Ataque  "+ Float.toString(per.getAtaque()));
 		defensa_personaje.setText("Defensa  "+Float.toString(per.getDefensa()));
-		
-		
+
+
 	}
 
 	public String[] getnomObjetos (PersonajeVO person){

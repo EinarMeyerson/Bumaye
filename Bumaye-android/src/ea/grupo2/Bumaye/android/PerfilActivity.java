@@ -1,13 +1,20 @@
 package ea.grupo2.Bumaye.android;
 
+import java.io.IOException;
+import java.util.Properties;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,15 +27,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
+import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.android.api.BatallaAPI;
 
 public class PerfilActivity extends Activity {
 
 	private ListView navList;
 	private DrawerLayout mDrawerLayout;
+	private BatallaAPI batalla;
 	TableLayout table_layout;
 	String[] lista_atributos= new String[6];//para crear las filas de la tabla de ataques
 	String url;
+	String serverAddress;
+	String serverPort;
 	PersonajeVO personaje;
 	String strAtaq,strArma;
 	TextView ataque, defensa;
@@ -38,8 +50,21 @@ public class PerfilActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_perfil);
+		
 
-		url = (String) getIntent().getExtras().get("url");
+		//preparar la url para los equipamientos
+		AssetManager assetManager = getAssets();
+		Properties config = new Properties();
+		try {
+			config.load(assetManager.open("config.properties"));
+			serverAddress = config.getProperty("server.address");
+			serverPort = config.getProperty("server.port");
+		} catch (IOException e) {
+			finish();
+		}
+		
+		batalla = new BatallaAPI();
+		
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		if (personaje.getIduser()==0)
@@ -320,14 +345,55 @@ public class PerfilActivity extends Activity {
 			finish();
 			break;
 		case 3:
-			Intent intent_batalla = new Intent(this, BatallaActivity.class);
-			intent_batalla.putExtra("personaje", personaje);
-			startActivity(intent_batalla);
-			finish();
+			//solo de prueva habra que hacer que mande peticiones constantemente para ver si tiene batallas
+			//por detras
+			
+			url = "http://" + serverAddress + ":" + serverPort
+			+ "/Bumaye-api/batalla/aceptar/"+personaje.getIduser();
+			Log.d("URL BATALLA",url);
+			(new comprovacionPeticionTask()).execute(url);
+			
 			break;
 		default: 
 			break;
 		}
+	}
+
+
+	private class comprovacionPeticionTask extends AsyncTask<String, Void, BatallaVO> {
+		
+		@Override
+		protected BatallaVO doInBackground(String... params) {
+			BatallaVO batallavo  = new BatallaVO();
+			Log.d("Enviando azeptacion","OOOOOOOOOOOOOOOuli shiet");
+			batallavo=batalla.comprovacion_peticionBatalla(params[0]);			
+			return batallavo;
+		}
+
+		@Override
+		protected void onPostExecute(BatallaVO result) {
+			if (result !=null)
+			{
+				Log.d("Obteniendo resultado: ","idBatalla: "+result.getIdbatalla());
+				iniciar_batalla(result);
+			}
+		}
+
+		@Override
+		protected void onPreExecute() {
+
+		}
+	}
+	
+	private void iniciar_batalla(BatallaVO batalla){
+
+		Log.d("Abriendo la batalla","Gasele");
+		Intent intent = new Intent(this, BatallaActivity.class);
+		intent.putExtra("url", url);
+		intent.putExtra("personaje", personaje);
+		intent.putExtra("batalla", batalla);
+		startActivity(intent);
+		finish();
 	}
 
 

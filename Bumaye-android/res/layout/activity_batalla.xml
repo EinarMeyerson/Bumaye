@@ -23,6 +23,58 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/sucesos_batallas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/atributos_enemigo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/enemigo_nombre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="23dp"
+                        android:layout_marginTop="10dp" />
+
+                    <ProgressBar
+                        android:id="@+id/enemigo_progressBar_vida"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="150dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="23dp"
+                        android:layout_marginTop="5dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:maxHeight="20dp"
+                        android:minHeight="20dp" />
+
+                    <TextView
+                        android:id="@+id/enemigo_ataque"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="23dp"
+                        android:layout_marginTop="0dp"
+                        android:text="Ataque" />
+
+                    <TextView
+                        android:id="@+id/enemigo_defensa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="23dp"
+                        android:text="Defensa" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -88,8 +140,8 @@
                         android:id="@+id/persojane_ataques"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ataques"
                         android:gravity="center"
+                        android:text="Ataques"
                         android:textSize="10dp" />
 
                     <LinearLayout
@@ -180,8 +232,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical" >
-                    
-                     <TextView
+
+                    <TextView
                         android:id="@+id/persojane_objetos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
