@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Properties;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -41,20 +42,21 @@ import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.android.api.MapAPI;
+import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
 
 public class MapActivity extends FragmentActivity {
 	private final static String TAG = MapActivity.class.getName();
 	private ListView navList;
 	private DrawerLayout mDrawerLayout;
 	private MapAPI api;
-	String url;
+	private UsrPersonajeAPI apip;
+	String url,contra;
 	NumberPicker np;
 	PopupWindow popUp;
 	String serverAddress;
 	String serverPort;
 	private GoogleMap map;
 	PersonajeVO personaje = null;
-	ArrayList mSelectedItems = null;
 	List<PersonajeVO> personajes = new ArrayList<PersonajeVO>();
 	List<CofreVO> cofres = new ArrayList<CofreVO>();
 	List<ObjetoCofreCantidadVO> objetos = new ArrayList<ObjetoCofreCantidadVO>();
@@ -72,6 +74,7 @@ public class MapActivity extends FragmentActivity {
 
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
 		api = new MapAPI();
+		apip = new UsrPersonajeAPI();
 		map = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
 		getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
@@ -89,6 +92,9 @@ public class MapActivity extends FragmentActivity {
 			Log.e(TAG, e.getMessage(), e);
 			finish();
 		}
+		SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
+		contra = prefs.getString("password", "");				
+		
 		url = "http://" + serverAddress + ":" + serverPort
 				+ "/Bumaye-api/user/lista/" + personaje.getIduser();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -181,18 +187,14 @@ public class MapActivity extends FragmentActivity {
 		}
 		for (int i = 0; i < personajes.size(); i++) {
 			PersonajeVO pers = personajes.get(i);
-			Marker m = map
-					.addMarker(new MarkerOptions()
-							.position(
-									new LatLng(pers.getLatitud(), pers
-											.getLongitud()))
-							.snippet(
-									"Ataque: " + pers.getAtaque()
-											+ ", Defensa: " + pers.getDefensa()
-											+ ", Luchar?")
-							.title(pers.getNombre())
-							.icon(BitmapDescriptorFactory
-									.fromResource(R.drawable.contrario_marker)));
+			map.addMarker(new MarkerOptions()
+					.position(new LatLng(pers.getLatitud(), pers.getLongitud()))
+					.snippet(
+							"Ataque: " + pers.getAtaque() + ", Defensa: "
+									+ pers.getDefensa() + ", Luchar?")
+					.title(pers.getNombre())
+					.icon(BitmapDescriptorFactory
+							.fromResource(R.drawable.contrario_marker)));
 
 		}
 
@@ -234,9 +236,6 @@ public class MapActivity extends FragmentActivity {
 		});
 
 		map.setMyLocationEnabled(true);
-
-		// EN ESTE PUNTO HAREMOS QUE EL MAPA TE SIGA SIEMPRE ASI SOLO
-		// SE ATACAN A LOS QUE ESTAN CERCA
 		map.setOnMyLocationChangeListener(myLocationChangeListener);
 
 		// COMENTAR SI QUEREIS MOVER EL MAPA DENTRO DE LA APP!!!
@@ -286,43 +285,55 @@ public class MapActivity extends FragmentActivity {
 		for (int i = 0; i < objeto.size(); i++) {
 			items[i] = objeto.get(i).getNombreObjeto() + ", cantidad: "
 					+ objeto.get(i).getCantidad();
-
-			Log.e(TAG, items[i]);
 		}
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Cofre")
-				.setItems(items, new DialogInterface.OnClickListener() {
+		if (objeto.size() != 0) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Cofre")
+					.setItems(items, new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-						AceptarCofre(objeto.get(which));
-					}
-				}).show();
-
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							AceptarCofre(objeto.get(which));
+						}
+					}).show();
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Cofre")
+					.setPositiveButton(R.string.aceptar,
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int id) {
+									dialog.dismiss();
+								}
+							}).setMessage("Este cofre ya ha sido saqueado!")
+					.show();
+		}
 	}
 
 	private void AceptarCofre(final ObjetoCofreCantidadVO obj) {
-		np = (NumberPicker) findViewById(R.id.np);
+		np = new NumberPicker(this);
 		np.setMaxValue(obj.getCantidad());
 		np.setMinValue(1);
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(obj.getNombreObjeto())
+		builder.setTitle("Recoger: " + obj.getNombreObjeto())
 				// Set the action buttons
 				.setView(np)
 				.setPositiveButton(R.string.aceptar,
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int id) {
-								dialog.dismiss();
 								cant = np.getValue();
 								url = "http://" + serverAddress + ":"
 										+ serverPort + "/Bumaye-api/user/"
 										+ personaje.getIduser() + "/cofre/"
 										+ obj.getIdcofre() + "/objeto/"
 										+ obj.getIdobjeto() + "/cantidad/"
-										+ obj.getCantidad();
+										+ np.getValue();
 								(new GetObjectsTask()).execute(url);
+								dialog.dismiss();
+								Log.e(TAG, url);
 							}
 						})
 				.setNegativeButton(R.string.cancel,
@@ -363,6 +374,7 @@ public class MapActivity extends FragmentActivity {
 	}
 
 	private class GetObjectsTask extends AsyncTask<String, Void, String> {
+		private ProgressDialog pd;
 
 		@Override
 		protected String doInBackground(String... params) {
@@ -372,17 +384,48 @@ public class MapActivity extends FragmentActivity {
 
 		@Override
 		protected void onPostExecute(String result) {
+			if (pd != null)
+				pd.dismiss();
 			Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG)
 					.show();
+			url = "http://" + serverAddress + ":" + serverPort + "/Bumaye-api/user";
+			(new LoginUsrTask()).execute(personaje.getNombre(), contra, url);
 		}
 
 		@Override
 		protected void onPreExecute() {
-
+			pd = new ProgressDialog(MapActivity.this);
+			pd.setTitle("Recogiendo...");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+			pd.show();
 		}
 
 	}
+	// SE LLAMA AL METODO loginUsr DE LA API
+		// SE LE MANDA LA URL Y DEVOLVEMOS UN PersonajeVO
+		private class LoginUsrTask extends AsyncTask<String, Void, PersonajeVO> {
 
+			@Override
+			protected PersonajeVO doInBackground(String... params) {
+				personaje = apip.loginUsr(params[0], params[1], params[2]);
+
+				return personaje;
+			}
+
+			@Override
+			protected void onPostExecute(PersonajeVO result) {				
+					if (result.getIduser() == 0) {
+						Toast.makeText(getApplicationContext(),
+								"Server not active", Toast.LENGTH_LONG).show();
+						finish();
+					}
+			}
+
+			@Override
+			protected void onPreExecute() {			
+			}
+		}
 	private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
 		@Override
 		public void onMyLocationChange(Location location) {

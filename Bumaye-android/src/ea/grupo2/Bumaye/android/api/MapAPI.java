@@ -95,6 +95,7 @@ public class MapAPI {
 		 } catch (Exception e) {
 		 Log.i("json array","While getting server response server generate error. ");
 		 }
+		 Log.e(TAG, responseString);
 		 return responseString;
 	}
 
