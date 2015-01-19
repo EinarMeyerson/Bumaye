@@ -59,6 +59,7 @@ public class MapActivity extends FragmentActivity {
 	PopupWindow popUp;
 	String serverAddress;
 	String serverPort;
+	boolean mapcomp;
 	private GoogleMap map;
 	PersonajeVO personaje = null;
 	List<PersonajeVO> personajes = new ArrayList<PersonajeVO>();
@@ -75,7 +76,7 @@ public class MapActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
-
+		mapcomp = true;
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
 		api = new MapAPI();
 		apip = new UsrPersonajeAPI();
@@ -174,7 +175,7 @@ public class MapActivity extends FragmentActivity {
 	}
 
 	private void opMapa() {
-		if (map != null) {
+		if (mapcomp != false) {
 			map = ((SupportMapFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.map)).getMap();
 			//
@@ -505,6 +506,7 @@ public class MapActivity extends FragmentActivity {
 	}
 
 	private void iniciar_batalla(BatallaVO batalla) {
+		mapcomp = false;
 
 		Log.d("Abriendo la batalla", "Gasele");
 		Intent intent = new Intent(this, BatallaActivity.class);
