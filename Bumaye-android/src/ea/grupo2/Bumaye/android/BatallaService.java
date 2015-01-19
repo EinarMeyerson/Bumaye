@@ -132,6 +132,11 @@ public class BatallaService extends Service {
 
 			@Override
 			protected BatallaVO doInBackground(String... params) {
+				try {
+					Thread.sleep(4000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				url = "http://" + serverAddress + ":" + serverPort
 						+ "/Bumaye-api/batalla/aceptar/" + iduser;
 				BatallaVO batallavo = new BatallaVO();
@@ -148,11 +153,7 @@ public class BatallaService extends Service {
 				batall = result;
 				Log.d("Comprobando batall", "ID: " + result.getIdbatalla());
 				iniciar_batalla(result);
-				try {
-					Thread.sleep(4000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				
 			}
 
 			@Override
