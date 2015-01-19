@@ -69,7 +69,7 @@ public class MapActivity extends FragmentActivity {
 	private ProgressDialog pdt;
 	int i = 0;
 	int cant = 1;
-	final float ZOOM = 9.0f;
+	final float ZOOM = 11.0f;
 	Marker lastOpenned = null;
 
 	@Override
@@ -601,7 +601,7 @@ public class MapActivity extends FragmentActivity {
 				map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM));
 			}
 
-			if (i<6)
+			if (i<8)
 			{
 				i = i+1;				
 			}
