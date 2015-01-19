@@ -492,6 +492,12 @@ public class BatallaActivity extends Activity {
 		
 		if (enemigo.getVida()<=0)
 		{
+			
+			actualizaciones_batalla.setText(" ¡VICTORIA!  has derrotado a tu oponente");
+//			SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
+//			nombre = prefs.getString("nombre", "");
+//			contra = prefs.getString("password", "");	
+//			(new LoginUsrTask()).execute(nombre, contra, url);
 			try {
 
 				Thread.sleep(6000);
@@ -501,15 +507,21 @@ public class BatallaActivity extends Activity {
 				e.printStackTrace();
 
 			}
-			actualizaciones_batalla.setText(" ¡VICTORIA!  has derrotado a tu oponente");
-			SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
-			nombre = prefs.getString("nombre", "");
-			contra = prefs.getString("password", "");	
-			(new LoginUsrTask()).execute(nombre, contra, url);
+			
+			Intent intent = new Intent(this, PresentacionActivity.class);
+			startActivity(intent);
+			finish();
 		
 		}
 		else if(personaje_batalla.getVida()<=0)
 		{
+			
+//			
+//			SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
+//			nombre = prefs.getString("nombre", "");
+//			contra = prefs.getString("password", "");	
+//			(new LoginUsrTask()).execute(nombre, contra, url);
+			actualizaciones_batalla.setText(" Derrota...  has sido deshonrado");
 			try {
 
 				Thread.sleep(6000);
@@ -519,11 +531,9 @@ public class BatallaActivity extends Activity {
 				e.printStackTrace();
 
 			}
-			actualizaciones_batalla.setText(" Derrota...  has sido deshonrado");
-			SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
-			nombre = prefs.getString("nombre", "");
-			contra = prefs.getString("password", "");	
-			(new LoginUsrTask()).execute(nombre, contra, url);
+			Intent intent = new Intent(this, PresentacionActivity.class);
+			startActivity(intent);
+			finish();
 			
 		}else
 		{
