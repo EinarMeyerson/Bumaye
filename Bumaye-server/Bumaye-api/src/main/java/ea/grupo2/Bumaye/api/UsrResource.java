@@ -43,9 +43,20 @@ public class UsrResource {
 	public PersonajeVO UserLogin (UsuarioVO user) {
 		BumayeInterface  m = new OperacionesBBDD();
 		PersonajeVO personaje = m.LoginUser(user);
+		System.out.print("entramosen el POST login user");
+
 		return personaje;
 	}
+	
+	@Path("/{idusuario}")
+	@GET
+	@Produces(MediaType.API_USER)
+	public PersonajeVO getPersonaje (@PathParam("idusuario") int idusuario) {
+		BumayeInterface  m = new OperacionesBBDD();
+		PersonajeVO pers = m.getPersonaje(idusuario);
 
+		return pers;
+	}
 	@Path("/register")
 	@POST
 	@Consumes(MediaType.API_USER)
@@ -81,6 +92,7 @@ public class UsrResource {
 	public List<ObjetoCantidadVO> listaObjetosPersonaje (@PathParam("idusuario") int idusuario) {
 		BumayeInterface  m = new OperacionesBBDD();
 		List<ObjetoCantidadVO> objetoscantida = m.listaObjetosUsr(idusuario);
+		System.out.print("entramosen elGET inventario");
 
 		return objetoscantida;
 	}
