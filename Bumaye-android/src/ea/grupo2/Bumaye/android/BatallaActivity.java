@@ -42,12 +42,6 @@ public class BatallaActivity extends Activity {
 		url = (String) getIntent().getExtras().get("url");
 		
 		batalla=(BatallaVO) getIntent().getExtras().get("batalla");
-		if (batalla.getIdbatalla()==0)
-		{
-			Toast.makeText(getApplicationContext(), "Server not active",
-					Toast.LENGTH_LONG).show();
-			finish();
-		}
 		
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
 		if (personaje.getIduser()==0)

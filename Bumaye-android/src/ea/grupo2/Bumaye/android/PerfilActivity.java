@@ -43,7 +43,7 @@ public class PerfilActivity extends Activity {
 	BatallaService mService;
 											// de ataques
 	String url;
-	boolean servicio;
+	boolean servicio = false;
 	String serverAddress;
 	String serverPort;
 	PersonajeVO personaje;
@@ -106,7 +106,7 @@ public class PerfilActivity extends Activity {
 		armaimagen = (ImageView) findViewById(R.id.arma);
 		piernasimagen = (ImageView) findViewById(R.id.piernas);
 		botasimagen = (ImageView) findViewById(R.id.botas);
-		servicio = isMyServiceRunning(LocationService.class);
+//		servicio = isMyServiceRunning(LocationService.class);
 		if (servicio == false){
 			Intent myIntent = new Intent(getApplicationContext(), LocationService.class);
 			startService(myIntent);
@@ -121,15 +121,7 @@ public class PerfilActivity extends Activity {
 		refreshPerfil();
 	}
 
-private ServiceConnection m_serviceConnection = new ServiceConnection() {
-    public void onServiceConnected(ComponentName className, IBinder service) {
-        mService = ((BatallaService.MyBinder)service).getService();
-}
 
-public void onServiceDisconnected(ComponentName className) {
-        mService = null;
-}
-};
 	private boolean isMyServiceRunning(Class<?> serviceClass) {
 		ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 		for (RunningServiceInfo service : manager

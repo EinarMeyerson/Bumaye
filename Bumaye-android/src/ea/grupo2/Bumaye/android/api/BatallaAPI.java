@@ -12,6 +12,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import android.util.Log;
 
@@ -63,8 +64,8 @@ public class BatallaAPI {
 		 }
 		 return data;
 	}
-	
-	public BatallaVO comprovacion_peticionBatalla(String url) {		
+
+	public BatallaVO aceptacion_peticionBatalla(String url) {		
 		Gson gson = new Gson();
 		HttpClient httpClient = new DefaultHttpClient();
 		BatallaVO data = new BatallaVO();
@@ -85,5 +86,18 @@ public class BatallaAPI {
 			 
 				 }
 		 return data;
+	}
+
+	public String comprovacion_peticionBatalla(String url) {		
+		HttpClient httpClient = new DefaultHttpClient();
+		 String responseString = "";
+		 httpClient = WebServiceUtils.getHttpClient();
+		 try {
+			 HttpResponse response = httpClient.execute(new HttpGet(url));
+			 responseString = EntityUtils.toString(response.getEntity());
+			  } catch (Exception e) {
+		 Log.i("json array","While getting server response server generate error. ");
+		 }
+		 return responseString;
 	}
 }
