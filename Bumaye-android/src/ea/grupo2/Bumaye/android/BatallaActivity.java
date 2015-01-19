@@ -58,7 +58,7 @@ public class BatallaActivity extends Activity {
 		url = (String) getIntent().getExtras().get("url");
 
 		batallaApi = new BatallaAPI();
-
+		api = new UsrPersonajeAPI();
 		batalla=(BatallaVO) getIntent().getExtras().get("batalla");
 		if (batalla.getIdbatalla()==0)
 		{

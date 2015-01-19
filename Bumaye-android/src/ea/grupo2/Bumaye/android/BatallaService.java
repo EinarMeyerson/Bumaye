@@ -64,11 +64,11 @@ public class BatallaService extends Service {
 		contra = prefs.getString("password", "");
 		Log.e(TAG, "Servicio onCreate: " + nombre);
 
-		esperarVerificacion();
 	}
 
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.e(TAG, "Servicio onStartCommand");
+		esperarVerificacion();
 
 		return START_STICKY;
 	}
