@@ -44,7 +44,7 @@ public class BatallaActivity extends Activity {
 	PersonajeVO personaje, enemigo, personaje_batalla;
 	String strAtaq,strArma;
 	TextView nombre_personaje, ataque_personaje, defensa_personaje;
-	TextView nombre_enemigo, enemigo_ataque, enemigo_defensa;
+	TextView nombre_enemigo, enemigo_ataque, enemigo_defensa, actualizaciones_batalla;
 	ImageView ataque_1, ataque_2, ataque_3, ataque_4, ataque_5, ataque_6;
 	ImageView cascoimagen, guantesimagen, corazaimagen, armaimagen, piernasimagen, botasimagen;
 	ListView lv;
@@ -92,7 +92,8 @@ public class BatallaActivity extends Activity {
 		enemigo_ataque = (TextView) findViewById(R.id.enemigo_ataque);
 		enemigo_defensa = (TextView) findViewById(R.id.enemigo_defensa);
 		enemigo_progressBar_vida = (ProgressBar) findViewById(R.id.enemigo_progressBar_vida);
-
+		actualizaciones_batalla =(TextView) findViewById(R.id.actualizaciones_batalla);
+		
 		nombre_personaje = (TextView) findViewById(R.id.personaje_nombre);
 		ataque_personaje = (TextView) findViewById(R.id.persojane_ataque);
 		defensa_personaje = (TextView) findViewById(R.id.persojane_defensa);
@@ -117,6 +118,8 @@ public class BatallaActivity extends Activity {
 		personaje_batalla = batalla.getEnemigo(enemigo.getNombre());
 		refrescarAtributosPersonaje(batalla.getEnemigo(enemigo.getNombre()));
 		cargarAtaques();
+		
+		actualizaciones_batalla.setText("Comienza la batalla");
 		
 		es_mi_turno();
 
@@ -260,7 +263,8 @@ public class BatallaActivity extends Activity {
 		Log.i("MOD Y POSICION","mod: "+mod+" posicion: "+posicionBatalla);
 		if (mod == posicionBatalla){
 			
-			Toast.makeText(BatallaActivity.this, "Es tu turno !!BUMAYE¡¡" , Toast.LENGTH_LONG).show();
+			
+			actualizaciones_batalla.setText("Es tu turno !!BUMAYE¡¡");
 
 		}
 		else{
@@ -268,7 +272,7 @@ public class BatallaActivity extends Activity {
 
 			//modificar para que salga en el dilogo de batalla
 
-			Toast.makeText(BatallaActivity.this, "No es tu turno" , Toast.LENGTH_LONG).show();
+			actualizaciones_batalla.setText("No es tu turno");
 
 			try {
 
@@ -463,7 +467,7 @@ public class BatallaActivity extends Activity {
 			{
 				try {
 
-					Thread.sleep(4000);
+					Thread.sleep(2000);
 
 				} catch (InterruptedException e) {
 
@@ -490,14 +494,14 @@ public class BatallaActivity extends Activity {
 		
 		if (enemigo.getVida()<=0)
 		{
-			
+			actualizaciones_batalla.setText(" ¡VICTORIA!  has derrotado a tu oponente");
 		}
 		else if(personaje_batalla.getVida()<=0)
 		{
+			actualizaciones_batalla.setText(" Derrota...  has sido deshonrado");
 			
 		}else
 		{
-		
 		es_mi_turno();
 		}
 	}
