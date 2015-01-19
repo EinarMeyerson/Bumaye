@@ -11,12 +11,14 @@ public class ObjetoCofreCantidadVO {
 	private int idobjeto;
 	@SerializedName("idcofre")
 	private int idcofre;
+	@SerializedName("nombreObjeto")
+	private String nombreObjeto;
 
 	public ObjetoCofreCantidadVO() {
 	}
 
 	public ObjetoCofreCantidadVO(int idobjetocofrecantidad, int cantidad,
-			int idobjeto, int idcofre) {
+			int idobjeto, int idcofre, String nombreObjeto) {
 		super();
 		this.idobjetocofrecantidad = idobjetocofrecantidad;
 		this.cantidad = cantidad;
@@ -54,6 +56,14 @@ public class ObjetoCofreCantidadVO {
 
 	public void setIdcofre(int idcofre) {
 		this.idcofre = idcofre;
+	}
+
+	public String getNombreObjeto() {
+		return nombreObjeto;
+	}
+
+	public void setNombreObjeto(String nombreObjeto) {
+		this.nombreObjeto = nombreObjeto;
 	}
 
 }

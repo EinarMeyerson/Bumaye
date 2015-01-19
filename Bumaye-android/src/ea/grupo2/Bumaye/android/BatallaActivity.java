@@ -1,37 +1,52 @@
 package ea.grupo2.Bumaye.android;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.android.api.BatallaAPI;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
+import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
+import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
+import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 
 public class BatallaActivity extends Activity {
 
 
 	String url;
+	String serverAddress;
+	String serverPort;
 	BatallaVO batalla;
-	PersonajeVO personaje, enemigo;
+	private BatallaAPI batallaApi;
+	PersonajeVO personaje, enemigo, personaje_batalla;
 	String strAtaq,strArma;
 	TextView nombre_personaje, ataque_personaje, defensa_personaje;
-	TextView nombre_enemigo, enemigo_ataque, enemigo_defensa;
+	TextView nombre_enemigo, enemigo_ataque, enemigo_defensa, actualizaciones_batalla;
 	ImageView ataque_1, ataque_2, ataque_3, ataque_4, ataque_5, ataque_6;
+	ImageView cascoimagen, guantesimagen, corazaimagen, armaimagen, piernasimagen, botasimagen;
 	ListView lv;
 	private ProgressBar progressBar, enemigo_progressBar_vida;
 	int progressStatus = 0;
@@ -43,7 +58,9 @@ public class BatallaActivity extends Activity {
 		setContentView(R.layout.activity_batalla);
 
 		url = (String) getIntent().getExtras().get("url");
-		
+
+		batallaApi = new BatallaAPI();
+
 		batalla=(BatallaVO) getIntent().getExtras().get("batalla");
 		if (batalla.getIdbatalla()==0)
 		{
@@ -51,7 +68,17 @@ public class BatallaActivity extends Activity {
 					Toast.LENGTH_LONG).show();
 			finish();
 		}
-		
+
+		//preparar la url para los equipamientos
+		AssetManager assetManager = getAssets();
+		Properties config = new Properties();
+		try {
+			config.load(assetManager.open("config.properties"));
+			serverAddress = config.getProperty("server.address");
+			serverPort = config.getProperty("server.port");
+		} catch (IOException e) {
+			finish();
+		}
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
 		if (personaje.getIduser()==0)
 		{
@@ -60,44 +87,50 @@ public class BatallaActivity extends Activity {
 			finish();
 		}
 		getWindow().setBackgroundDrawableResource(R.drawable.fondomarron);
-		
+
 		nombre_enemigo= (TextView) findViewById(R.id.enemigo_nombre);
 		enemigo_ataque = (TextView) findViewById(R.id.enemigo_ataque);
 		enemigo_defensa = (TextView) findViewById(R.id.enemigo_defensa);
 		enemigo_progressBar_vida = (ProgressBar) findViewById(R.id.enemigo_progressBar_vida);
-
+		actualizaciones_batalla =(TextView) findViewById(R.id.actualizaciones_batalla);
+		
 		nombre_personaje = (TextView) findViewById(R.id.personaje_nombre);
 		ataque_personaje = (TextView) findViewById(R.id.persojane_ataque);
 		defensa_personaje = (TextView) findViewById(R.id.persojane_defensa);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar_vida);
 
-		ataque_1 = (ImageView)findViewById(R.id.ataque_1);
-		ataque_2 = (ImageView)findViewById(R.id.ataque_2);
-		ataque_3 = (ImageView)findViewById(R.id.ataque_3); 
-		ataque_4= (ImageView)findViewById(R.id.ataque_4); 
-		ataque_5 = (ImageView)findViewById(R.id.ataque_5); 
-		ataque_6 = (ImageView)findViewById(R.id.ataque_6); 
+		cascoimagen = (ImageView)findViewById(R.id.ataque_casco);
+		armaimagen = (ImageView)findViewById(R.id.ataque_arma);
+		guantesimagen = (ImageView)findViewById(R.id.ataque_guantes); 
+		corazaimagen= (ImageView)findViewById(R.id.ataque_coraza); 
+		piernasimagen = (ImageView)findViewById(R.id.ataque_perneras); 
+		botasimagen = (ImageView)findViewById(R.id.ataque_botas); 
 
 		lv=(ListView) findViewById(R.id.listObjetos_personaje);
 		String [] nombre_Objetos = getnomObjetos(personaje);
 		int [] cantidad_Objetos = getcantidadObjetos(personaje);
 		lv.setAdapter(new CustomAdapterBatalla(this, nombre_Objetos, cantidad_Objetos));
 
-		refrescarAtributosPersonaje(personaje);
-		
+
+
 		enemigo = batalla.getEnemigo(personaje.getNombre());
 		refrescarAtributosEnemigo(enemigo);
+		personaje_batalla = batalla.getEnemigo(enemigo.getNombre());
+		refrescarAtributosPersonaje(batalla.getEnemigo(enemigo.getNombre()));
 		cargarAtaques();
-
+		
+		actualizaciones_batalla.setText("Comienza la batalla");
+		
+		es_mi_turno();
 
 	}
 
-	public void refrescarAtributosEnemigo (PersonajeVO per)
+	public void refrescarAtributosEnemigo (PersonajeVO enemi)
 	{
-		nombre_enemigo.setText(per.getNombre());
-		enemigo_ataque.setText("Ataque  "+ Float.toString(per.getAtaque()));
-		enemigo_defensa.setText("Defensa  "+Float.toString(per.getDefensa()));
-		enemigo_progressBar_vida.setProgress((int)per.getVida());
+		nombre_enemigo.setText(enemi.getNombre());
+		enemigo_ataque.setText("Ataque  "+ Float.toString(enemi.getAtaque()));
+		enemigo_defensa.setText("Defensa  "+Float.toString(enemi.getDefensa()));
+		enemigo_progressBar_vida.setProgress((int)enemi.getVida());
 
 	}
 
@@ -191,184 +224,311 @@ public class BatallaActivity extends Activity {
 					{
 						Uri uri = Uri.parse("android.resource://ea.grupo2.Bumaye.android/drawable/"+arm.getNombre());
 
-
-						if (contador_ataques==0)
+						if (arm.getTipo().equals("arma"))
 						{
-							ataque_1.setImageURI(uri);
-							contador_ataques++;
+							armaimagen.setImageURI(uri);
 
-						}else if(contador_ataques==1)
+						}else if(arm.getTipo().equals("casco"))
 						{
-							ataque_2.setImageURI(uri);
-							contador_ataques++;
+							cascoimagen.setImageURI(uri);
 
-						}else if(contador_ataques==2)
+						}else if(arm.getTipo().equals("guantes"))
 						{
-							ataque_3.setImageURI(uri);
-							contador_ataques++;
+							guantesimagen.setImageURI(uri);
 
-						}else if(contador_ataques==3)
+						}else if(arm.getTipo().equals("coraza"))
 						{
-							ataque_4.setImageURI(uri);
-							contador_ataques++;
+							corazaimagen.setImageURI(uri);
 
-						}else if(contador_ataques==4)
+						}else if(arm.getTipo().equals("perneras"))
 						{
-							ataque_5.setImageURI(uri);
-							contador_ataques++;
+							piernasimagen.setImageURI(uri);
 
-						}else if(contador_ataques==5)
+						}else if(arm.getTipo().equals("botas"))
 						{
-							ataque_6.setImageURI(uri);
-							contador_ataques++;
+							//botas
+							botasimagen.setImageURI(uri);
 						}
 					}
-
-
 				}
-
-
 			}
-
 
 		}
 	}
 
-	public void clickAtaque(View view){
+	public void es_mi_turno()
+	{
+		int mod = batalla.getTurno() % 2;
+		int posicionBatalla=batalla.posicionJugador(personaje.getIduser());
+		Log.i("MOD Y POSICION","mod: "+mod+" posicion: "+posicionBatalla);
+		if (mod == posicionBatalla){
+			
+			
+			actualizaciones_batalla.setText("Es tu turno !!BUMAYE¡¡");
 
-		if (view.getId()==R.id.casco)
-		{
-			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+		}
+		else{
+			//no es tu turno
+
+			//modificar para que salga en el dilogo de batalla
+
+			actualizaciones_batalla.setText("No es tu turno");
+
+			try {
+
+				Thread.sleep(2000);
+
+			} catch (InterruptedException e) {
+
+				e.printStackTrace();
+
+			}
+
+			url = "http://" + serverAddress + ":" + serverPort
+					+ "/Bumaye-api/batalla/"+ batalla.getIdbatalla();
+			Log.d("URL BATALLA",url);
+			(new comprovacionPeticionTask()).execute(url);
+		}
+	}
+
+	public void enBatalla_Click(View view)
+	{
+		//es tu turno??
+		int mod = batalla.getTurno() % 2;
+		int posicionBatalla=batalla.posicionJugador(personaje.getIduser());
+		Log.i("MOD Y POSICION","mod: "+mod+" posicion: "+posicionBatalla);
+		if (mod == posicionBatalla){
+			//es tu turno
+
+
+			if (view.getId()==R.id.ataque_casco)
 			{
-				if (arm.getEquipada()==1){
-					AtaqueVO ataces = new AtaqueVO();
+				for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+				{
+					if (arm.getEquipada()==1){
+						AtaqueVO ataces = new AtaqueVO();
 
-					for (AtaqueVO atac: arm.getAtaques()) {
+						for (AtaqueVO atac: arm.getAtaques()) {
 
-						ataces=atac;
-					}
-
-					if (arm.getTipo().equals("casco")){
-						if(ataces.getNombreataque()==null){
-							ataces.setNombreataque("sin ataque");
+							ataces=atac;
 						}
-						String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-						//Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+
+						if (arm.getTipo().equals("casco")){
+							if(ataces.getNombreataque()==null){
+								ataces.setNombreataque("sin ataque");
+							}
+
+							preparar_Url(ataces.getIdataque());
+							///Funcion de mandar ataque a la api
+						}
 					}
 				}
 			}
-		}
-		if (view.getId()==R.id.guantes)
-		{
-			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+			if (view.getId()==R.id.ataque_guantes)
 			{
-				if (arm.getEquipada()==1){
-					AtaqueVO ataces = new AtaqueVO();
+				for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+				{
+					if (arm.getEquipada()==1){
+						AtaqueVO ataces = new AtaqueVO();
 
-					for (AtaqueVO atac: arm.getAtaques()) {
+						for (AtaqueVO atac: arm.getAtaques()) {
 
-						ataces=atac;
-					}
-
-					if (arm.getTipo().equals("guantes")){
-						if(ataces.getNombreataque()==null){
-							ataces.setNombreataque("sin ataque");
+							ataces=atac;
 						}
-						String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-						//Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+
+						if (arm.getTipo().equals("guantes")){
+							if(ataces.getNombreataque()==null){
+								ataces.setNombreataque("sin ataque");
+							}
+							///Funcion de mandar ataque a la api
+							preparar_Url(ataces.getIdataque());
+						}
 					}
 				}
 			}
-		}
-		if (view.getId()==R.id.coraza)
-		{
-			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+			if (view.getId()==R.id.ataque_coraza)
 			{
-				if (arm.getEquipada()==1){
-					AtaqueVO ataces = new AtaqueVO();
+				for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+				{
+					if (arm.getEquipada()==1){
+						AtaqueVO ataces = new AtaqueVO();
 
-					for (AtaqueVO atac: arm.getAtaques()) {
+						for (AtaqueVO atac: arm.getAtaques()) {
 
-						ataces=atac;
-					}
-
-					if (arm.getTipo().equals("coraza")){
-						if(ataces.getNombreataque()==null){
-							ataces.setNombreataque("sin ataque");
+							ataces=atac;
 						}
-						String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-						//Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+
+						if (arm.getTipo().equals("coraza")){
+							if(ataces.getNombreataque()==null){
+								ataces.setNombreataque("sin ataque");
+							}
+							///Funcion de mandar ataque a la api
+							preparar_Url(ataces.getIdataque());
+						}
 					}
 				}
 			}
-		}
-		if (view.getId()==R.id.arma)
-		{
-			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+			if (view.getId()==R.id.ataque_arma)
 			{
-				if (arm.getEquipada()==1){
-					AtaqueVO ataces = new AtaqueVO();
+				for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+				{
+					if (arm.getEquipada()==1){
+						AtaqueVO ataces = new AtaqueVO();
 
-					for (AtaqueVO atac: arm.getAtaques()) {
+						for (AtaqueVO atac: arm.getAtaques()) {
 
-						ataces=atac;
-					}
-
-					if (arm.getTipo().equals("arma")){
-						if(ataces.getNombreataque()==null){
-							ataces.setNombreataque("sin ataque");
+							ataces=atac;
 						}
-						String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-						//Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+
+						if (arm.getTipo().equals("arma")){
+							if(ataces.getNombreataque()==null){
+								ataces.setNombreataque("sin ataque");
+							}
+							///Funcion de mandar ataque a la api
+							preparar_Url(ataces.getIdataque());
+						}
 					}
 				}
 			}
-		}
-		if (view.getId()==R.id.piernas)
-		{
-			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+			if (view.getId()==R.id.ataque_perneras)
 			{
-				if (arm.getEquipada()==1){
-					AtaqueVO ataces = new AtaqueVO();
+				for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+				{
+					if (arm.getEquipada()==1){
+						AtaqueVO ataces = new AtaqueVO();
 
-					for (AtaqueVO atac: arm.getAtaques()) {
+						for (AtaqueVO atac: arm.getAtaques()) {
 
-						ataces=atac;
-					}
-
-					if (arm.getTipo().equals("perneras")){
-						if(ataces.getNombreataque()==null){
-							ataces.setNombreataque("sin ataque");
+							ataces=atac;
 						}
-						String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-						//Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+
+						if (arm.getTipo().equals("perneras")){
+							if(ataces.getNombreataque()==null){
+								ataces.setNombreataque("sin ataque");
+							}
+							///Funcion de mandar ataque a la api
+							preparar_Url(ataces.getIdataque());
+						}
 					}
 				}
 			}
-		}
-		if (view.getId()==R.id.botas)
-		{
-			for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+			if (view.getId()==R.id.ataque_botas)
 			{
-				if (arm.getEquipada()==1){
-					AtaqueVO ataces = new AtaqueVO();
+				for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
+				{
+					if (arm.getEquipada()==1){
+						AtaqueVO ataces = new AtaqueVO();
 
-					for (AtaqueVO atac: arm.getAtaques()) {
+						for (AtaqueVO atac: arm.getAtaques()) {
 
-						ataces=atac;
-					}
-
-					if (arm.getTipo().equals("botas")){
-						if(ataces.getNombreataque()==null){
-							ataces.setNombreataque("sin ataque");
+							ataces=atac;
 						}
-						String especificaciones ="Nombre : " + arm.getNombre()+ "\n Ataque : " + arm.getAtaque() + "\n Defensa: " + arm.getDefensa() + "\n Ataque : " + ataces.getNombreataque();
-						//Toast.makeText(PerfilActivity.this, especificaciones , Toast.LENGTH_LONG).show();
+
+						if (arm.getTipo().equals("botas")){
+							if(ataces.getNombreataque()==null){
+								ataces.setNombreataque("sin ataque");
+							}
+
+							//funcion de pusi y 
+							preparar_Url(ataces.getIdataque());
+						}
 					}
 				}
 			}
+
+
+
+		}
+		else{
+
+		}
+	}
+
+	public void preparar_Url(int idatacque)
+	{
+		url = "http://" + serverAddress + ":" + serverPort
+				+ "/Bumaye-api/batalla/"+ batalla.getIdbatalla() +"/jugador/"+personaje.getIduser()+"/ataque/"+ idatacque;
+		Log.d("URL BATALLA",url);
+		(new AtaqueTask()).execute(url);
+	}
+
+	private class AtaqueTask extends AsyncTask<String, Void, BatallaVO> {
+		@Override
+		protected BatallaVO doInBackground(String... params) {
+			BatallaVO enbatalla  = new BatallaVO();
+			enbatalla = batallaApi.ataque_enBatalla(params[0]);			
+			return enbatalla;
 		}
 
+		@Override
+		protected void onPostExecute(BatallaVO result) {
+			Log.d("Batalla actualizada id:",""+result.getIdbatalla());
+			if (result!= null)
+			{
+				try {
+
+					Thread.sleep(2000);
+
+				} catch (InterruptedException e) {
+
+					e.printStackTrace();
+
+				}
+				refrescar_batalla(result);
+			}	
+		}
+
+		@Override
+		protected void onPreExecute() {
+
+		}
+	}
+
+	private void refrescar_batalla(BatallaVO batalla_actualizada){
+		
+		batalla = batalla_actualizada;
+		enemigo = batalla_actualizada.getEnemigo(personaje.getNombre());
+		refrescarAtributosEnemigo(enemigo);
+		personaje_batalla=batalla_actualizada.getEnemigo(enemigo.getNombre());
+		refrescarAtributosPersonaje(batalla_actualizada.getEnemigo(enemigo.getNombre()));
+		
+		if (enemigo.getVida()<=0)
+		{
+			actualizaciones_batalla.setText(" ¡VICTORIA!  has derrotado a tu oponente");
+		}
+		else if(personaje_batalla.getVida()<=0)
+		{
+			actualizaciones_batalla.setText(" Derrota...  has sido deshonrado");
+			
+		}else
+		{
+		es_mi_turno();
+		}
+	}
+
+	private class comprovacionPeticionTask extends AsyncTask<String, Void, BatallaVO> {
+
+		@Override
+		protected BatallaVO doInBackground(String... params) {
+			BatallaVO batallavo  = new BatallaVO();
+			Log.d("Enviando azeptacion","OOOOOOOOOOOOOOOuli shiet");
+			batallavo=batallaApi.aceptacion_peticionBatalla(params[0]);			
+			return batallavo;
+		}
+
+		@Override
+		protected void onPostExecute(BatallaVO result) {
+			if (result !=null)
+			{
+				Log.d("Obteniendo resultado: ","idBatalla: "+result.getIdbatalla());
+				refrescar_batalla(result);
+			}
+		}
+
+		@Override
+		protected void onPreExecute() {
+
+		}
 	}
 
 }
