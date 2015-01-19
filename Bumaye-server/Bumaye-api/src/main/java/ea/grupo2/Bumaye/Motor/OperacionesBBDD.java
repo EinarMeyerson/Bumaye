@@ -2315,8 +2315,6 @@ public class OperacionesBBDD implements BumayeInterface{
 		// TODO Auto-generated method stub
 		PeticionBatallaVO peticion;
 		String Comprobacion="No";
-		BatallaVO batallaaceptada= new BatallaVO();
-		ArrayList<PersonajeVO> listaPersonajesVO = new ArrayList<PersonajeVO>();
 		peticion= comprovacion_peticion(iddefensor);
 		if (peticion!=null)
 		{
@@ -2798,11 +2796,12 @@ public class OperacionesBBDD implements BumayeInterface{
 			//sacar la batalla que ya esta inicializada
 			batallaaceptada= listbatallas.getBatallaVO_byIdAtacante(atacante);
 			
-//			if (peticion.getAceptada().equals("Si"))
-//			{
-//				eliminar_peticion(atacante);
-//				System.out.print("Peticion eliminada , id: "+atacante);
-//			}
+			if (peticion.getAceptada().equals("Si"))
+			{
+				
+				eliminar_peticion(atacante);
+				System.out.print("Peticion eliminada , id: "+atacante + "\n");
+			}
 		}
 		else
 		{
@@ -2823,7 +2822,7 @@ public class OperacionesBBDD implements BumayeInterface{
 	@Override
 	public void eliminar_peticion(int idatacante) {
 		// TODO Auto-generated method stub
-		
-	        	listpeticiones.remove_peticion(idatacante);
+		PeticionBatallaVO peticion = listpeticiones.getPeticionAtacanteVO(idatacante); 
+	    listpeticiones.remove_peticion(peticion);
 	}
 }

@@ -3,6 +3,8 @@ package ea.grupo2.Bumaye.ClasesVO;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ea.grupo2.Bumaye.pojos.Objeto;
+
 public class ListaPeticionesVO {
 	ArrayList<PeticionBatallaVO> listapeticiones = new ArrayList<PeticionBatallaVO>();
 	HashMap<Integer, PeticionBatallaVO> mapPeticionAtacanteVO = new HashMap<Integer, PeticionBatallaVO>();
@@ -49,20 +51,9 @@ public class ListaPeticionesVO {
 		return i;
 	}
 	
-	public void remove_peticion (int idatacante)
+	public void remove_peticion (PeticionBatallaVO peticion)
 	{
-		int i=0;
-		for(PeticionBatallaVO p: listapeticiones)
-	    {
-			p = getPeticionAtacanteVO(i);
-			System.out.print("&& Eliminar peticicion IDatacante "+p.getIdatacante());
-
-	        if(p.getIdatacante()==idatacante)
-	        {
-	        	listapeticiones.remove(p);
-	            break;
-	        }
-	        i++;
-	}
+		
+		listapeticiones.remove(peticion);
 	}
 }

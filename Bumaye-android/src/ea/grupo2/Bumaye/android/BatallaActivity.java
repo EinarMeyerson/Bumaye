@@ -37,7 +37,7 @@ public class BatallaActivity extends Activity {
 	String serverPort;
 	BatallaVO batalla;
 	private BatallaAPI batallaApi;
-	PersonajeVO personaje, enemigo;
+	PersonajeVO personaje, enemigo, personaje_batalla;
 	String strAtaq,strArma;
 	TextView nombre_personaje, ataque_personaje, defensa_personaje;
 	TextView nombre_enemigo, enemigo_ataque, enemigo_defensa;
@@ -111,6 +111,7 @@ public class BatallaActivity extends Activity {
 
 		enemigo = batalla.getEnemigo(personaje.getNombre());
 		refrescarAtributosEnemigo(enemigo);
+		personaje_batalla = batalla.getEnemigo(enemigo.getNombre());
 		refrescarAtributosPersonaje(batalla.getEnemigo(enemigo.getNombre()));
 		cargarAtaques();
 		
@@ -268,7 +269,7 @@ public class BatallaActivity extends Activity {
 
 			try {
 
-				Thread.sleep(4000);
+				Thread.sleep(2000);
 
 			} catch (InterruptedException e) {
 
@@ -457,6 +458,15 @@ public class BatallaActivity extends Activity {
 			Log.d("Batalla actualizada id:",""+result.getIdbatalla());
 			if (result!= null)
 			{
+				try {
+
+					Thread.sleep(4000);
+
+				} catch (InterruptedException e) {
+
+					e.printStackTrace();
+
+				}
 				refrescar_batalla(result);
 			}	
 		}
@@ -468,11 +478,25 @@ public class BatallaActivity extends Activity {
 	}
 
 	private void refrescar_batalla(BatallaVO batalla_actualizada){
-
+		
+		batalla = batalla_actualizada;
 		enemigo = batalla_actualizada.getEnemigo(personaje.getNombre());
 		refrescarAtributosEnemigo(enemigo);
+		personaje_batalla=batalla_actualizada.getEnemigo(enemigo.getNombre());
 		refrescarAtributosPersonaje(batalla_actualizada.getEnemigo(enemigo.getNombre()));
+		
+		if (enemigo.getVida()<=0)
+		{
+			
+		}
+		else if(personaje_batalla.getVida()<=0)
+		{
+			
+		}else
+		{
+		
 		es_mi_turno();
+		}
 	}
 
 	private class comprovacionPeticionTask extends AsyncTask<String, Void, BatallaVO> {
