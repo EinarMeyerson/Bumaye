@@ -64,8 +64,8 @@ mercadoApp.controller('MercadoCtrl', function($cookieStore, $scope, $http, $wind
 				idobjeto:$scope.venderIdObjeto
 		};	
 		$http.post(urlVenderMercado, data, config).success(function(data, status, headers, config){
+			$window.location.reload();
 		})	
-//		$window.location.reload();
 	};
 	$scope.loginMercado = function(){
 		var config = {
@@ -84,7 +84,6 @@ mercadoApp.controller('MercadoCtrl', function($cookieStore, $scope, $http, $wind
 			this.mercadoPers = $cookieStore.get("personaje");
 			$cookieStore.put("idUser", responsedata.iduser);
 			console.log($cookieStore.get("idUser"));
-
 		    $window.location.replace("/auth.html");
 		})	
 	      
@@ -93,7 +92,6 @@ mercadoApp.controller('MercadoCtrl', function($cookieStore, $scope, $http, $wind
 	$scope.logOutMercado = function(){
 	    $window.location.replace("/index.html");
 
-		
 	};
 	
 });
