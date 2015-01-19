@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,10 +12,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
@@ -38,6 +36,7 @@ public class BatallaService extends Service {
 	PersonajeVO personaje = new PersonajeVO();
 	String url;
 	String url2;
+	ProgressDialog pd;
 	BatallaVO batall = new BatallaVO();
 	private MediaPlayer media;
 	private PowerManager.WakeLock lock;
@@ -96,7 +95,6 @@ public class BatallaService extends Service {
 		url = "http://" + serverAddress + ":" + serverPort
 				+ "/Bumaye-api/batalla/comprovar/" + iduser;
 		(new FetchInBackground()).execute(url);
-
 	}
 
 	private class FetchInBackground extends AsyncTask<String, Void, String> {
@@ -104,13 +102,14 @@ public class BatallaService extends Service {
 		@Override
 		protected String doInBackground(String... params) {
 			String aver;
-			Log.d("Comprobando batalla", "OOOOOOOOOOOOOOOuli shiet");
+			Log.d("Comprobando batalla", "Enviando comprobacion");
 			aver = batalla.comprovacion_peticionBatalla(params[0]);
 			return aver;
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
+			Log.d("Comprobando batalla", result);
 			if (result.equals("No")) {
 				try {
 					Thread.sleep(4000);
@@ -133,9 +132,9 @@ public class BatallaService extends Service {
 				url = "http://" + serverAddress + ":" + serverPort
 						+ "/Bumaye-api/batalla/aceptar/" + iduser;
 				BatallaVO batallavo = new BatallaVO();
-				batallavo.setIdbatalla(0);
-				Log.d("Comprobando batalla", "OOOOOOOOOOOOOOOuli shiet");
-				batallavo = batalla.aceptacion_peticionBatalla(params[0]);
+				Log.d("Aceptando batalla", params[0]);
+
+				batallavo = batalla.aceptacion_peticionBatalla(url);
 
 				return batallavo;
 			}
@@ -143,20 +142,14 @@ public class BatallaService extends Service {
 			@Override
 			protected void onPostExecute(BatallaVO result) {
 
-				Log.d("Obteniendo resultado: ",
-						"idBatalla: " + result.getIdbatalla());
 				batall = result;
-				Log.d("Comprobando batall", "ID: " + batall.getIdbatalla());
-				Log.d("Comprobando batall", batall.getEnemigo(nombre).getNombre());
-
+				Log.d("Comprobando batall", "ID: " + result.getIdbatalla());
+				iniciar_batalla(result);
 				try {
 					Thread.sleep(4000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-
-				esperarVerificacion();
-
 			}
 
 			@Override
@@ -168,6 +161,7 @@ public class BatallaService extends Service {
 		private void alarmaLucha() {
 			url2 = "http://" + serverAddress + ":" + serverPort
 					+ "/Bumaye-api/user";
+			(new LoginUsrTask()).execute(nombre, contra, url2);
 
 			PowerManager power = (PowerManager) getSystemService(Context.POWER_SERVICE);
 			lock = power.newWakeLock(PowerManager.FULL_WAKE_LOCK
@@ -188,9 +182,7 @@ public class BatallaService extends Service {
 							// media.stop();
 							vibrateThread.interrupt();
 							lock.release();
-							(new LoginUsrTask()).execute(nombre, contra, url2);
-							(new AcceptInBackground()).execute(nombre, contra,
-									url2);
+							(new AcceptInBackground()).execute(url);
 						}// Ends onClick
 					})
 					.setNegativeButton(R.string.cancel, new OnClickListener() {
@@ -207,38 +199,38 @@ public class BatallaService extends Service {
 			dialog.getWindow().setType(
 					WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 			dialog.show();
-			// startAlarm(this);
+			startAlarm(getApplicationContext());
 			vibrateThread.start();
 		}
 
 		private void startAlarm(final Context context) {
 			new Thread() {
 				public void run() {
-					Uri uri = RingtoneManager
-							.getDefaultUri(RingtoneManager.TYPE_ALARM);
-					if (uri == null) {
-						uri = RingtoneManager
-								.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-						if (uri == null)
-							uri = RingtoneManager
-									.getDefaultUri(RingtoneManager.TYPE_ALARM);
-					}// Descomentar per alarma
-
-					media = new MediaPlayer();
-					try {
-						media.setDataSource(context, uri);
-						final AudioManager audioManager = (AudioManager) context
-								.getSystemService(Context.AUDIO_SERVICE);
-						if (audioManager
-								.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
-							media.setAudioStreamType(AudioManager.STREAM_ALARM);
-							media.setLooping(true);
-							media.prepare();
-							media.start();
-						}// Ends if
-					}// Ends try
-					catch (Exception e) {
-					}
+					// Uri uri = RingtoneManager
+					// .getDefaultUri(RingtoneManager.TYPE_ALARM);
+					// if (uri == null) {
+					// uri = RingtoneManager
+					// .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+					// if (uri == null)
+					// uri = RingtoneManager
+					// .getDefaultUri(RingtoneManager.TYPE_ALARM);
+					// }// Descomentar per alarma
+					//
+					// media = new MediaPlayer();
+					// try {
+					// media.setDataSource(context, uri);
+					// final AudioManager audioManager = (AudioManager) context
+					// .getSystemService(Context.AUDIO_SERVICE);
+					// if (audioManager
+					// .getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
+					// media.setAudioStreamType(AudioManager.STREAM_ALARM);
+					// media.setLooping(true);
+					// media.prepare();
+					// media.start();
+					// }// Ends if
+					// }// Ends try
+					// catch (Exception e) {
+					// }
 				}// Ends run method
 			}.start();
 		}// Ends startAlarm method
@@ -282,16 +274,20 @@ public class BatallaService extends Service {
 				if (result == null) {
 					Toast.makeText(getApplicationContext(),
 							"Server not active", Toast.LENGTH_LONG).show();
-				} else {
-					if (result.getNombre() != "") {
-						iniciar_batalla(batall);
-						Log.d("Comprobando pers",
-								"ID: " + personaje.getIduser());
-
-					}
 				}
+				if (pd != null)
+					pd.dismiss();
+			}
 
+			@Override
+			protected void onPreExecute() {
+				pd = new ProgressDialog(BatallaService.this);
+				pd.setTitle("Accediendo...");
+				pd.setCancelable(false);
+				pd.setIndeterminate(true);
+				pd.show();
 			}
 		}
 	}
+
 }

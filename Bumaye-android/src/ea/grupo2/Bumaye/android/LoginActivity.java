@@ -120,7 +120,6 @@ public class LoginActivity extends Activity {
 		intent.putExtra("personaje", person);
 		startActivity(intent);
 		finish();
-
 	}
 
 	private void wronglogin() {

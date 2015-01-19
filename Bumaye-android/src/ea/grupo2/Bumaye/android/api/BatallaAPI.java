@@ -85,6 +85,8 @@ public class BatallaAPI {
 				 {
 			 
 				 }
+		 Log.i("aceptada batalla",Integer.toString(data.getIdbatalla()));
+
 		 return data;
 	}
 
