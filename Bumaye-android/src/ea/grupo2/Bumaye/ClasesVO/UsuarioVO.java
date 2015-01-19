@@ -1,8 +1,10 @@
 package ea.grupo2.Bumaye.ClasesVO;
 
+import java.io.Serializable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class UsuarioVO {
+public class UsuarioVO implements Serializable {
 	@SerializedName("username")
 	private String username;
 	@SerializedName("pass")
@@ -15,30 +17,33 @@ public class UsuarioVO {
 	private double longitud;
 	@SerializedName("latitud")
 	private double latitud;
-	
-	public UsuarioVO (){
+
+	public UsuarioVO() {
 	}
 
-public UsuarioVO(String idGCM, String username, String pass, String email,
-		double latitud, double longitud) {
-	super();
-	this.idGCM = idGCM;
-	this.username = username;
-	this.pass = pass;
-	this.email = email;
-	this.longitud = longitud;
-	this.latitud = latitud;
-}
-	
+	public UsuarioVO(String idGCM, String username, String pass, String email,
+			double latitud, double longitud) {
+		super();
+		this.idGCM = idGCM;
+		this.username = username;
+		this.pass = pass;
+		this.email = email;
+		this.longitud = longitud;
+		this.latitud = latitud;
+	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getPass() {
 		return pass;
 	}
+
 	public void setPass(String pass) {
 		this.pass = pass;
 	}

@@ -1,8 +1,10 @@
 package ea.grupo2.Bumaye.ClasesVO;
 
+import java.io.Serializable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class ObjetoCofreCantidadVO {
+public class ObjetoCofreCantidadVO implements Serializable {
 	@SerializedName("idobjetocofrecantidad")
 	private int idobjetocofrecantidad;
 	@SerializedName("cantidad")
