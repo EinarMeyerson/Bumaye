@@ -110,18 +110,21 @@ public class BatallaService extends Service {
 		@Override
 		protected void onPostExecute(String result) {
 			Log.d("Comprobando batalla", result);
-			if (result.equals("No")) {
-				try {
-					Thread.sleep(4000);
-					esperarVerificacion();
+			if (result.equals(null)) {
 
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			} else {
-				alarmaLucha();
-			}
+				if (result.equals("No")) {
+					try {
+						Thread.sleep(4000);
+						esperarVerificacion();
 
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				} else {
+					alarmaLucha();
+				}
+			}
 		}
 
 		private class AcceptInBackground extends
