@@ -65,23 +65,27 @@ public class BatallaService extends Service {
 		iduser = prefs.getString("iduser", "");
 		nombre = prefs.getString("nombre", "");
 		contra = prefs.getString("password", "");
+		Log.e(TAG, "Servicio onCreate: " + nombre);
 
-		Log.e(TAG, "recibimos personaje: " + nombre);
 		esperarVerificacion();
 	}
 
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		Log.e(TAG, "Servicio onStartCommand");
+
 		return START_STICKY;
 	}
 
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
+		Log.e(TAG, "Servicio onStart");
 		esperarVerificacion();
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
+		Log.e(TAG, "Servicio onBind");
 		return null;
 	}
 
@@ -121,8 +125,8 @@ public class BatallaService extends Service {
 			} else {
 				if (result.equals("Si")) {
 					alarmaLucha();
-				} else {					
-						esperarVerificacion();
+				} else {
+					esperarVerificacion();
 				}
 			}
 		}
@@ -140,8 +144,6 @@ public class BatallaService extends Service {
 				url = "http://" + serverAddress + ":" + serverPort
 						+ "/Bumaye-api/batalla/aceptar/" + iduser;
 				BatallaVO batallavo = new BatallaVO();
-				Log.d("Aceptando batalla", params[0]);
-
 				batallavo = batalla.aceptacion_peticionBatalla(url);
 
 				return batallavo;
@@ -149,16 +151,8 @@ public class BatallaService extends Service {
 
 			@Override
 			protected void onPostExecute(BatallaVO result) {
-
 				batall = result;
-				Log.d("Comprobando batall", "ID: " + result.getIdbatalla());
 				iniciar_batalla(result);
-				
-			}
-
-			@Override
-			protected void onPreExecute() {
-
 			}
 		}
 
@@ -172,9 +166,9 @@ public class BatallaService extends Service {
 					| PowerManager.ACQUIRE_CAUSES_WAKEUP,
 					"AlarmReceiverActivity");
 			vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-			long[] pattern = { 0, 100, 1000};
+			long[] pattern = { 0, 1000, 1500 };
 			vibrator.vibrate(pattern, 0);
-			
+
 			lock.acquire();
 			AlertDialog.Builder builder = new AlertDialog.Builder(
 					getApplicationContext());
@@ -192,7 +186,7 @@ public class BatallaService extends Service {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							vibrator.cancel();
-							lock.release();							
+							lock.release();
 							dialog.dismiss();
 						}// Ends onClick
 					});
