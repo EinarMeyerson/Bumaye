@@ -101,7 +101,7 @@ public class BatallaService extends Service {
 
 		@Override
 		protected String doInBackground(String... params) {
-			String aver;
+			String aver = "No";
 			Log.d("Comprobando batalla", "Enviando comprobacion");
 			aver = batalla.comprovacion_peticionBatalla(params[0]);
 			return aver;
@@ -109,20 +109,20 @@ public class BatallaService extends Service {
 
 		@Override
 		protected void onPostExecute(String result) {
-			Log.d("Comprobando batalla", result);
+			Log.e("Resultado comprovacion", result);
 			if (result.equals(null)) {
 
 			} else {
-				if (result.equals("No")) {
+				if (result.equals("Si")) {
+					alarmaLucha();
+				} else {
 					try {
-						Thread.sleep(4000);
+						Thread.sleep(10000);
 						esperarVerificacion();
 
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-				} else {
-					alarmaLucha();
 				}
 			}
 		}
@@ -278,17 +278,17 @@ public class BatallaService extends Service {
 					Toast.makeText(getApplicationContext(),
 							"Server not active", Toast.LENGTH_LONG).show();
 				}
-				if (pd != null)
-					pd.dismiss();
+				// if (pd != null)
+				// pd.dismiss();
 			}
 
 			@Override
 			protected void onPreExecute() {
-				pd = new ProgressDialog(BatallaService.this);
-				pd.setTitle("Accediendo...");
-				pd.setCancelable(false);
-				pd.setIndeterminate(true);
-				pd.show();
+				// pd = new ProgressDialog(BatallaService.this);
+				// pd.setTitle("Accediendo...");
+				// pd.setCancelable(false);
+				// pd.setIndeterminate(true);
+				// pd.show();
 			}
 		}
 	}
