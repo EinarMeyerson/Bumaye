@@ -1,42 +1,53 @@
 <!DOCTYPE html>
 <html ng-app="mercadoApp" ng-controller="MercadoCtrl as mercado">
 <head>
+
 <link rel="stylesheet"
 	href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 <script type="text/javascript" src="angular.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
 <script type="text/javascript" src="app.js"></script>
 	<script src="text/javascript/jquery.cookie.js"></script>
-
+<style type="text/css">
+body {
+	background-image: url("img/textura-marron-2874.jpg");
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	color:white;
+}
+#input {
+   color:black;
+}
+</style>
 </head>
 <body class="list-group">
-	<header ng-controller="MercadoCtrl as mercado">
+	<header class="col-md-12" ng-controller="MercadoCtrl as mercado">
 		<h1 class="text-center">Mercado Bumaye</h1>
 		<h4> Bienvenido al mercado {{mercado.mercadoPers.nombre}} !!</h4>
 				<h4>Efectivo disponible: {{mercado.mercadoPers.laPasta | currency}}</h4>
 		<div class="pull-right">
 		<button class="btn-danger" ng-click="logOutMercado()">Log out</button>
 		</div>
-				
-		
 	</header>
-	<form ng-init="loadInventarioUser()">
-		<select >
-			<option ng-repeat="inventario in inventario_list">
+	<form class="col-md-12" ng-init="loadInventarioUser()">
+		<select id="input">
+			<option id="input" ng-repeat="inventario in inventario_list">
 				Id: {{inventario.idobjeto}} {{inventario.nombre}} x{{inventario.cantidad}}</option>
-		</select> Id objeto: <input type="number" ng-model=venderIdObjeto size="5">
-		Cantidad: <input type="number" ng-model=venderCantidad size="5">
-		Precio: <input type="number" ng-model=venderPrecio size="5">
+		</select> Id objeto: <input id="input" type="number" ng-model=venderIdObjeto size="5">
+		Cantidad: <input id="input" type="number" ng-model=venderCantidad size="5">
+		Precio: <input id="input" type="number" ng-model=venderPrecio size="5">
 		<button class="btn-warning" ng-click="venderMercado()">Vender</button>
 	</form>
-	<div class="list-group-item" ng-init="loadMercado()">
+	<div ng-init="loadMercado()">
 		<div class="col-md-6" ng-repeat="mercado in mercado_list">
 			<h3>
 				{{mercado.objeto.nombre}} Cantidad: {{mercado.cantidad}} <em
 					class="pull-right">{{mercado.precioUnidad | currency}}</em>
 			</h3>
 			<form ng-controller="MercadoCtrl" class="pull-right">
-				Cantidad: <input type="text" ng-model=compraCantidad size="5">
+				Cantidad: <input id="input" type="text" ng-model=compraCantidad size="5">
 				<button class="btn-success" ng-click="compraMercado(mercado.idEntradaMercado)">Comprar</button>
 
 			</form>
