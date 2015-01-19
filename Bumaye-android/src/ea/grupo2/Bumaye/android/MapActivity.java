@@ -53,6 +53,7 @@ public class MapActivity extends FragmentActivity {
 	private DrawerLayout mDrawerLayout;
 	private MapAPI api;
 	private UsrPersonajeAPI apip;
+	private ProgressDialog pdp;
 	String url, contra;
 	NumberPicker np;
 	private BatallaAPI batalla;
@@ -430,7 +431,6 @@ public class MapActivity extends FragmentActivity {
 
 	private class esperarVerificacionTask extends
 			AsyncTask<String, Void, PeticionBatallaVO> {
-		private ProgressDialog pd;
 
 		@Override
 		protected PeticionBatallaVO doInBackground(String... params) {
@@ -440,9 +440,7 @@ public class MapActivity extends FragmentActivity {
 		}
 
 		@Override
-		protected void onPostExecute(PeticionBatallaVO result) {
-			if (pd != null)
-				pd.dismiss();
+		protected void onPostExecute(PeticionBatallaVO result) {			
 			if (result != null) {
 
 				Log.i("Resultado peticion",
@@ -471,11 +469,11 @@ public class MapActivity extends FragmentActivity {
 
 		@Override
 		protected void onPreExecute() {
-			pd = new ProgressDialog(MapActivity.this);
-			pd.setTitle("Esperando verificacion");
-			pd.setCancelable(false);
-			pd.setIndeterminate(true);
-			pd.show();
+			pdp = new ProgressDialog(MapActivity.this);
+			pdp.setTitle("Esperando verificacion");
+			pdp.setCancelable(false);
+			pdp.setIndeterminate(true);
+			pdp.show();
 		}
 	}
 
@@ -507,7 +505,8 @@ public class MapActivity extends FragmentActivity {
 
 	private void iniciar_batalla(BatallaVO batalla) {
 		mapcomp = false;
-
+		if (pdp!=null)
+			pdp.dismiss();
 		Log.d("Abriendo la batalla", "Gasele");
 		Intent intent = new Intent(this, BatallaActivity.class);
 		intent.putExtra("url", url);

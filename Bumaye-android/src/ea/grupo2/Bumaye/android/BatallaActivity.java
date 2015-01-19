@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Properties;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,7 +31,7 @@ import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
 
 public class BatallaActivity extends Activity {
 
-
+	ProgressDialog pdp;
 	String url;
 	String serverAddress;
 	String serverPort;
@@ -298,7 +299,11 @@ public class BatallaActivity extends Activity {
 		if (mod == posicionBatalla){
 			//es tu turno
 
-
+			pdp = new ProgressDialog(BatallaActivity.this);
+			pdp.setTitle("Atacando..");
+			pdp.setCancelable(false);
+			pdp.setIndeterminate(true);
+			pdp.show();
 			if (view.getId()==R.id.ataque_casco)
 			{
 				for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
@@ -460,6 +465,8 @@ public class BatallaActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(BatallaVO result) {
+			if (pdp!=null)
+				pdp.dismiss();
 			Log.d("Batalla actualizada id:",""+result.getIdbatalla());
 			if (result!= null)
 			{
