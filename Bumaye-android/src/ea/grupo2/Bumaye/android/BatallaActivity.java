@@ -520,7 +520,6 @@ public class BatallaActivity extends Activity {
 
 			}
 			actualizaciones_batalla.setText(" Derrota...  has sido deshonrado");
-			actualizaciones_batalla.setText(" ¡VICTORIA!  has derrotado a tu oponente");
 			SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
 			nombre = prefs.getString("nombre", "");
 			contra = prefs.getString("password", "");	
