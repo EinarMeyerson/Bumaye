@@ -115,15 +115,11 @@ public class LoginActivity extends Activity {
 		editor.putString("iduser", Long.toString(person.getIduser()));
 		editor.commit();
 
-		Intent myIntent = new Intent(this, LocationService.class);
-		startService(myIntent);
-		
 		Intent intent = new Intent(this, PerfilActivity.class);
 		intent.putExtra("url", url);
 		intent.putExtra("personaje", person);
 		startActivity(intent);
 		finish();
-
 	}
 
 	private void wronglogin() {

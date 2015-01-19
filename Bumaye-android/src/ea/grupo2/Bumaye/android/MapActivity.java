@@ -477,7 +477,7 @@ public class MapActivity extends FragmentActivity {
 		protected BatallaVO doInBackground(String... params) {
 			BatallaVO batallavo  = new BatallaVO();
 			Log.d("Enviando azeptacion","OOOOOOOOOOOOOOOuli shiet");
-			batallavo=batalla.comprovacion_peticionBatalla(params[0]);			
+			batallavo=batalla.aceptacion_peticionBatalla(params[0]);			
 			return batallavo;
 		}
 

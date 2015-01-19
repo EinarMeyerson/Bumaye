@@ -14,9 +14,11 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.apache.http.entity.StringEntity;
+
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -74,7 +76,7 @@ public class BatallaAPI {
 		 return data;
 	}
 	
-	public BatallaVO comprovacion_peticionBatalla(String url) {		
+	public BatallaVO aceptacion_peticionBatalla(String url) {		
 		Gson gson = new Gson();
 		HttpClient httpClient = new DefaultHttpClient();
 		BatallaVO data = new BatallaVO();
@@ -90,7 +92,26 @@ public class BatallaAPI {
 		 } catch (Exception e) {
 		 Log.i("json array","While getting server response server generate error. ");
 		 }
+		 if (data.equals(null))
+				 {
+			 
+				 }
+		 Log.i("aceptada batalla",Integer.toString(data.getIdbatalla()));
+
 		 return data;
+	}
+
+	public String comprovacion_peticionBatalla(String url) {		
+		HttpClient httpClient = new DefaultHttpClient();
+		 String responseString = "";
+		 httpClient = WebServiceUtils.getHttpClient();
+		 try {
+			 HttpResponse response = httpClient.execute(new HttpGet(url));
+			 responseString = EntityUtils.toString(response.getEntity());
+			  } catch (Exception e) {
+		 Log.i("json array","While getting server response server generate error. ");
+		 }
+		 return responseString;
 	}
 	
 	public BatallaVO ataque_enBatalla(String url) {		

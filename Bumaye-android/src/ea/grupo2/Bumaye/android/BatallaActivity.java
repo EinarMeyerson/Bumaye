@@ -25,9 +25,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
+import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
+import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
+import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 
 public class BatallaActivity extends Activity {
 
@@ -75,7 +79,6 @@ public class BatallaActivity extends Activity {
 		} catch (IOException e) {
 			finish();
 		}
-
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
 		if (personaje.getIduser()==0)
 		{
@@ -505,7 +508,7 @@ public class BatallaActivity extends Activity {
 		protected BatallaVO doInBackground(String... params) {
 			BatallaVO batallavo  = new BatallaVO();
 			Log.d("Enviando azeptacion","OOOOOOOOOOOOOOOuli shiet");
-			batallavo=batallaApi.comprovacion_peticionBatalla(params[0]);			
+			batallavo=batallaApi.aceptacion_peticionBatalla(params[0]);			
 			return batallavo;
 		}
 
