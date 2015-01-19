@@ -6,17 +6,18 @@ import java.util.Properties;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,7 +30,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
-import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.android.api.BatallaAPI;
 
@@ -40,7 +40,8 @@ public class PerfilActivity extends Activity {
 	private BatallaAPI batalla;
 	TableLayout table_layout;
 	String[] lista_atributos = new String[6];// para crear las filas de la tabla
-												// de ataques
+	BatallaService mService;
+											// de ataques
 	String url;
 	boolean servicio;
 	String serverAddress;
@@ -107,17 +108,28 @@ public class PerfilActivity extends Activity {
 		botasimagen = (ImageView) findViewById(R.id.botas);
 		servicio = isMyServiceRunning(LocationService.class);
 		if (servicio == false){
-			Intent myIntent = new Intent(this, LocationService.class);
+			Intent myIntent = new Intent(getApplicationContext(), LocationService.class);
 			startService(myIntent);
-			Intent myIntent2 = new Intent(this, BatallaService.class);
+			Intent myIntent2 = new Intent(getApplicationContext(), BatallaService.class);
 			myIntent2.putExtra("url", url);
 			myIntent2.putExtra("personaje", personaje);
-			startService(myIntent2);			
+			startService(myIntent2);
+//			Intent intent = new Intent(this, BatallaService.class);
+//	        bindService(intent, m_serviceConnection, BIND_AUTO_CREATE);
 		}
 
 		refreshPerfil();
 	}
 
+private ServiceConnection m_serviceConnection = new ServiceConnection() {
+    public void onServiceConnected(ComponentName className, IBinder service) {
+        mService = ((BatallaService.MyBinder)service).getService();
+}
+
+public void onServiceDisconnected(ComponentName className) {
+        mService = null;
+}
+};
 	private boolean isMyServiceRunning(Class<?> serviceClass) {
 		ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 		for (RunningServiceInfo service : manager
@@ -377,57 +389,9 @@ public class PerfilActivity extends Activity {
 			startActivity(intenttt);
 			finish();
 			break;
-		case 3:
-			// solo de prueva habra que hacer que mande peticiones
-			// constantemente para ver si tiene batallas
-			// por detras
-
-			url = "http://" + serverAddress + ":" + serverPort
-					+ "/Bumaye-api/batalla/aceptar/" + personaje.getIduser();
-			Log.d("URL BATALLA", url);
-			(new comprovacionPeticionTask()).execute(url);
-
-			break;
 		default:
 			break;
 		}
-	}
-
-	private class comprovacionPeticionTask extends
-			AsyncTask<String, Void, BatallaVO> {
-
-		@Override
-		protected BatallaVO doInBackground(String... params) {
-			BatallaVO batallavo = new BatallaVO();
-			Log.d("Enviando azeptacion", "OOOOOOOOOOOOOOOuli shiet");
-			batallavo = batalla.comprovacion_peticionBatalla(params[0]);
-			return batallavo;
-		}
-
-		@Override
-		protected void onPostExecute(BatallaVO result) {
-			if (result != null) {
-				Log.d("Obteniendo resultado: ",
-						"idBatalla: " + result.getIdbatalla());
-				iniciar_batalla(result);
-			}
-		}
-
-		@Override
-		protected void onPreExecute() {
-
-		}
-	}
-
-	private void iniciar_batalla(BatallaVO batalla) {
-
-		Log.d("Abriendo la batalla", "Gasele");
-		Intent intent = new Intent(this, BatallaActivity.class);
-		intent.putExtra("url", url);
-		intent.putExtra("personaje", personaje);
-		intent.putExtra("batalla", batalla);
-		startActivity(intent);
-		finish();
 	}
 
 	// funcion para crear nuevas entradas en la tabla de ataques
