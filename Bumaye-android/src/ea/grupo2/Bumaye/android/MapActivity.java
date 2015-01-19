@@ -38,7 +38,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
@@ -174,6 +173,8 @@ public class MapActivity extends FragmentActivity {
 	}
 
 	private void opMapa() {
+		if (map != null)
+		{
 		map = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
 		//
@@ -267,12 +268,12 @@ public class MapActivity extends FragmentActivity {
 
 		map.setMyLocationEnabled(true);
 		map.setOnMyLocationChangeListener(myLocationChangeListener);
-
 		// COMENTAR SI QUEREIS MOVER EL MAPA DENTRO DE LA APP!!!
 		map.getUiSettings().setAllGesturesEnabled(false);
 		map.getUiSettings().setMyLocationButtonEnabled(false);
 		map.getUiSettings().setMapToolbarEnabled(false);
 		;
+		}
 	}
 
 	private void Dial(final String title, String identif) {

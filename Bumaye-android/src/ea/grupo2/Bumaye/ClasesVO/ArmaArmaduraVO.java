@@ -6,9 +6,7 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-
-
-public class ArmaArmaduraVO implements Serializable  {
+public class ArmaArmaduraVO implements Serializable {
 	@SerializedName("idarmaarmadura")
 	private int idarmaarmadura;
 	@SerializedName("nombre")
@@ -23,10 +21,10 @@ public class ArmaArmaduraVO implements Serializable  {
 	private float ataque;
 	@SerializedName("ataques")
 	private List<AtaqueVO> ataques = new ArrayList<AtaqueVO>();
-	
-	public ArmaArmaduraVO (){
+
+	public ArmaArmaduraVO() {
 	}
-	
+
 	public ArmaArmaduraVO(int idarmaarmadura, String nombrenombrearm,
 			String tipo, float defensa, float ataque, int equipada) {
 		this.idarmaarmadura = idarmaarmadura;
@@ -40,30 +38,39 @@ public class ArmaArmaduraVO implements Serializable  {
 	public int getIdarmaarmadura() {
 		return idarmaarmadura;
 	}
+
 	public void setIdarmaarmadura(int idarmaarmadura) {
 		this.idarmaarmadura = idarmaarmadura;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 	public String getTipo() {
 		return tipo;
 	}
+
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+
 	public float getDefensa() {
 		return defensa;
 	}
+
 	public void setDefensa(float defensa) {
 		this.defensa = defensa;
 	}
+
 	public float getAtaque() {
 		return ataque;
 	}
+
 	public void setAtaque(float ataque) {
 		this.ataque = ataque;
 	}
@@ -91,6 +98,5 @@ public class ArmaArmaduraVO implements Serializable  {
 	public void setEquipada(int equipada) {
 		this.equipada = equipada;
 	}
-	
 
 }

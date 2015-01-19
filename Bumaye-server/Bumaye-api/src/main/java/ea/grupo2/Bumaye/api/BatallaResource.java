@@ -153,6 +153,15 @@ public class BatallaResource {
 		BatallaVO batallaVO = m.getBatallaVO(idbatalla);
 		return batallaVO;
 	}
+	
+//	@Path("/fin/{idusuario}")
+//	@GET
+//	public String finalizar_batalla (@PathParam("idusuario") int idusuario) {
+//		BumayeInterface  m = new OperacionesBBDD();
+//		System.out.print("$$ Fin de Batalla\n");
+//		String comprovavion = m.comprobarPeticion(iddefensor);
+//		return comprovavion;
+//	}
 
 
 

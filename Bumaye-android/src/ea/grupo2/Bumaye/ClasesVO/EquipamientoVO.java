@@ -1,8 +1,10 @@
 package ea.grupo2.Bumaye.ClasesVO;
 
+import java.io.Serializable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class EquipamientoVO {
+public class EquipamientoVO implements Serializable {
 	@SerializedName("iduser")
 	private int iduser;
 	@SerializedName("idarmequipada")
@@ -17,7 +19,7 @@ public class EquipamientoVO {
 
 		this.idarmequipada = idarmequipada;
 		this.iduser = iduser;
-		this.idesequipada=idesequipada;
+		this.idesequipada = idesequipada;
 	}
 
 	public int getIdarmequipada() {

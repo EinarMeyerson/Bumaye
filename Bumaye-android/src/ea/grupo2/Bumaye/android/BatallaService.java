@@ -12,7 +12,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
@@ -38,10 +37,8 @@ public class BatallaService extends Service {
 	String url2;
 	ProgressDialog pd;
 	BatallaVO batall = new BatallaVO();
-	private MediaPlayer media;
 	private PowerManager.WakeLock lock;
 	private Vibrator vibrator;
-	private Thread vibrateThread;
 	AlertDialog dialog;
 	String nombre, contra;
 
@@ -67,11 +64,11 @@ public class BatallaService extends Service {
 		contra = prefs.getString("password", "");
 		Log.e(TAG, "Servicio onCreate: " + nombre);
 
-		esperarVerificacion();
 	}
 
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.e(TAG, "Servicio onStartCommand");
+		esperarVerificacion();
 
 		return START_STICKY;
 	}

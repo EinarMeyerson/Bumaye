@@ -26,9 +26,7 @@ import com.google.gson.reflect.TypeToken;
 
 import ea.grupo2.Bumaye.ClasesVO.CombinacionVO;
 import ea.grupo2.Bumaye.ClasesVO.EquipamientoVO;
-import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
-import ea.grupo2.Bumaye.ClasesVO.PuntoVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 
 // METODOS LLAMADOS POR LAS DISTINTAS ACTIVITY

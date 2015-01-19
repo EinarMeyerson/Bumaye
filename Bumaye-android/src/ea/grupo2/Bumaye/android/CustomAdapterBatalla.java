@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import ea.grupo2.Bumaye.android.CustomAdapter.Holder;
 
 public class CustomAdapterBatalla extends BaseAdapter{   
 	String [] result;

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ObjetoCantidadVO implements Serializable{
+public class ObjetoCantidadVO implements Serializable {
 	@SerializedName("idobjeto")
 	private int idobjeto;
 	@SerializedName("nombre")
@@ -25,8 +25,9 @@ public class ObjetoCantidadVO implements Serializable{
 	public ObjetoCantidadVO() {
 	}
 
-	public ObjetoCantidadVO(int idobjeto, String nombre, String tipo, float rareza, String combo1,
-			String combo2, float exito, int cantidad) {
+	public ObjetoCantidadVO(int idobjeto, String nombre, String tipo,
+			float rareza, String combo1, String combo2, float exito,
+			int cantidad) {
 		this.idobjeto = idobjeto;
 		this.nombre = nombre;
 		this.rareza = rareza;
@@ -100,5 +101,5 @@ public class ObjetoCantidadVO implements Serializable{
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-	
+
 }
