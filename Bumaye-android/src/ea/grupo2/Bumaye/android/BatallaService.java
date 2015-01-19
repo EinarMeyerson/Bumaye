@@ -117,7 +117,7 @@ public class BatallaService extends Service {
 					alarmaLucha();
 				} else {
 					try {
-						Thread.sleep(10000);
+						Thread.sleep(15000);
 						esperarVerificacion();
 
 					} catch (InterruptedException e) {
@@ -171,19 +171,18 @@ public class BatallaService extends Service {
 					| PowerManager.ACQUIRE_CAUSES_WAKEUP,
 					"AlarmReceiverActivity");
 			vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-			vibrateThread = new VibrateThread();
-
+			long[] pattern = { 0, 100, 1000};
+			vibrator.vibrate(pattern, 0);
+			
 			lock.acquire();
 			AlertDialog.Builder builder = new AlertDialog.Builder(
 					getApplicationContext());
 			builder.setTitle("A la batalla!")
-					.setMessage("El jugador (nombre) te llama a la batalla")
-					.setCancelable(false)
+					.setMessage("Te llaman a la batalla!").setCancelable(false)
 					.setPositiveButton(R.string.aceptar, new OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// media.stop();
-							vibrateThread.interrupt();
+							vibrator.cancel();
 							lock.release();
 							(new AcceptInBackground()).execute(url);
 						}// Ends onClick
@@ -191,9 +190,8 @@ public class BatallaService extends Service {
 					.setNegativeButton(R.string.cancel, new OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// media.stop();
-							vibrateThread.interrupt();
-							lock.release();
+							vibrator.cancel();
+							lock.release();							
 							dialog.dismiss();
 						}// Ends onClick
 					});
@@ -202,58 +200,7 @@ public class BatallaService extends Service {
 			dialog.getWindow().setType(
 					WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 			dialog.show();
-			startAlarm(getApplicationContext());
-			vibrateThread.start();
 		}
-
-		private void startAlarm(final Context context) {
-			new Thread() {
-				public void run() {
-					// Uri uri = RingtoneManager
-					// .getDefaultUri(RingtoneManager.TYPE_ALARM);
-					// if (uri == null) {
-					// uri = RingtoneManager
-					// .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-					// if (uri == null)
-					// uri = RingtoneManager
-					// .getDefaultUri(RingtoneManager.TYPE_ALARM);
-					// }// Descomentar per alarma
-					//
-					// media = new MediaPlayer();
-					// try {
-					// media.setDataSource(context, uri);
-					// final AudioManager audioManager = (AudioManager) context
-					// .getSystemService(Context.AUDIO_SERVICE);
-					// if (audioManager
-					// .getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
-					// media.setAudioStreamType(AudioManager.STREAM_ALARM);
-					// media.setLooping(true);
-					// media.prepare();
-					// media.start();
-					// }// Ends if
-					// }// Ends try
-					// catch (Exception e) {
-					// }
-				}// Ends run method
-			}.start();
-		}// Ends startAlarm method
-
-		class VibrateThread extends Thread {
-			public VibrateThread() {
-				super();
-			}
-
-			public void run() {
-				try {
-					// PATRON DE VIBRACION!
-					long[] pattern = { 0, 100, 1000, 100 };
-
-					vibrator.vibrate(pattern, 8);
-				}// Ends try
-				catch (Exception e) {
-				}
-			}// Ends run method
-		}// Ends VibrateThread class
 
 		private void iniciar_batalla(BatallaVO batalla) {
 			Intent intent = new Intent(getApplicationContext(),
