@@ -126,6 +126,8 @@ public interface BumayeInterface {
     public PeticionBatallaVO comprovacion_peticion_atacante (int idatacante);
     public BatallaVO aceptarPeticion_atacante (int atacante);
     public PeticionBatallaVO verificar_aceptacion (int idatacante);
+    public void eliminar_peticion(int idatacante);
+    public String comprobarPeticion (int iddefensor);
     
     
     //funcion de batalla

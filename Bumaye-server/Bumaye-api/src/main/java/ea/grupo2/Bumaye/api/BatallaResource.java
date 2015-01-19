@@ -43,6 +43,7 @@ public class BatallaResource {
 	public BatallaVO ataqueBatalla (@PathParam("idbatalla") int idbatalla,@PathParam("idPersonaje") int idPersonaje, @PathParam("idataque") int idataque) throws Exception {
 		BumayeInterface  m = new OperacionesBBDD();
 
+		System.out.print("Usuario realiza ataque\n");
 		BatallaVO batallaVO = null;
 		try{
 			batallaVO = m.ResultadoAtaqueVO(idataque, idbatalla, idPersonaje);
@@ -97,7 +98,7 @@ public class BatallaResource {
 		BumayeInterface  m = new OperacionesBBDD();
 		//PersonajeVO personaje = m.getPersonajeCompleto(idAtacante);
 		int iddefensor = m.devolvemosaIDuser(nombredefensor);
-		System.out.print("$$$  Iddefensor encontrado: " + iddefensor);
+		System.out.print("$$$  Iddefensor encontrado: " + iddefensor+ "\n");
 		String solicitud = m.crearPeticion(idAtacante, iddefensor);
 		System.out.print(solicitud);
 		return "Peticion realizada";
@@ -108,9 +109,18 @@ public class BatallaResource {
 	@Produces(MediaType.API_BATALLA)
 	public BatallaVO aceptarBatalla (@PathParam("iddefensor") int iddefensor) {
 		BumayeInterface  m = new OperacionesBBDD();
-		System.out.print("$$ Defensor acepta la batalla : " +iddefensor);
+		System.out.print("$$ Defensor acepta la batalla : " +iddefensor+ "\n");
 		BatallaVO batallaVO = m.aceptarPeticion(iddefensor);
 		return batallaVO;
+	}
+	
+	@Path("/comprovar/{iddefensor}")
+	@GET
+	public String comprovar_peticionBatalla (@PathParam("iddefensor") int iddefensor) {
+		BumayeInterface  m = new OperacionesBBDD();
+		System.out.print("$$ Defensor acepta la batalla : " +iddefensor+ "\n");
+		String comprovavion = m.comprobarPeticion(iddefensor);
+		return comprovavion;
 	}
 	
 	@Path("/verificar/{idAtacante}")
@@ -128,8 +138,19 @@ public class BatallaResource {
 	@Produces(MediaType.API_BATALLA)
 	public BatallaVO aceptarBatalla_atacante (@PathParam("idatacante") int idatacante) {
 		BumayeInterface  m = new OperacionesBBDD();
-		System.out.print("$$ Atacante inicia la batalla : " +idatacante);
+		System.out.print("$$ Atacante inicia la batalla : " +idatacante+ "\n");
 		BatallaVO batallaVO = m.aceptarPeticion_atacante(idatacante);
+		return batallaVO;
+	}
+	
+	@Path("/{idbatalla}")
+	@GET
+	@Produces(MediaType.API_BATALLA)
+	public BatallaVO batalla(@PathParam("idbatalla") int idbatalla) {
+		BumayeInterface  m = new OperacionesBBDD();
+		System.out.print("$$ Batalla solicitada para comprobacion : " +idbatalla+ "\n");
+		
+		BatallaVO batallaVO = m.getBatallaVO(idbatalla);
 		return batallaVO;
 	}
 

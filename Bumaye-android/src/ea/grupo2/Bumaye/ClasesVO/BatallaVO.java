@@ -103,4 +103,19 @@ public class BatallaVO implements Serializable {
     	return enemigo;
     }
      
+    
+    public int posicionJugador(int idjugador)
+    {
+    	int posicion=0;
+    	for (PersonajeVO person: listajugadores)
+    	{
+    	if (person.getIduser()==idjugador)
+    	{
+    		break;
+    	}
+    	posicion++;
+    	}
+    	return posicion;
+    }
+    
 }

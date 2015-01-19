@@ -2310,6 +2310,27 @@ public class OperacionesBBDD implements BumayeInterface{
 
 		return batallaaceptada;
 	}
+	
+	public String comprobarPeticion(int iddefensor) {
+		// TODO Auto-generated method stub
+		PeticionBatallaVO peticion;
+		String Comprobacion="No";
+		BatallaVO batallaaceptada= new BatallaVO();
+		ArrayList<PersonajeVO> listaPersonajesVO = new ArrayList<PersonajeVO>();
+		peticion= comprovacion_peticion(iddefensor);
+		if (peticion!=null)
+		{
+			Comprobacion="Si";
+			System.out.print("Comprobando peticion idatacante: " + peticion.getIddefensor()+ " iddefensor: " + peticion.getIdatacante());
+
+		}
+		else
+		{
+			System.out.print("No hay ninguna peticion para este usuario");
+		}
+
+		return Comprobacion;
+	}
 
 	@Override
 	public int devolvemosaIDuser(String nombrePersonaje) {
@@ -2769,7 +2790,6 @@ public class OperacionesBBDD implements BumayeInterface{
 		// TODO Auto-generated method stub
 		PeticionBatallaVO peticion;
 		BatallaVO batallaaceptada= new BatallaVO();
-		ArrayList<PersonajeVO> listaPersonajesVO = new ArrayList<PersonajeVO>();
 		peticion= comprovacion_peticion_atacante(atacante);
 		if (peticion!=null)
 		{
@@ -2777,10 +2797,16 @@ public class OperacionesBBDD implements BumayeInterface{
 			System.out.print("Aceptando peticion idatacante: " + peticion.getIddefensor()+ " iddefensor: " + peticion.getIdatacante());
 			//sacar la batalla que ya esta inicializada
 			batallaaceptada= listbatallas.getBatallaVO_byIdAtacante(atacante);
+			
+//			if (peticion.getAceptada().equals("Si"))
+//			{
+//				eliminar_peticion(atacante);
+//				System.out.print("Peticion eliminada , id: "+atacante);
+//			}
 		}
 		else
 		{
-			System.out.print("No hay ninguna peticion para este usuario");
+			System.out.print("No hay ninguna peticion para este usuario\n");
 		}
 
 		return batallaaceptada;
@@ -2791,5 +2817,13 @@ public class OperacionesBBDD implements BumayeInterface{
 	public PeticionBatallaVO comprovacion_peticion_atacante(int idatacante) {
 		PeticionBatallaVO peticion = listpeticiones.getPeticionAtacanteVO(idatacante); 
 		return peticion;
+	}
+
+
+	@Override
+	public void eliminar_peticion(int idatacante) {
+		// TODO Auto-generated method stub
+		
+	        	listpeticiones.remove_peticion(idatacante);
 	}
 }

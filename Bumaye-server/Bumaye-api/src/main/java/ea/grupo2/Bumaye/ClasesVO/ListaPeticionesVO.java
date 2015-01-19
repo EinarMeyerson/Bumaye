@@ -48,4 +48,21 @@ public class ListaPeticionesVO {
 		int i = listapeticiones.size();
 		return i;
 	}
+	
+	public void remove_peticion (int idatacante)
+	{
+		int i=0;
+		for(PeticionBatallaVO p: listapeticiones)
+	    {
+			p = getPeticionAtacanteVO(i);
+			System.out.print("&& Eliminar peticicion IDatacante "+p.getIdatacante());
+
+	        if(p.getIdatacante()==idatacante)
+	        {
+	        	listapeticiones.remove(p);
+	            break;
+	        }
+	        i++;
+	}
+	}
 }
