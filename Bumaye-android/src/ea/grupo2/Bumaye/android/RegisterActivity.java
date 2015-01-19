@@ -36,22 +36,22 @@ public class RegisterActivity extends Activity {
 	private UsrPersonajeAPI api;
 	String lat, lng;
 
-//	public static final String EXTRA_MESSAGE = "message";
-//	public static final String PROPERTY_REG_ID = "registration_id";
-//	private static final String PROPERTY_APP_VERSION = "appVersion";
-//	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-//	/**
-//	 * Substitute you own sender ID here. This is the project number you got
-//	 * from the API Console, as described in "Getting Started."
-//	 */
-//	String SENDER_ID = Integer.toString(R.string.app_id);
-//	GoogleCloudMessaging gcm;
-//	AtomicInteger msgId = new AtomicInteger();
+	// public static final String EXTRA_MESSAGE = "message";
+	// public static final String PROPERTY_REG_ID = "registration_id";
+	// private static final String PROPERTY_APP_VERSION = "appVersion";
+	// private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+	// /**
+	// * Substitute you own sender ID here. This is the project number you got
+	// * from the API Console, as described in "Getting Started."
+	// */
+	// String SENDER_ID = Integer.toString(R.string.app_id);
+	// GoogleCloudMessaging gcm;
+	// AtomicInteger msgId = new AtomicInteger();
 	SharedPreferences prefs;
 	Context context;
 	public LocationManager locationManager;
 	public MyLocationListener listener;
-	//String regid;
+	// String regid;
 	private ProgressDialog pdd;
 
 	@Override
@@ -89,8 +89,8 @@ public class RegisterActivity extends Activity {
 		context = getApplicationContext();
 		// Check device for Play Services APK. If check succeeds, proceed with
 		// GCM registration.
-		//gcm = GoogleCloudMessaging.getInstance(this);
-		//regid = getRegistrationId(context);
+		// gcm = GoogleCloudMessaging.getInstance(this);
+		// regid = getRegistrationId(context);
 		nombre = username.getText().toString();
 		contra = password.getText().toString();
 		confirm = passconf.getText().toString();
@@ -175,8 +175,6 @@ public class RegisterActivity extends Activity {
 			editor.putString("password", contra);
 			editor.putString("iduser", Long.toString(person.getIduser()));
 			editor.commit();
-			Intent myIntent = new Intent(this, LocationService.class);
-			startService(myIntent);
 			Intent intent = new Intent(this, PerfilActivity.class);
 			intent.putExtra("url", url);
 			intent.putExtra("personaje", person);
@@ -210,8 +208,8 @@ public class RegisterActivity extends Activity {
 				if (pdd != null) {
 					pdd.dismiss();
 				}
-				(new RegistUsrTask()).execute(nombre, contra, mail, null,
-							lat, lng, url);
+				(new RegistUsrTask()).execute(nombre, contra, mail, null, lat,
+						lng, url);
 			}
 		}
 

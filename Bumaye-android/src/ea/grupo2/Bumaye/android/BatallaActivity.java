@@ -3,14 +3,7 @@ package ea.grupo2.Bumaye.android;
 import java.util.ArrayList;
 import java.util.List;
 
-import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
-import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
-import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
-import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
-import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import android.app.Activity;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,9 +11,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
+import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
+import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
+import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
+import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 
 public class BatallaActivity extends Activity {
 
