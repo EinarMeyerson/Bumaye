@@ -20,6 +20,7 @@ mercadoApp.controller('MercadoCtrl', function($cookieStore, $scope, $http, $wind
 	var urlVenderMercado= API_BASE_URL + '/mercado/vender';
 	var urlLoginMercado= API_BASE_URL + '/user';
 	this.mercadoPers = $cookieStore.get("personaje");
+
 	
 	$scope.loadMercado = function(){
 		$http.get(urlMercado).success(function(mercadoList){
@@ -33,7 +34,6 @@ mercadoApp.controller('MercadoCtrl', function($cookieStore, $scope, $http, $wind
 		var idUser = $cookieStore.get("idUser");
 
 		$http.get(urlInventarioUser + idUser).success(function(inventarioList){
-			console.log(inventarioList);
 			$scope.inventario_list = inventarioList;
 		})	
 

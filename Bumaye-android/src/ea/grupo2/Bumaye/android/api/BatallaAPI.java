@@ -115,7 +115,6 @@ public class BatallaAPI {
 	}
 	
 	public BatallaVO ataque_enBatalla(String url) {		
-		Log.d(TAG, "Login()");
 		BatallaVO batalla = new BatallaVO();
         Gson gson = new GsonBuilder().create();
         
