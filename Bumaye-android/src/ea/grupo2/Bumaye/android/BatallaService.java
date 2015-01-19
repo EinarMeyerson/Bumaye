@@ -102,6 +102,12 @@ public class BatallaService extends Service {
 		@Override
 		protected String doInBackground(String... params) {
 			String aver = "No";
+			try {
+				Thread.sleep(15000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			Log.d("Comprobando batalla", "Enviando comprobacion");
 			aver = batalla.comprovacion_peticionBatalla(params[0]);
 			return aver;
@@ -115,14 +121,8 @@ public class BatallaService extends Service {
 			} else {
 				if (result.equals("Si")) {
 					alarmaLucha();
-				} else {
-					try {
-						Thread.sleep(15000);
+				} else {					
 						esperarVerificacion();
-
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
 				}
 			}
 		}

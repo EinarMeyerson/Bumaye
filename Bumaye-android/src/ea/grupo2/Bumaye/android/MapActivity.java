@@ -601,7 +601,7 @@ public class MapActivity extends FragmentActivity {
 				map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM));
 			}
 
-			if (i<8)
+			if (i<10)
 			{
 				i = i+1;				
 			}
