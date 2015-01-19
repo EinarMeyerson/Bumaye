@@ -54,11 +54,11 @@ public class OperacionesBBDD implements BumayeInterface{
 		//        m.getBatallaVO(1);
 
 		/* COFRES  */
-		//(idcofre, latitud, longitud)
+		//(idcofre, latitud, longitud)41.269861, 1.991578
 
-		m.addCofre(new Cofre (2.23456,41.1234));
-		m.addCofre(new Cofre (1.23456,40.1234));
-		m.addCofre(new Cofre (1.21456,41.124));
+		m.addCofre(new Cofre (1.980635,41.272458));
+		m.addCofre(new Cofre (1.986450,41.281940));
+		m.addCofre(new Cofre (1.991578,41.269861));
 
 
 		/* OBJETOS  */
@@ -2797,8 +2797,8 @@ public class OperacionesBBDD implements BumayeInterface{
 		if (peticion!=null)
 		{
 			
-			System.out.print("Atacante tambien comienza la batalla");
-			System.out.print("Aceptando peticion idatacante: " + peticion.getIddefensor()+ " iddefensor: " + peticion.getIdatacante());
+			System.out.print("Atacante tambien comienza la batalla\n");
+			System.out.print("Aceptando peticion idatacante: " + peticion.getIddefensor()+ " iddefensor: " + peticion.getIdatacante()+ "\n");
 			//sacar la batalla que ya esta inicializada
 			batallaaceptada= listbatallas.getBatallaVO_byIdAtacante(atacante);
 			
@@ -2806,7 +2806,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			{
 				peticion.setAceptada("No");
 				eliminar_peticion(atacante);
-				System.out.print("Peticion eliminada , id: "+atacante + "\n");
+				System.out.print("Peticion eliminada , id: "+atacante + " estado de peticion: "+peticion.getAceptada()+"\n");
 			}
 		}
 		else
