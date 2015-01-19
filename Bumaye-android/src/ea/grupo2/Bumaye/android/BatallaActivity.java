@@ -507,7 +507,7 @@ public class BatallaActivity extends Activity {
 //			(new LoginUsrTask()).execute(nombre, contra, url);
 			try {
 
-				Thread.sleep(6000);
+				Thread.sleep(10000);
 
 			} catch (InterruptedException e) {
 
@@ -531,7 +531,7 @@ public class BatallaActivity extends Activity {
 			actualizaciones_batalla.setText(" Derrota...  has sido deshonrado");
 			try {
 
-				Thread.sleep(6000);
+				Thread.sleep(10000);
 
 			} catch (InterruptedException e) {
 
