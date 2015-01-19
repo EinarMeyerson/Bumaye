@@ -1,4 +1,4 @@
-var API_BASE_URL = "http://localhost:8080/Bumaye-api";
+var API_BASE_URL = "http://147.83.7.199:8080/Bumaye-api";
 var mercadoApp = angular.module('mercadoApp',['ngCookies']);
 
 mercadoApp.controller('TabController', function(){
