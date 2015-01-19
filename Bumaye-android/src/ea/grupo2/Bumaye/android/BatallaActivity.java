@@ -515,7 +515,7 @@ public class BatallaActivity extends Activity {
 
 			}
 			
-			Intent intent = new Intent(this, PresentacionActivity.class);
+			Intent intent = new Intent(this, GanadorActivity.class);
 			startActivity(intent);
 			finish();
 		
@@ -538,7 +538,7 @@ public class BatallaActivity extends Activity {
 				e.printStackTrace();
 
 			}
-			Intent intent = new Intent(this, PresentacionActivity.class);
+			Intent intent = new Intent(this, PerdedorActivity.class);
 			startActivity(intent);
 			finish();
 			
@@ -571,45 +571,6 @@ public class BatallaActivity extends Activity {
 		protected void onPreExecute() {
 
 		}
-	}
-	
-	private class LoginUsrTask extends AsyncTask<String, Void, PersonajeVO> {
-
-		@Override
-		protected PersonajeVO doInBackground(String... params) {
-			PersonajeVO person = new PersonajeVO();
-			person = api.loginUsr(params[0], params[1], params[2]);
-
-			return person;
-		}
-
-		@Override
-		protected void onPostExecute(PersonajeVO result) {
-			if (result.getNombre() != "") {
-				if (result.getIduser() == 0) {
-					Toast.makeText(getApplicationContext(),
-							"Server not active", Toast.LENGTH_LONG).show();
-					finish();
-				} else {
-					Logeado(result);
-				}
-			} else {
-			}
-		}
-
-		@Override
-		protected void onPreExecute() {
-			
-		}
-	}
-
-	private void Logeado(PersonajeVO person) {
-		
-		Intent intent = new Intent(this, PerfilActivity.class);
-		intent.putExtra("url", url);
-		intent.putExtra("personaje", person);
-		startActivity(intent);
-		finish();
-	}
+	}	
 
 }
