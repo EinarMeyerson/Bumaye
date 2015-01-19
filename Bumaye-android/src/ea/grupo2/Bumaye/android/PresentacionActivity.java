@@ -95,20 +95,21 @@ public class PresentacionActivity extends Activity{
 				}
 				@Override
 				protected void onPostExecute(PersonajeVO result) {											
-					Log.d("Login",result.toString());
-					if (result.getNombre() != "")
-					{
-						if (result.getIduser() == 0) {
-							Toast.makeText(getApplicationContext(),
-									"Server not active", Toast.LENGTH_LONG).show();
-							finish();
-						} else {
-							Logeado(result);
+					if (result == null) {
+						Toast.makeText(getApplicationContext(),
+								"Server not active", Toast.LENGTH_LONG).show();
+						finish();
+					} else {
+						if (result.getNombre() != "")
+						{
+							Logeado(result);	
+						}
+						else{				
+							wronglogin();
 						}
 					}
-					else{				
-						wronglogin();
-					}				
+					
+									
 				}
 				@Override
 				protected void onPreExecute() {					

@@ -30,6 +30,7 @@ public class ObjetoCofreCantidadVO {
 		this.cantidad = cantidad;
 		this.idobjeto = idobjeto;
 		this.idcofre = idcofre;
+		this.nombreObjeto = nombreObjeto;
 	}
 
 	

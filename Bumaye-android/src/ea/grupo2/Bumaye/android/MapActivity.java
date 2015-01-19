@@ -7,8 +7,10 @@ import java.util.Properties;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -23,12 +25,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -43,27 +46,30 @@ import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.PeticionBatallaVO;
 import ea.grupo2.Bumaye.android.api.BatallaAPI;
 import ea.grupo2.Bumaye.android.api.MapAPI;
+import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
 
 public class MapActivity extends FragmentActivity {
 	private final static String TAG = MapActivity.class.getName();
 	private ListView navList;
 	private DrawerLayout mDrawerLayout;
 	private MapAPI api;
+	private UsrPersonajeAPI apip;
+	String url,contra;
+	NumberPicker np;
 	private BatallaAPI batalla;
-	String url;
 	PopupWindow popUp;
 	String serverAddress;
 	String serverPort;
 	private GoogleMap map;
 	PersonajeVO personaje = null;
-	ArrayList mSelectedItems = null;
 	List<PersonajeVO> personajes = new ArrayList<PersonajeVO>();
 	List<CofreVO> cofres = new ArrayList<CofreVO>();
 	List<ObjetoCofreCantidadVO> objetos = new ArrayList<ObjetoCofreCantidadVO>();
 	private ProgressDialog pdm;
 	private ProgressDialog pdt;
 	int i = 0;
-	final float ZOOM=9.0f;
+	int cant = 1;
+	final float ZOOM = 9.0f;
 	Marker lastOpenned = null;
 
 	@Override
@@ -73,6 +79,7 @@ public class MapActivity extends FragmentActivity {
 
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
 		api = new MapAPI();
+		apip = new UsrPersonajeAPI();
 		batalla = new BatallaAPI();
 		map = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
@@ -91,6 +98,9 @@ public class MapActivity extends FragmentActivity {
 			Log.e(TAG, e.getMessage(), e);
 			finish();
 		}
+		SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
+		contra = prefs.getString("password", "");				
+		
 		url = "http://" + serverAddress + ":" + serverPort
 				+ "/Bumaye-api/user/lista/" + personaje.getIduser();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -176,11 +186,10 @@ public class MapActivity extends FragmentActivity {
 			CofreVO cof = cofres.get(i);
 			map.addMarker(new MarkerOptions()
 			.position(new LatLng(cof.getLatitud(), cof.getLongitud()))
-			.title("Cofre")
-			.snippet("Recoger!")
-			.icon(BitmapDescriptorFactory
-					.fromResource(R.drawable.treasure_chest_marker)));
-
+					.title("Cofre")
+					.snippet(Integer.toString(cof.getIdcofre()))
+					.icon(BitmapDescriptorFactory
+							.fromResource(R.drawable.treasure_chest_marker)));
 		}
 		for (int i = 0; i < personajes.size(); i++) {
 			PersonajeVO pers = personajes.get(i);
@@ -195,50 +204,75 @@ public class MapActivity extends FragmentActivity {
 
 		}
 
-		map.setOnMarkerClickListener(new OnMarkerClickListener() {
-			public boolean onMarkerClick(Marker marker) {
+		//map.setOnMarkerClickListener(new OnMarkerClickListener() {
+			//public boolean onMarkerClick(Marker marker) {
 				// Check if there is an open info window
-				if (lastOpenned != null) {
+				//if (lastOpenned != null) {
 					// Close the info window
-					lastOpenned.hideInfoWindow();
+					//lastOpenned.hideInfoWindow();
 
 					// Is the marker the same marker that was already open
-					if (lastOpenned.equals(marker)) {
+					//if (lastOpenned.equals(marker)) {
 						// Nullify the lastOpenned object
-						lastOpenned = null;
+						//lastOpenned = null;
 						// Return so that the info window isn't openned again
-						return true;
-					} 
-				}
+						//return true;
+					//} 
+				//}
+		// CODIGO PARA QUE AL CLICAR AL MARKER NO SE MUEVA EL MAPA
 
 				// Open the info window for the marker
-				marker.showInfoWindow();
+				//marker.showInfoWindow();
 				// Re-assign the last openned such that we can close it later
-				lastOpenned = marker;
+				//lastOpenned = marker;
 
 				// Event was handled by our code do not launch default behaviour.
-				return true;
-			}
-		});
+				//return true;
+			//}
+		//});
+		// map.setOnMarkerClickListener(new OnMarkerClickListener() {
+		// public boolean onMarkerClick(Marker marker) {
+		// // Check if there is an open info window
+		// if (lastOpenned != null) {
+		// // Close the info window
+		// lastOpenned.hideInfoWindow();
+		//
+		// // Is the marker the same marker that was already open
+		// if (lastOpenned.equals(marker)) {
+		// // Nullify the lastOpenned object
+		// lastOpenned = null;
+		// // Return so that the info window isn't openned again
+		// return true;
+		// }
+		// }
+		//
+		// // Open the info window for the marker
+		// marker.showInfoWindow();
+		// // Re-assign the last openned such that we can close it later
+		// lastOpenned = marker;
+		//
+		// // Event was handled by our code do not launch default
+		// // behaviour.
+		// return true;
+		// }
+		// });
 		map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 			@Override
 			public void onInfoWindowClick(Marker arg0) {
 				final String title = arg0.getTitle();
-				String identif = arg0.getId();
+				String identif = arg0.getSnippet();
 				Dial(title, identif);
 			}
 		});
 
 		map.setMyLocationEnabled(true);
-
-		// EN ESTE PUNTO HAREMOS QUE EL MAPA TE SIGA SIEMPRE ASI SOLO
-		// SE ATACAN A LOS QUE ESTAN CERCA
 		map.setOnMyLocationChangeListener(myLocationChangeListener);
 
 		// COMENTAR SI QUEREIS MOVER EL MAPA DENTRO DE LA APP!!!
 		map.getUiSettings().setAllGesturesEnabled(false);
 		map.getUiSettings().setMyLocationButtonEnabled(false);
-		map.getUiSettings().setMapToolbarEnabled(false);;
+		map.getUiSettings().setMapToolbarEnabled(false);
+		;
 	}
 
 	private void Dial(final String title, String identif) {
@@ -249,70 +283,98 @@ public class MapActivity extends FragmentActivity {
 
 		} else {
 			new AlertDialog.Builder(this)
-			.setMessage("Quieres Luchar?")
-			.setTitle(title)
-			.setPositiveButton(android.R.string.yes,
-					new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog,
-						int which) {
-					// User clicked OK button
-					dialog.dismiss();
-					Log.d("Click","Rival: "+title);
-					esperarLucha(title);
-				}
-			})
-			.setNegativeButton(R.string.cancel,
-					new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog,
-						int id) {
-					// User cancelled the dialog
-					dialog.dismiss();
-				}
-			}).show();
+					.setMessage("Quieres Luchar?")
+					.setTitle(title)
+					.setPositiveButton(android.R.string.yes,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// User clicked OK button
+									dialog.dismiss();
+									pdm = new ProgressDialog(MapActivity.this);
+									pdm.setTitle("Esperando oponente...");
+									pdm.setCancelable(true);
+									pdm.setIndeterminate(true);
+									pdm.show();
+									esperarLucha(title);
+								}
+							})
+					.setNegativeButton(R.string.cancel,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									// User cancelled the dialog
+									dialog.dismiss();
+								}
+							}).show();
 		}
 	}
 
-	private void Dial2(List<ObjetoCofreCantidadVO> objeto) {
-		ArrayList<String> items = new ArrayList<String>();
+	private void Dial2(final List<ObjetoCofreCantidadVO> objeto) {
+		String[] items = new String[objeto.size()];
 		for (int i = 0; i < objeto.size(); i++) {
-			int o = (objeto.get(i).getIdobjeto());			
+			items[i] = objeto.get(i).getNombreObjeto() + ", cantidad: "
+					+ objeto.get(i).getCantidad();
 		}
-		mSelectedItems = new ArrayList();
+		if (objeto.size() != 0) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Cofre")
+					.setItems(items, new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							AceptarCofre(objeto.get(which));
+						}
+					}).show();
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Cofre")
+					.setPositiveButton(R.string.aceptar,
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int id) {
+									dialog.dismiss();
+								}
+							}).setMessage("Este cofre ya ha sido saqueado!")
+					.show();
+		}
+	}
+
+	private void AceptarCofre(final ObjetoCofreCantidadVO obj) {
+		np = new NumberPicker(this);
+		np.setMaxValue(obj.getCantidad());
+		np.setMinValue(1);
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Cofre")
-		//		.setMultiChoiceItems(items, 0,
-		//                new DialogInterface.OnMultiChoiceClickListener() {
-		//         @Override
-		//         public void onClick(DialogInterface dialog, int which,
-		//                 boolean isChecked) {
-		//             if (isChecked) {
-		//                 // If the user checked the item, add it to the selected items
-		//                 mSelectedItems.add(which);
-		//             } else if (mSelectedItems.contains(which)) {
-		//                 // Else, if the item is already in the array, remove it 
-		//                 mSelectedItems.remove(Integer.valueOf(which));
-		//             }
-		//         }
-		//     })
-		// Set the action buttons
-		.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-				// User clicked OK, so save the mSelectedItems results somewhere
-				// or return them to the component that opened the dialog
-				dialog.dismiss();
+		
 
-				// FUNCION RECOGER!!!
-
-			}
-		})
-		.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.dismiss();
-			}
-		}).show();
-
+		builder.setTitle("Recoger: " + obj.getNombreObjeto())
+				// Set the action buttons
+				.setView(np)
+				.setPositiveButton(R.string.aceptar,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
+								cant = np.getValue();
+								url = "http://" + serverAddress + ":"
+										+ serverPort + "/Bumaye-api/user/"
+										+ personaje.getIduser() + "/cofre/"
+										+ obj.getIdcofre() + "/objeto/"
+										+ obj.getIdobjeto() + "/cantidad/"
+										+ np.getValue();
+								(new GetObjectsTask()).execute(url);
+								dialog.dismiss();
+								Log.e(TAG, url);
+							}
+						})
+				.setNegativeButton(R.string.cancel,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.dismiss();
+							}
+						}).show();
 	}
 
 	private void esperarLucha(String nom) {
@@ -321,6 +383,9 @@ public class MapActivity extends FragmentActivity {
 		Log.d("Esperando Lucha","URL: "+url);
 		(new esperarLuchaTask()).execute(url);
 	}
+	
+	
+	
 
 	private class esperarLuchaTask extends AsyncTask<String, Void, String> {
 		private ProgressDialog pd;
@@ -443,7 +508,7 @@ public class MapActivity extends FragmentActivity {
 	}
 
 	private class LoadCofreItemTask extends
-	AsyncTask<String, Void, List<ObjetoCofreCantidadVO>> {
+			AsyncTask<String, Void, List<ObjetoCofreCantidadVO>> {
 
 		@Override
 		protected List<ObjetoCofreCantidadVO> doInBackground(String... params) {
@@ -464,6 +529,63 @@ public class MapActivity extends FragmentActivity {
 		}
 
 	}
+
+	private class GetObjectsTask extends AsyncTask<String, Void, String> {
+		private ProgressDialog pd;
+
+		@Override
+		protected String doInBackground(String... params) {
+			String notas = api.acceptObjetos(params[0]);
+			return notas;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (pd != null)
+				pd.dismiss();
+			Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG)
+					.show();
+			url = "http://" + serverAddress + ":" + serverPort + "/Bumaye-api/user";
+			(new LoginUsrTask()).execute(personaje.getNombre(), contra, url);
+		}
+
+		@Override
+		protected void onPreExecute() {
+			pd = new ProgressDialog(MapActivity.this);
+			pd.setTitle("Recogiendo...");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+			pd.show();
+		}
+
+	}
+	// SE LLAMA AL METODO loginUsr DE LA API
+		// SE LE MANDA LA URL Y DEVOLVEMOS UN PersonajeVO
+		private class LoginUsrTask extends AsyncTask<String, Void, PersonajeVO> {
+
+			@Override
+			protected PersonajeVO doInBackground(String... params) {
+				personaje = apip.loginUsr(params[0], params[1], params[2]);
+
+				return personaje;
+			}
+
+			@Override
+			protected void onPostExecute(PersonajeVO result) {				
+					if (result.getIduser() == 0) {
+						Toast.makeText(getApplicationContext(),
+								"Server not active", Toast.LENGTH_LONG).show();
+						finish();
+					}
+			}
+
+			@Override
+			protected void onPreExecute() {			
+			}
+		}
+	
+	
+	
 
 	private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
 		@Override
