@@ -3,7 +3,6 @@ package ea.grupo2.Bumaye.android.api;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import ea.grupo2.Bumaye.android.BatallaService;
 import ea.grupo2.Bumaye.android.LocationService;
 
 public class LocationBoot extends BroadcastReceiver {   

@@ -1,6 +1,5 @@
 package ea.grupo2.Bumaye.ClasesVO;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 
 
-public class ArmaArmaduraVO implements Serializable  {
+public class ArmaArmaduraVO {
 	@SerializedName("idarmaarmadura")
 	private int idarmaarmadura;
 	@SerializedName("nombre")

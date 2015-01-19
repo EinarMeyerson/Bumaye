@@ -4,18 +4,12 @@ import java.io.IOException;
 import java.util.Properties;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningServiceInfo;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.util.TypedValue;
@@ -31,13 +25,12 @@ import android.widget.Toast;
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
 import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
-import ea.grupo2.Bumaye.android.api.BatallaAPI;
 
 public class PerfilActivity extends Activity {
 
 	private ListView navList;
 	private DrawerLayout mDrawerLayout;
-	private BatallaAPI batalla;
+	//private BatallaAPI batalla;
 	TableLayout table_layout;
 	String[] lista_atributos = new String[6];// para crear las filas de la tabla
 	BatallaService mService;
@@ -68,7 +61,7 @@ public class PerfilActivity extends Activity {
 			finish();
 		}
 
-		batalla = new BatallaAPI();
+//		batalla = new BatallaAPI();
 
 		personaje = (PersonajeVO) getIntent().getExtras().get("personaje");
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -122,16 +115,16 @@ public class PerfilActivity extends Activity {
 	}
 
 
-	private boolean isMyServiceRunning(Class<?> serviceClass) {
-		ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-		for (RunningServiceInfo service : manager
-				.getRunningServices(Integer.MAX_VALUE)) {
-			if (serviceClass.getName().equals(service.service.getClassName())) {
-				return true;
-			}
-		}
-		return false;
-	}
+//	private boolean isMyServiceRunning(Class<?> serviceClass) {
+//		ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+//		for (RunningServiceInfo service : manager
+//				.getRunningServices(Integer.MAX_VALUE)) {
+//			if (serviceClass.getName().equals(service.service.getClassName())) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 	private void refreshPerfil() {
 

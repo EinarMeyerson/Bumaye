@@ -5,18 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
-import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
-import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
-import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
-import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
-import ea.grupo2.Bumaye.android.api.BatallaAPI;
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.res.AssetManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,6 +22,7 @@ import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.android.api.BatallaAPI;
 
 public class BatallaActivity extends Activity {
 
@@ -211,7 +202,7 @@ public class BatallaActivity extends Activity {
 
 	public void cargarAtaques ()
 	{
-		int contador_ataques=0;
+		//int contador_ataques=0;
 
 		for (ArmaArmaduraVO arm: personaje.getArmasarmaduras()) {
 
