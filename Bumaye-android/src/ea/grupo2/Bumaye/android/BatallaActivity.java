@@ -11,9 +11,12 @@ import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.android.api.BatallaAPI;
+import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -39,8 +42,11 @@ public class BatallaActivity extends Activity {
 	String url;
 	String serverAddress;
 	String serverPort;
+	String nombre;
+	String contra;
 	BatallaVO batalla;
 	private BatallaAPI batallaApi;
+	private UsrPersonajeAPI api;
 	PersonajeVO personaje, enemigo, personaje_batalla;
 	String strAtaq,strArma;
 	TextView nombre_personaje, ataque_personaje, defensa_personaje;
@@ -494,11 +500,39 @@ public class BatallaActivity extends Activity {
 		
 		if (enemigo.getVida()<=0)
 		{
+			try {
+
+				Thread.sleep(6000);
+
+			} catch (InterruptedException e) {
+
+				e.printStackTrace();
+
+			}
 			actualizaciones_batalla.setText(" ¡VICTORIA!  has derrotado a tu oponente");
+			SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
+			nombre = prefs.getString("nombre", "");
+			contra = prefs.getString("password", "");	
+			(new LoginUsrTask()).execute(nombre, contra, url);
+		
 		}
 		else if(personaje_batalla.getVida()<=0)
 		{
+			try {
+
+				Thread.sleep(6000);
+
+			} catch (InterruptedException e) {
+
+				e.printStackTrace();
+
+			}
 			actualizaciones_batalla.setText(" Derrota...  has sido deshonrado");
+			actualizaciones_batalla.setText(" ¡VICTORIA!  has derrotado a tu oponente");
+			SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
+			nombre = prefs.getString("nombre", "");
+			contra = prefs.getString("password", "");	
+			(new LoginUsrTask()).execute(nombre, contra, url);
 			
 		}else
 		{
@@ -529,6 +563,45 @@ public class BatallaActivity extends Activity {
 		protected void onPreExecute() {
 
 		}
+	}
+	
+	private class LoginUsrTask extends AsyncTask<String, Void, PersonajeVO> {
+
+		@Override
+		protected PersonajeVO doInBackground(String... params) {
+			PersonajeVO person = new PersonajeVO();
+			person = api.loginUsr(params[0], params[1], params[2]);
+
+			return person;
+		}
+
+		@Override
+		protected void onPostExecute(PersonajeVO result) {
+			if (result.getNombre() != "") {
+				if (result.getIduser() == 0) {
+					Toast.makeText(getApplicationContext(),
+							"Server not active", Toast.LENGTH_LONG).show();
+					finish();
+				} else {
+					Logeado(result);
+				}
+			} else {
+			}
+		}
+
+		@Override
+		protected void onPreExecute() {
+			
+		}
+	}
+
+	private void Logeado(PersonajeVO person) {
+		
+		Intent intent = new Intent(this, PerfilActivity.class);
+		intent.putExtra("url", url);
+		intent.putExtra("personaje", person);
+		startActivity(intent);
+		finish();
 	}
 
 }
