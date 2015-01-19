@@ -15,6 +15,7 @@ import ea.grupo2.Bumaye.ClasesVO.AtaqueVO;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.ClasesVO.PeticionBatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
 import ea.grupo2.Bumaye.Motor.BumayeInterface;
 import ea.grupo2.Bumaye.Motor.NoEsTuTurnoException;
@@ -113,10 +114,12 @@ public class BatallaResource {
 	}
 	
 	@Path("/verificar/{idAtacante}")
-	@PUT
-	public String verificacionAceptada (@PathParam("idAtacante") int idAtacante) {
+	@GET
+	@Produces(MediaType.API_PETICION)
+	public PeticionBatallaVO verificacionAceptada (@PathParam("idAtacante") int idAtacante) {
 		BumayeInterface  m = new OperacionesBBDD();
-		String verificacion = m.verificar_aceptacion(idAtacante);
+		PeticionBatallaVO verificacion = m.verificar_aceptacion(idAtacante);
+		System.out.print(" ~~ El atacante esta esperando la batalla por el momento : " +verificacion.getAceptada()+ "\n");
 		return verificacion;
 	}
 

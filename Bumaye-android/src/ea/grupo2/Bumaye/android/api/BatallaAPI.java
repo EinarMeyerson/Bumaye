@@ -24,6 +24,7 @@ import com.google.gson.reflect.TypeToken;
 import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.EquipamientoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.ClasesVO.PeticionBatallaVO;
 import android.util.Log;
 
 public class BatallaAPI {
@@ -52,6 +53,24 @@ public class BatallaAPI {
 	}
 	
 	
+	public PeticionBatallaVO solicitudVerificaciona(String url) {		
+		Gson gson = new Gson();
+		HttpClient httpClient = new DefaultHttpClient();
+		PeticionBatallaVO data = new PeticionBatallaVO();
+		 java.lang.reflect.Type arrayListType = new TypeToken<PeticionBatallaVO>()
+		{}.getType();
+		 gson = new Gson();
+		 httpClient = WebServiceUtils.getHttpClient();
+		 try {
+		 HttpResponse response = httpClient.execute(new HttpGet(url));
+		 HttpEntity entity = response.getEntity();
+		 Reader reader = new InputStreamReader(entity.getContent());
+		 data = gson.fromJson(reader, PeticionBatallaVO.class);
+		 } catch (Exception e) {
+		 Log.i("json array","While getting server response server generate error. ");
+		 }
+		 return data;
+	}
 	
 	public BatallaVO comprovacion_peticionBatalla(String url) {		
 		Gson gson = new Gson();

@@ -92,12 +92,12 @@ public class BatallaActivity extends Activity {
 
 	}
 
-	public void refrescarAtributosEnemigo (PersonajeVO per)
+	public void refrescarAtributosEnemigo (PersonajeVO enemi)
 	{
-		nombre_enemigo.setText(per.getNombre());
-		enemigo_ataque.setText("Ataque  "+ Float.toString(per.getAtaque()));
-		enemigo_defensa.setText("Defensa  "+Float.toString(per.getDefensa()));
-		enemigo_progressBar_vida.setProgress((int)per.getVida());
+		nombre_enemigo.setText(enemi.getNombre());
+		enemigo_ataque.setText("Ataque  "+ Float.toString(enemi.getAtaque()));
+		enemigo_defensa.setText("Defensa  "+Float.toString(enemi.getDefensa()));
+		enemigo_progressBar_vida.setProgress((int)enemi.getVida());
 
 	}
 

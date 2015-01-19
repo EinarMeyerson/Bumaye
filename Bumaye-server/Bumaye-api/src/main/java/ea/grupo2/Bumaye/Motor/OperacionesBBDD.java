@@ -2757,10 +2757,10 @@ public class OperacionesBBDD implements BumayeInterface{
 
 
 	@Override
-	public String verificar_aceptacion (int idatacante) {
+	public PeticionBatallaVO verificar_aceptacion (int idatacante) {
 		// TODO Auto-generated method stub
 		PeticionBatallaVO peticion = listpeticiones.getPeticionAtacanteVO(idatacante); 
-		return peticion.getAceptada();
+		return peticion;
 	}
 
 

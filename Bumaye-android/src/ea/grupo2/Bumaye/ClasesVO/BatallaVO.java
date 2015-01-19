@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
  
 public class BatallaVO implements Serializable {
@@ -88,8 +90,13 @@ public class BatallaVO implements Serializable {
     	PersonajeVO enemigo= new PersonajeVO();
     	for (PersonajeVO person: listajugadores)
     	{
-    		if (person.getNombre()!=nombre)
+    		if (person.getNombre().equals(nombre))
     		{
+    			Log.i("Jugador",person.getNombre());
+    		}
+    		else
+    		{
+    			Log.i("Enemigo",person.getNombre());
     			enemigo=person;
     		}
     	}

@@ -11,6 +11,7 @@ public class MediaType {
 	public final static String API_COMBINACION = "application/vnd.bumaye.api.combinacion+json";
 	public final static String API_EQUIPAMIENTO = "application/vnd.bumaye.api.equipamiento+json";
 	public static final String API_PUNTO = "application/vnd.bumaye.api.punto+json";
+	public static final String API_PETICION = "application/vnd.bumaye.api.peticion+json";
 	public static final String API_ENTRADA_MERCADO = "application/vnd.bumaye.api.mercado+json";
 
 

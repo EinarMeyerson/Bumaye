@@ -36,9 +36,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import ea.grupo2.Bumaye.ClasesVO.ArmaArmaduraVO;
+import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoCofreCantidadVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
+import ea.grupo2.Bumaye.ClasesVO.PeticionBatallaVO;
 import ea.grupo2.Bumaye.android.api.BatallaAPI;
 import ea.grupo2.Bumaye.android.api.MapAPI;
 
@@ -97,7 +99,7 @@ public class MapActivity extends FragmentActivity {
 		String[] names = getResources().getStringArray(R.array.nav_options);
 		if (personaje.getNombre() != null)
 			names[0] = Html.fromHtml("<b>" + personaje.getNombre() + "</b>")
-					.toString();
+			.toString();
 		this.navList = (ListView) findViewById(R.id.left_drawer);
 		// Set previous array as adapter of the list
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -113,7 +115,7 @@ public class MapActivity extends FragmentActivity {
 	}
 
 	private class LoadListTask extends
-			AsyncTask<String, Void, List<PersonajeVO>> {
+	AsyncTask<String, Void, List<PersonajeVO>> {
 
 		@Override
 		protected List<PersonajeVO> doInBackground(String... params) {
@@ -173,50 +175,50 @@ public class MapActivity extends FragmentActivity {
 		for (int i = 0; i < cofres.size(); i++) {
 			CofreVO cof = cofres.get(i);
 			map.addMarker(new MarkerOptions()
-					.position(new LatLng(cof.getLatitud(), cof.getLongitud()))
-					.title("Cofre")
-					.snippet("Recoger!")
-					.icon(BitmapDescriptorFactory
-							.fromResource(R.drawable.treasure_chest_marker)));
+			.position(new LatLng(cof.getLatitud(), cof.getLongitud()))
+			.title("Cofre")
+			.snippet("Recoger!")
+			.icon(BitmapDescriptorFactory
+					.fromResource(R.drawable.treasure_chest_marker)));
 
 		}
 		for (int i = 0; i < personajes.size(); i++) {
 			PersonajeVO pers = personajes.get(i);
 			map.addMarker(new MarkerOptions()
-					.position(new LatLng(pers.getLatitud(), pers.getLongitud()))
-					.snippet(
-							"Ataque: " + pers.getAtaque() + ", Defensa: "
-									+ pers.getDefensa() + ", Luchar?")
-					.title(pers.getNombre())
-					.icon(BitmapDescriptorFactory
-							.fromResource(R.drawable.contrario_marker)));
+			.position(new LatLng(pers.getLatitud(), pers.getLongitud()))
+			.snippet(
+					"Ataque: " + pers.getAtaque() + ", Defensa: "
+							+ pers.getDefensa() + ", Luchar?")
+							.title(pers.getNombre())
+							.icon(BitmapDescriptorFactory
+									.fromResource(R.drawable.contrario_marker)));
 
 		}
-		
+
 		map.setOnMarkerClickListener(new OnMarkerClickListener() {
-		public boolean onMarkerClick(Marker marker) {
-		    // Check if there is an open info window
-		    if (lastOpenned != null) {
-		        // Close the info window
-		        lastOpenned.hideInfoWindow();
+			public boolean onMarkerClick(Marker marker) {
+				// Check if there is an open info window
+				if (lastOpenned != null) {
+					// Close the info window
+					lastOpenned.hideInfoWindow();
 
-		        // Is the marker the same marker that was already open
-		        if (lastOpenned.equals(marker)) {
-		            // Nullify the lastOpenned object
-		            lastOpenned = null;
-		            // Return so that the info window isn't openned again
-		            return true;
-		        } 
-		    }
+					// Is the marker the same marker that was already open
+					if (lastOpenned.equals(marker)) {
+						// Nullify the lastOpenned object
+						lastOpenned = null;
+						// Return so that the info window isn't openned again
+						return true;
+					} 
+				}
 
-		    // Open the info window for the marker
-		    marker.showInfoWindow();
-		    // Re-assign the last openned such that we can close it later
-		    lastOpenned = marker;
+				// Open the info window for the marker
+				marker.showInfoWindow();
+				// Re-assign the last openned such that we can close it later
+				lastOpenned = marker;
 
-		    // Event was handled by our code do not launch default behaviour.
-		    return true;
-		}
+				// Event was handled by our code do not launch default behaviour.
+				return true;
+			}
 		});
 		map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 			@Override
@@ -247,26 +249,26 @@ public class MapActivity extends FragmentActivity {
 
 		} else {
 			new AlertDialog.Builder(this)
-					.setMessage("Quieres Luchar?")
-					.setTitle(title)
-					.setPositiveButton(android.R.string.yes,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int which) {
-									// User clicked OK button
-									dialog.dismiss();
-									Log.d("Click","Rival: "+title);
-									esperarLucha(title);
-								}
-							})
-					.setNegativeButton(R.string.cancel,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-									// User cancelled the dialog
-									dialog.dismiss();
-								}
-							}).show();
+			.setMessage("Quieres Luchar?")
+			.setTitle(title)
+			.setPositiveButton(android.R.string.yes,
+					new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,
+						int which) {
+					// User clicked OK button
+					dialog.dismiss();
+					Log.d("Click","Rival: "+title);
+					esperarLucha(title);
+				}
+			})
+			.setNegativeButton(R.string.cancel,
+					new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,
+						int id) {
+					// User cancelled the dialog
+					dialog.dismiss();
+				}
+			}).show();
 		}
 	}
 
@@ -278,38 +280,38 @@ public class MapActivity extends FragmentActivity {
 		mSelectedItems = new ArrayList();
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Cofre")
-//		.setMultiChoiceItems(items, 0,
-//                new DialogInterface.OnMultiChoiceClickListener() {
-//         @Override
-//         public void onClick(DialogInterface dialog, int which,
-//                 boolean isChecked) {
-//             if (isChecked) {
-//                 // If the user checked the item, add it to the selected items
-//                 mSelectedItems.add(which);
-//             } else if (mSelectedItems.contains(which)) {
-//                 // Else, if the item is already in the array, remove it 
-//                 mSelectedItems.remove(Integer.valueOf(which));
-//             }
-//         }
-//     })
-// Set the action buttons
-     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-         @Override
-         public void onClick(DialogInterface dialog, int id) {
-             // User clicked OK, so save the mSelectedItems results somewhere
-             // or return them to the component that opened the dialog
-        	 dialog.dismiss();
-        	 
-        	 // FUNCION RECOGER!!!
-        	 
-         }
-     })
-     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-         @Override
-         public void onClick(DialogInterface dialog, int id) {
-        	 dialog.dismiss();
-         }
-     }).show();
+		//		.setMultiChoiceItems(items, 0,
+		//                new DialogInterface.OnMultiChoiceClickListener() {
+		//         @Override
+		//         public void onClick(DialogInterface dialog, int which,
+		//                 boolean isChecked) {
+		//             if (isChecked) {
+		//                 // If the user checked the item, add it to the selected items
+		//                 mSelectedItems.add(which);
+		//             } else if (mSelectedItems.contains(which)) {
+		//                 // Else, if the item is already in the array, remove it 
+		//                 mSelectedItems.remove(Integer.valueOf(which));
+		//             }
+		//         }
+		//     })
+		// Set the action buttons
+		.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				// User clicked OK, so save the mSelectedItems results somewhere
+				// or return them to the component that opened the dialog
+				dialog.dismiss();
+
+				// FUNCION RECOGER!!!
+
+			}
+		})
+		.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.dismiss();
+			}
+		}).show();
 
 	}
 
@@ -319,7 +321,7 @@ public class MapActivity extends FragmentActivity {
 		Log.d("Esperando Lucha","URL: "+url);
 		(new esperarLuchaTask()).execute(url);
 	}
-	
+
 	private class esperarLuchaTask extends AsyncTask<String, Void, String> {
 		private ProgressDialog pd;
 		@Override
@@ -333,11 +335,7 @@ public class MapActivity extends FragmentActivity {
 			if (result != "")
 			{
 				Log.d("Resultado peticion",result);
-				//mandar constantemente gets para mirar si ha aceptado la solicitud
-				//durante "x" tiempo
-//				if (pd != null) {
-//					pd.dismiss();
-//				}
+				esperarVerificacion();
 			}
 		}
 
@@ -350,9 +348,102 @@ public class MapActivity extends FragmentActivity {
 			pd.show();
 		}
 	}
+	private void esperarVerificacion()
+	{
+		url = "http://" + serverAddress + ":" + serverPort
+				+ "/Bumaye-api/batalla/verificar/"+personaje.getIduser();
+		Log.d("Esperando verificacionLucha","URL: "+url);
+		(new esperarVerificacionTask()).execute(url);
+
+	}
+
+	private class esperarVerificacionTask extends AsyncTask<String, Void, PeticionBatallaVO> {
+		private ProgressDialog pd;
+		@Override
+		protected PeticionBatallaVO doInBackground(String... params) {
+			PeticionBatallaVO peticion = new PeticionBatallaVO();
+			peticion=batalla.solicitudVerificaciona(params[0]);			
+			return peticion;
+		}
+
+		@Override
+		protected void onPostExecute(PeticionBatallaVO result) {
+			if (result != null)
+			{
+				
+				Log.i("Resultado peticion", "UUUUUUUUUUUUUUUli   "+result.getAceptada());
+				if (result.getAceptada().equals("Si"))
+				{
+					url = "http://" + serverAddress + ":" + serverPort
+							+ "/Bumaye-api/batalla/aceptarAtacante/"+personaje.getIduser();
+					Log.d("URL BATALLA",url);
+					(new comprovacionPeticionTask()).execute(url);
+				}
+				else
+				{
+					try {
+
+						Thread.sleep(4000);
+
+					} catch (InterruptedException e) {
+
+						e.printStackTrace();
+
+					}
+
+					esperarVerificacion();
+				}
+			}
+		}
+
+		@Override
+		protected void onPreExecute() {
+			pd = new ProgressDialog(MapActivity.this);
+			pd.setTitle("Esperando verificacion");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+			pd.show();
+		}
+	}
+
+	private class comprovacionPeticionTask extends AsyncTask<String, Void, BatallaVO> {
+
+		@Override
+		protected BatallaVO doInBackground(String... params) {
+			BatallaVO batallavo  = new BatallaVO();
+			Log.d("Enviando azeptacion","OOOOOOOOOOOOOOOuli shiet");
+			batallavo=batalla.comprovacion_peticionBatalla(params[0]);			
+			return batallavo;
+		}
+
+		@Override
+		protected void onPostExecute(BatallaVO result) {
+			if (result !=null)
+			{
+				Log.d("Obteniendo resultado: ","idBatalla: "+result.getIdbatalla());
+				iniciar_batalla(result);
+			}
+		}
+
+		@Override
+		protected void onPreExecute() {
+
+		}
+	}
+
+	private void iniciar_batalla(BatallaVO batalla){
+
+		Log.d("Abriendo la batalla","Gasele");
+		Intent intent = new Intent(this, BatallaActivity.class);
+		intent.putExtra("url", url);
+		intent.putExtra("personaje", personaje);
+		intent.putExtra("batalla", batalla);
+		startActivity(intent);
+		finish();
+	}
 
 	private class LoadCofreItemTask extends
-			AsyncTask<String, Void, List<ObjetoCofreCantidadVO>> {
+	AsyncTask<String, Void, List<ObjetoCofreCantidadVO>> {
 
 		@Override
 		protected List<ObjetoCofreCantidadVO> doInBackground(String... params) {
@@ -387,7 +478,7 @@ public class MapActivity extends FragmentActivity {
 			if (map != null) {
 				map.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM));
 			}
-			
+
 			if (i<6)
 			{
 				i = i+1;				
@@ -402,7 +493,7 @@ public class MapActivity extends FragmentActivity {
 	};
 
 	private class DrawerItemClickListener implements
-			ListView.OnItemClickListener {
+	ListView.OnItemClickListener {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
