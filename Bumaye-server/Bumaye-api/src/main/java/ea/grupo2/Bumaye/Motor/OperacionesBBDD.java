@@ -2796,6 +2796,7 @@ public class OperacionesBBDD implements BumayeInterface{
 		peticion= comprovacion_peticion_atacante(atacante);
 		if (peticion!=null)
 		{
+			
 			System.out.print("Atacante tambien comienza la batalla");
 			System.out.print("Aceptando peticion idatacante: " + peticion.getIddefensor()+ " iddefensor: " + peticion.getIdatacante());
 			//sacar la batalla que ya esta inicializada
@@ -2803,7 +2804,7 @@ public class OperacionesBBDD implements BumayeInterface{
 			
 			if (peticion.getAceptada().equals("Si"))
 			{
-				
+				peticion.setAceptada("No");
 				eliminar_peticion(atacante);
 				System.out.print("Peticion eliminada , id: "+atacante + "\n");
 			}

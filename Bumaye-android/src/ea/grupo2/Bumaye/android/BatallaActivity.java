@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Properties;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,7 +31,7 @@ import ea.grupo2.Bumaye.android.api.UsrPersonajeAPI;
 
 public class BatallaActivity extends Activity {
 
-
+	ProgressDialog pdp;
 	String url;
 	String serverAddress;
 	String serverPort;
@@ -298,7 +299,11 @@ public class BatallaActivity extends Activity {
 		if (mod == posicionBatalla){
 			//es tu turno
 
-
+			pdp = new ProgressDialog(BatallaActivity.this);
+			pdp.setTitle("Atacando..");
+			pdp.setCancelable(false);
+			pdp.setIndeterminate(true);
+			pdp.show();
 			if (view.getId()==R.id.ataque_casco)
 			{
 				for(ArmaArmaduraVO arm: personaje.getArmasarmaduras())
@@ -460,6 +465,8 @@ public class BatallaActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(BatallaVO result) {
+			if (pdp!=null)
+				pdp.dismiss();
 			Log.d("Batalla actualizada id:",""+result.getIdbatalla());
 			if (result!= null)
 			{
@@ -492,38 +499,48 @@ public class BatallaActivity extends Activity {
 		
 		if (enemigo.getVida()<=0)
 		{
+			
+			actualizaciones_batalla.setText(" ¡VICTORIA!  has derrotado a tu oponente");
+//			SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
+//			nombre = prefs.getString("nombre", "");
+//			contra = prefs.getString("password", "");	
+//			(new LoginUsrTask()).execute(nombre, contra, url);
 			try {
 
-				Thread.sleep(6000);
+				Thread.sleep(10000);
 
 			} catch (InterruptedException e) {
 
 				e.printStackTrace();
 
 			}
-			actualizaciones_batalla.setText(" ¡VICTORIA!  has derrotado a tu oponente");
-			SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
-			nombre = prefs.getString("nombre", "");
-			contra = prefs.getString("password", "");	
-			(new LoginUsrTask()).execute(nombre, contra, url);
+			
+			Intent intent = new Intent(this, GanadorActivity.class);
+			startActivity(intent);
+			finish();
 		
 		}
 		else if(personaje_batalla.getVida()<=0)
 		{
+			
+//			
+//			SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
+//			nombre = prefs.getString("nombre", "");
+//			contra = prefs.getString("password", "");	
+//			(new LoginUsrTask()).execute(nombre, contra, url);
+			actualizaciones_batalla.setText(" Derrota...  has sido deshonrado");
 			try {
 
-				Thread.sleep(6000);
+				Thread.sleep(10000);
 
 			} catch (InterruptedException e) {
 
 				e.printStackTrace();
 
 			}
-			actualizaciones_batalla.setText(" Derrota...  has sido deshonrado");
-			SharedPreferences prefs = getSharedPreferences("upc.eetac.ea.bumaye",Context.MODE_PRIVATE); 
-			nombre = prefs.getString("nombre", "");
-			contra = prefs.getString("password", "");	
-			(new LoginUsrTask()).execute(nombre, contra, url);
+			Intent intent = new Intent(this, PerdedorActivity.class);
+			startActivity(intent);
+			finish();
 			
 		}else
 		{
@@ -554,45 +571,6 @@ public class BatallaActivity extends Activity {
 		protected void onPreExecute() {
 
 		}
-	}
-	
-	private class LoginUsrTask extends AsyncTask<String, Void, PersonajeVO> {
-
-		@Override
-		protected PersonajeVO doInBackground(String... params) {
-			PersonajeVO person = new PersonajeVO();
-			person = api.loginUsr(params[0], params[1], params[2]);
-
-			return person;
-		}
-
-		@Override
-		protected void onPostExecute(PersonajeVO result) {
-			if (result.getNombre() != "") {
-				if (result.getIduser() == 0) {
-					Toast.makeText(getApplicationContext(),
-							"Server not active", Toast.LENGTH_LONG).show();
-					finish();
-				} else {
-					Logeado(result);
-				}
-			} else {
-			}
-		}
-
-		@Override
-		protected void onPreExecute() {
-			
-		}
-	}
-
-	private void Logeado(PersonajeVO person) {
-		
-		Intent intent = new Intent(this, PerfilActivity.class);
-		intent.putExtra("url", url);
-		intent.putExtra("personaje", person);
-		startActivity(intent);
-		finish();
-	}
+	}	
 
 }

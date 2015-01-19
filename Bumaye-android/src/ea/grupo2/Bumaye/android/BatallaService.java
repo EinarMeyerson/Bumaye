@@ -104,7 +104,7 @@ public class BatallaService extends Service {
 		protected String doInBackground(String... params) {
 			String aver = "No";
 			try {
-				Thread.sleep(15000);
+				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
