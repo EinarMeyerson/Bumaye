@@ -347,10 +347,10 @@ public class OperacionesBBDD implements BumayeInterface{
 		m.updateAtributosEquipada_UserArmasArmaduras(21, 3);
 		System.out.print("Equipado el jugador3");
 		
-		//new Mercado(cantidad, precioUnidad, personaje, objeto)
+		//m.addEntradaMercado(idUser, idObjeto, cantidad, precioUnidad)
 		m.addEntradaMercado(1, 2, 2, 100);
 		m.addEntradaMercado(1, 6, 1, 200);
-		m.addEntradaMercado(3, 4, 1, 2500);
+		m.addEntradaMercado(3, 4, 1, 100);
 
 	}
 
@@ -2539,8 +2539,10 @@ public class OperacionesBBDD implements BumayeInterface{
 			transaction = session.beginTransaction();
 			mercado = (Mercado)session.load(Mercado.class, idEntradaMercado);
 			if (mercado!= null) {
-
-				mercadoVO = new MercadoVO(mercado.getIdEntradaMercado(), mercado.getCantidad(), mercado.getPrecioUnidad(), mercado.getPersonaje().getIduser(), mercado.getObjeto().getIdobjeto());
+				
+				PersonajeVO persVO = getPersonaje(mercado.getPersonaje().getIduser());
+				ObjetoVO objVO = getObjeto( mercado.getObjeto().getIdobjeto());
+				mercadoVO = new MercadoVO(mercado.getIdEntradaMercado(), mercado.getCantidad(), mercado.getPrecioUnidad(),persVO,objVO );
 				transaction.commit();
 
 			}
@@ -2567,11 +2569,12 @@ public class OperacionesBBDD implements BumayeInterface{
 		String s;
 		if(VerificarCantidadCompra(idEntradaMercado, cantidad)==true){
 			if (VerificarCompra(TotalPrecioCompra, idUserCompador)==true){
-				if(VerificarCapacidadInventario(idUserCompador, mercadoVO.getIdobjeto())==true){	
+				if(VerificarCapacidadInventario(idUserCompador, mercadoVO.getObjeto().getIdobjeto())==true){	
 					s= compraObjetoUser(idEntradaMercado, cantidad, idUserCompador);
 					for(int i=0; i<cantidad; i++)
 					{
-						añadirObjetoInventarioVerificado(mercadoVO.getIdobjeto(), idUserCompador);
+
+						añadirObjetoInventarioVerificado(mercadoVO.getObjeto().getIdobjeto(), idUserCompador);
 					}
 					limpiezaEntradaMercado();
 				}
@@ -2755,7 +2758,9 @@ public class OperacionesBBDD implements BumayeInterface{
 			if (m!= null) {               
 				for (Mercado merc: m) {
 
-					MercadoVO mVO = new MercadoVO(merc.getIdEntradaMercado(), merc.getCantidad(), merc.getPrecioUnidad(), merc.getPersonaje().getIduser(), merc.getObjeto().getIdobjeto());
+					PersonajeVO persVO = getPersonaje(merc.getPersonaje().getIduser());
+					ObjetoVO objVO = getObjeto(merc.getObjeto().getIdobjeto());
+					MercadoVO mVO = new MercadoVO(merc.getIdEntradaMercado(), merc.getCantidad(), merc.getPrecioUnidad(), persVO, objVO);
 					entradasMercado.add(mVO);
 
 				}

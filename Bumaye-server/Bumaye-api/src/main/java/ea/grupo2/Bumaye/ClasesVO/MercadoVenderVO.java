@@ -1,26 +1,26 @@
 package ea.grupo2.Bumaye.ClasesVO;
 
 
-public class MercadoVO {
+public class MercadoVenderVO {
 
 	private int idEntradaMercado;
 	private int cantidad;
 	private int precioUnidad;
-	private PersonajeVO personaje;
-	private ObjetoVO objeto;
+	private int idpersonaje;
+	private int idobjeto;
 	
-	public MercadoVO(){
+	public MercadoVenderVO(){
 		
 	}
 	
-	public MercadoVO(int idEntradaMercado, int cantidad, int precioUnidad,
-			PersonajeVO personaje, ObjetoVO objeto) {
+	public MercadoVenderVO(int idEntradaMercado, int cantidad, int precioUnidad,
+			int idpersonaje, int idobjeto) {
 		super();
 		this.idEntradaMercado = idEntradaMercado;
 		this.cantidad = cantidad;
 		this.precioUnidad = precioUnidad;
-		this.personaje = personaje;
-		this.objeto = objeto;
+		this.idpersonaje = idpersonaje;
+		this.idobjeto = idobjeto;
 	}
 
 	public int getIdEntradaMercado() {
@@ -47,22 +47,21 @@ public class MercadoVO {
 		precioUnidad = preciounidad;
 	}
 
-	public PersonajeVO getPersonaje() {
-		return personaje;
+	public int getIdpersonaje() {
+		return idpersonaje;
 	}
 
-	public void setPersonaje(PersonajeVO personaje) {
-		this.personaje = personaje;
+	public void setIdpersonaje(int idpersonaje) {
+		this.idpersonaje = idpersonaje;
 	}
 
-	public ObjetoVO getObjeto() {
-		return objeto;
+	public int getIdobjeto() {
+		return idobjeto;
 	}
 
-	public void setObjeto(ObjetoVO objeto) {
-		this.objeto = objeto;
+	public void setIdobjeto(int idobjeto) {
+		this.idobjeto = idobjeto;
 	}
 
 
-	
 }

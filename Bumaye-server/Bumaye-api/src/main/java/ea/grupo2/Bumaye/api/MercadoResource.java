@@ -17,6 +17,7 @@ import ea.grupo2.Bumaye.ClasesVO.BatallaVO;
 import ea.grupo2.Bumaye.ClasesVO.CofreVO;
 import ea.grupo2.Bumaye.ClasesVO.EquipamientoVO;
 import ea.grupo2.Bumaye.ClasesVO.MercadoVO;
+import ea.grupo2.Bumaye.ClasesVO.MercadoVenderVO;
 import ea.grupo2.Bumaye.ClasesVO.ObjetoVO;
 import ea.grupo2.Bumaye.ClasesVO.PersonajeVO;
 import ea.grupo2.Bumaye.ClasesVO.UsuarioVO;
@@ -43,40 +44,50 @@ public class MercadoResource {
 	public List<MercadoVO> listaEngtradasMercado () {
 		BumayeInterface  m = new OperacionesBBDD();
 		List<MercadoVO> entradas = m.listaMercado();
+		System.out.print("entramosen elGET mercado");
 
 		return entradas;
 	}
 	
 	@Path("/{idUserCompador}/comprar/{identradamercado}/cantidad/{cantidad}")
 	@GET
-	public String compararaMercado (@PathParam("idUserCompador") int idUserCompador,@PathParam("identradamercado") int identradamercado, 
+	public PersonajeVO comprarMercado (@PathParam("idUserCompador") int idUserCompador,@PathParam("identradamercado") int identradamercado, 
 			@PathParam("cantidad") int cantidad) throws Exception {
 		BumayeInterface  m = new OperacionesBBDD();
 		String s;
+		PersonajeVO pers = null;
 		try{
 			s = m.compraObjetoMercado(identradamercado, cantidad, idUserCompador);
+			pers = m.getPersonaje(idUserCompador);
 		}
 		catch(NoHayTantosObjetosException | NoTienesEspacioEnInventarioException | NoHayTantaPastaEnTusBolsillosException | NoExisteEsaEntradaException e){
 			throw e;
 		}
+		System.out.print("entramosen el GET comprar");
 
-		return s;
+		return pers;
 	}
 	
 	@Path("/vender")
 	@POST
 	@Consumes(MediaType.API_ENTRADA_MERCADO)
-	public List<MercadoVO> venderObjeto (MercadoVO mercado) throws Exception {
+	public List<MercadoVO> venderObjeto (MercadoVenderVO mercado) throws Exception {
 		BumayeInterface  m = new OperacionesBBDD();
 		List<MercadoVO> listm = null;
 		try{
+			System.out.print("mercado iduser "+ mercado.getIdpersonaje());
+			System.out.print("mercado idobjeto "+ mercado.getIdobjeto());
+			System.out.print("mercado cantidad "+ mercado.getCantidad());
+			System.out.print("mercado precio "+ mercado.getPrecioUnidad());
+
 			m.addEntradaMercado(mercado.getIdpersonaje(), mercado.getIdobjeto(), mercado.getCantidad(), mercado.getPrecioUnidad());
 			listm =listaEngtradasMercado();
 		}
 		catch(NoTienesTantaCantidadDeEseObjetoException | NoTienesEseObjetoException |NoHayTantosObjetosException e){
 			throw e;
 		}
-		
+		System.out.print("entramosen el POST vender");
+
 		return listm;
 	}
 
